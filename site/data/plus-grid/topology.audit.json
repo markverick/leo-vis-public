@@ -1,0 +1,24 @@
+{
+  "before": {
+    "satellites": 1584,
+    "isls": 3168,
+    "topology": "hypatia_starlink_550",
+    "isl_degree_counts": {
+      "4": 1584
+    },
+    "attachments_recomputed_and_matched": true,
+    "isl_length_km_min": 620.4087128986409,
+    "isl_length_km_max": 1961.399706534668
+  },
+  "after": {
+    "satellites": 1584,
+    "isls": 3168,
+    "topology": "hypatia_starlink_550",
+    "isl_degree_counts": {
+      "4": 1584
+    },
+    "attachments_recomputed_and_matched": true,
+    "isl_length_km_min": 620.020266144189,
+    "isl_length_km_max": 1961.3993176952677
+  }
+}
