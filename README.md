@@ -4,6 +4,8 @@ Static, self-contained coverage/user/gateway audit and satellite ISL topology in
 
 One viewer supports both Hypatia's idealized toroidal plus-grid (`topology=plus-grid`) and OCM's inferred version-budget ISLs (`topology=ocm`). Combine either with `view=3d`, `view=map`, `view=orbital` (normalized unsnapped), or `view=grid`. For example: https://markverick.github.io/leo-vis-public/topology.html?topology=plus-grid&view=3d
 
+Gateway mapping is selectable: `mapping=closest` preserves geographically closest fixed registration; `mapping=anycast` selects a fewest-hop gateway independently in each frozen snapshot. Anycast explicitly assumes all admitted gateways can serve the same study prefix; actual PoP eligibility is unknown. The selected destination, route, radius reachability, and side-by-side all-user cutoffs update in every view. Costs include outlet 1 and exclude user access.
+
 Expected Pages URL: https://markverick.github.io/leo-vis-public/
 
 The site contains processed data and source/assumption audits under `site/data/`, with a SHA-256 manifest. No runtime API, map service, or package installation is required. Open the grid inspector to switch between logical plane/slot, geographic, and orbital views.

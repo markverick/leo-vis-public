@@ -7,6 +7,11 @@
       "4": 1584
     },
     "attachments_recomputed_and_matched": true,
+    "anycast_paths_match_converged_dv": true,
+    "mapping_cutoffs": {
+      "closest": 11,
+      "anycast": 4
+    },
     "isl_length_km_min": 620.4087128986409,
     "isl_length_km_max": 1961.399706534668
   },
@@ -18,6 +23,11 @@
       "4": 1584
     },
     "attachments_recomputed_and_matched": true,
+    "anycast_paths_match_converged_dv": true,
+    "mapping_cutoffs": {
+      "closest": 11,
+      "anycast": 4
+    },
     "isl_length_km_min": 620.020266144189,
     "isl_length_km_max": 1961.3993176952677
   }

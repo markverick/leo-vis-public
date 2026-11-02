@@ -11,8 +11,8 @@
   },
   {
     "path": "topology.html",
-    "bytes": 5608359,
-    "sha256": "2ccc9ad879cbfe26ce4ad116cd0006d2d74f73d218a22b4aa13f9c75ec981e83"
+    "bytes": 5999288,
+    "sha256": "14c9d3bb69ea4bb4436c2ba0aa17fe528fb90aac9b9decef557743486290ce96"
   },
   {
     "path": "THREE-LICENSE.txt",
@@ -66,8 +66,8 @@
   },
   {
     "path": "data/topology.audit.json",
-    "bytes": 693,
-    "sha256": "2cb25c673e6da198342ee37f66d9b2ecdce0cb05c729401e608f26ffda359d0e"
+    "bytes": 927,
+    "sha256": "ad1b27b78523cc4456cd7f81a93ea0ac73e2a2a72bf68ff7b4dbd498ed5e66b1"
   },
   {
     "path": "data/plus-grid/snapshot.json",
@@ -86,18 +86,18 @@
   },
   {
     "path": "data/plus-grid/topology.audit.json",
-    "bytes": 574,
-    "sha256": "4bcd0565c94c1684f3a4f6c1840797972eb46872ef3441b47f9196bce091b15a"
+    "bytes": 810,
+    "sha256": "fd23715128cae56ca3cfe985edff590a99aaf0cad9f163de090b9f6ac79b7800"
   },
   {
     "path": "data/plus-grid/topology.data.json",
-    "bytes": 5060883,
-    "sha256": "f8a29e57f91750c8001b25ba031d189a796befe6588f68d8327a6fb3347cad2f"
+    "bytes": 5365728,
+    "sha256": "120baea52d5d2dd8d0fe05212816152811ca997aade2588e7f914eb817905ba0"
   },
   {
     "path": "data/ocm/topology.data.json",
-    "bytes": 6467563,
-    "sha256": "6ebf7cb6507848b390f454b90edb5569370865176d7bcb9c761fd25893ffaaca"
+    "bytes": 6781322,
+    "sha256": "0ae7caf07c352399138e54c80d8634fe67b9af7e1ceb06674d8d1958b86ebca3"
   },
   {
     "path": "data/plus-grid/satellites.csv",
