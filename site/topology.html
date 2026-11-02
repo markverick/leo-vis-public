@@ -53,7 +53,8 @@ for(const user of data.users){
 }
 $("user").value=data.users.reduce((a,b)=>(data.snapshots.before.paths[b.id].cost??-1)>(data.snapshots.before.paths[a.id].cost??-1)?b:a).id;
 $("radius").value=Math.max(...Object.values(data.snapshots.before.paths).map(p=>p.cost??0));
-if(new URLSearchParams(location.search).get("view")==="grid")$("view").value="grid";
+const requestedView=new URLSearchParams(location.search).get("view");
+if(["map","grid","orbital"].includes(requestedView))$("view").value=requestedView;
 for(const phase of ["before","after"]) $("phase").querySelector(`[value="${phase}"]`).textContent=`${phase} · t = ${data.snapshots[phase].seconds} s`;
 function state(){const snapshot=data.snapshots[$("phase").value],user=users.get($("user").value);return {snapshot,user,path:snapshot.paths[user.id],grid:$("view").value!=="map",orbital:$("view").value==="orbital"};}
 function project(lon,lat){return [(lon+180)/360*width,(90-lat)/180*height];}
