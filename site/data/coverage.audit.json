@@ -1,0 +1,13 @@
+{
+  "coverage_method": "explicit_deployed_service_polygons_v2",
+  "source_last_modified": "Tue, 09 Apr 2024 05:22:07 GMT",
+  "administrative_boundaries_used": false,
+  "sampled_users": 500,
+  "inside_explicit_deployed_polygons": 500,
+  "outside_user_ids": [],
+  "input_sha256": {
+    "data/generated/coverage/starlink/deployed.geojson": "9696db7c1a48032fe7719565fc3e240900267bf3039fae46ed1d3dcb025aa634",
+    "data/generated/evaluations/explicit_residential_20240409_500/users.csv": "d460233eda305b6f71a8246b715f8aa69530da51a8fe5b25ce53050b8f0a5188",
+    "data/generated/evaluations/explicit_residential_20240409_500/users.metadata.json": "218ce0bf25941948cb2c0159e18cce476293936030b049851c8b2c500d21465f"
+  }
+}

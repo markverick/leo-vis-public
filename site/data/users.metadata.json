@@ -1,0 +1,44 @@
+{
+  "parameters": {
+    "count": 500,
+    "seed": 42,
+    "coverage_sha256": "9696db7c1a48032fe7719565fc3e240900267bf3039fae46ed1d3dcb025aa634"
+  },
+  "coverage": {
+    "coverage_method": "explicit_deployed_service_polygons_v2",
+    "accepted_statuses": [
+      "launched"
+    ],
+    "source_classification": {
+      "name": "available",
+      "tooltip": "Available Now"
+    },
+    "administrative_boundaries_used": false,
+    "feature_counts": {
+      "deployed": 1,
+      "excluded": 15
+    },
+    "invalid_geometries_repaired": 13,
+    "scope": "published residential service-polygon snapshot",
+    "limitation": "Coverage is dated by the source publication; no inference of current service or address capacity.",
+    "source_last_modified": "Tue, 09 Apr 2024 05:22:07 GMT"
+  },
+  "sampling": {
+    "count": 500,
+    "seed": 42,
+    "eligible_population": 2146762080.7007527,
+    "method": "with-replacement population-count weighted cell centers; PCG64",
+    "boundary_cells": "cell-center inclusion; no partial-cell population allocation",
+    "subcell_locations": "cell centers; no within-cell jitter"
+  },
+  "population": "GHS-POP R2023A E2020 WGS84 30 arcseconds V1.0; persons per cell",
+  "population_attribution": "European Commission, Joint Research Centre, GHSL",
+  "source_urls": [
+    "https://jeodpp.jrc.ec.europa.eu/ftp/jrc-opendata/GHSL/GHS_POP_GLOBE_R2023A/GHS_POP_E2020_GLOBE_R2023A_4326_30ss/V1-0/GHS_POP_E2020_GLOBE_R2023A_4326_30ss_V1_0.zip"
+  ],
+  "input_sha256": {
+    "data/cache/locality/ghs_pop_2020_30ss.zip": "579fb7477b33d9be61e9562b170ea108a670b85ef6fe23b61a22d17200929636",
+    "data/cache/locality/population.tif": "630f8b250246bdb9b49e2e1e7b72d572cba9e30d1d53998a13015161c4735e43",
+    "data/generated/coverage/starlink/deployed.geojson": "9696db7c1a48032fe7719565fc3e240900267bf3039fae46ed1d3dcb025aa634"
+  }
+}

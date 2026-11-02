@@ -1,0 +1,30 @@
+{
+  "before": {
+    "satellites": 2549,
+    "isls": 3778,
+    "topology": "starlinkocm_463km_version_budget",
+    "isl_degree_counts": {
+      "1": 17,
+      "2": 233,
+      "3": 2123,
+      "4": 176
+    },
+    "attachments_recomputed_and_matched": true,
+    "isl_length_km_min": 47.41721261817242,
+    "isl_length_km_max": 1477.2966844849368
+  },
+  "after": {
+    "satellites": 2549,
+    "isls": 3778,
+    "topology": "starlinkocm_463km_version_budget",
+    "isl_degree_counts": {
+      "1": 17,
+      "2": 233,
+      "3": 2123,
+      "4": 176
+    },
+    "attachments_recomputed_and_matched": true,
+    "isl_length_km_min": 49.8293506981239,
+    "isl_length_km_max": 1474.8180099844324
+  }
+}

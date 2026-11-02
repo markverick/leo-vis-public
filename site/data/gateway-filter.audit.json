@@ -1,0 +1,19 @@
+{
+  "source": "https://www.google.com/maps/d/viewer?mid=1805q6rlePY4WZd8QMOaNe2BqAgFkYBY",
+  "raw_sha256": "34c5eddce28e7d0ad3f392dc8790de05e81ccef15311415e0a3dc39c68f412b3",
+  "regional_gateway_point_records": 568,
+  "reported_live_records": null,
+  "limitations": [
+    "Community evidence, not a complete official operational inventory.",
+    "Candidate CSV retains planned and uncertain entries; not a runtime gateway dataset.",
+    "Live status is reported or presumed and is not independently certified.",
+    "Regional records can include duplicates; deduplication is required before routing use."
+  ],
+  "superseded_by": "data/generated/gateway_candidates/community_map.csv",
+  "filter_policy": "built_or_live_assumed_operational_v2",
+  "admitted_sites": 310,
+  "coordinate_quality_counts": {
+    "map_site_coordinate": 304,
+    "approximate_or_uncertain": 6
+  }
+}

@@ -1,0 +1,5 @@
+{
+  "source": "starlink:explicit-deployed-service-polygons",
+  "source_url": "https://api.starlink.com/public-files/coverage_residential.pb",
+  "source_revision": "63a1e0c9988a4fd9841901cf52e9f17be8d8f137909cd4508bf784687effb8e5"
+}

@@ -1,0 +1,107 @@
+[
+  {
+    "path": "coverage-map.html",
+    "bytes": 4899994,
+    "sha256": "ed981aa40c58aeabeafb4b7d07c076290059e717b183f46b1aef9c44ce4c564c"
+  },
+  {
+    "path": "coverage-map.png",
+    "bytes": 525599,
+    "sha256": "d3fc230f2586057da299da35c150f392311c4e02d2a1cc3a258fa2507504cf03"
+  },
+  {
+    "path": "topology.html",
+    "bytes": 2624079,
+    "sha256": "571ddaded4540f61c48052e678e92ba4536009e2243000c917e3a4b8f4463d07"
+  },
+  {
+    "path": "data/users.csv",
+    "bytes": 21377,
+    "sha256": "d460233eda305b6f71a8246b715f8aa69530da51a8fe5b25ce53050b8f0a5188"
+  },
+  {
+    "path": "data/users.metadata.json",
+    "bytes": 1846,
+    "sha256": "218ce0bf25941948cb2c0159e18cce476293936030b049851c8b2c500d21465f"
+  },
+  {
+    "path": "data/coverage.audit.json",
+    "bytes": 712,
+    "sha256": "8ae8193eb0ccd18266d74211ac339fb09db19305fafa03917ddb7ad8f70bad29"
+  },
+  {
+    "path": "data/coastline.audit.json",
+    "bytes": 1567,
+    "sha256": "7b476792085ea9845d2d932f4a4f7e7ffb86d4a9877ec6c2d468b786485f290d"
+  },
+  {
+    "path": "data/snapshot.json",
+    "bytes": 1064212,
+    "sha256": "e4fa86f3310bad78a30bc01fc0dd85f9b4ee312ce42281c1521cbc0acbca9606"
+  },
+  {
+    "path": "data/report.json",
+    "bytes": 854878,
+    "sha256": "a1854e5b6631ad0c73824a43678388fed95241d565386859cc782d0f17f653ce"
+  },
+  {
+    "path": "data/registrations.csv",
+    "bytes": 72182,
+    "sha256": "8ae167305bfa9feb6ebac1a0c1576a669bd5d49605242309a064cf63698adb65"
+  },
+  {
+    "path": "data/anycast_sensitivity.json",
+    "bytes": 1150650,
+    "sha256": "b09ef5a9565b1db04edde3ad28283bee15f28f89d14a539f88d2ee42b925fa2e"
+  },
+  {
+    "path": "data/gateway_research_audit.json",
+    "bytes": 2322,
+    "sha256": "8ebb207351a4a8d221c946682f64e21bc9d95cd9c95c62a6dd3f0ae0c9be8d8b"
+  },
+  {
+    "path": "data/topology.audit.json",
+    "bytes": 693,
+    "sha256": "2cb25c673e6da198342ee37f66d9b2ecdce0cb05c729401e608f26ffda359d0e"
+  },
+  {
+    "path": "data/gateways.csv",
+    "bytes": 191599,
+    "sha256": "c2be7944d2de0e45a467cc94b4558796052696e923a3ca16f9301df1c51d94ac"
+  },
+  {
+    "path": "data/gateway-candidates.csv",
+    "bytes": 345250,
+    "sha256": "afd173c5aeb9a66957c51f527b9b173e74cf3a81b622c1492aea1f9e07c69007"
+  },
+  {
+    "path": "data/gateway-filter.audit.json",
+    "bytes": 873,
+    "sha256": "77fd3bf65d41847db8e8d1420d2b83302be20ebc144a9c4528f822134a2734fa"
+  },
+  {
+    "path": "data/coverage.geojson",
+    "bytes": 3852241,
+    "sha256": "9696db7c1a48032fe7719565fc3e240900267bf3039fae46ed1d3dcb025aa634"
+  },
+  {
+    "path": "data/coverage.metadata.json",
+    "bytes": 232,
+    "sha256": "328616c6dbe8169a9acf7462c05b8c023715fdcad541a7b0db4a09f3f11e90cd"
+  },
+  {
+    "path": "data/satellites.csv",
+    "bytes": 400861,
+    "sha256": "b38053a82d01d63fa705763011dd004877b627d3ddf26a35d85971ac449d3508"
+  },
+  {
+    "path": "data/isls.csv",
+    "bytes": 158122,
+    "sha256": "c4d128e5f649158a4c12641d287c8c6dd9436492711c22a74777f85af42da3cb"
+  },
+  {
+    "path": "data/positions.csv",
+    "bytes": 14732245,
+    "sha256": "d7b02ae147a047cae8c3d6e64b7bd5c84f14200715a14d324a7b357f10195081"
+  }
+]

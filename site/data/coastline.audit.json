@@ -1,0 +1,55 @@
+{
+  "land_reference": "data/cache/locality/natural_earth_land_v5.1.2.geojson",
+  "scope": "Display diagnostic only; no gateway or sampling eligibility changes.",
+  "outside_reference_land": [
+    {
+      "id": "map-gateway-997a3f1207dedab8",
+      "name": "Dakar, SN",
+      "latitude": 14.9,
+      "longitude": -17.4,
+      "coordinate_quality": "approximate_or_uncertain"
+    },
+    {
+      "id": "map-gateway-994410c48870c06b",
+      "name": "Otaru, JP",
+      "latitude": 43.173215,
+      "longitude": 141.258373,
+      "coordinate_quality": "map_site_coordinate"
+    },
+    {
+      "id": "map-gateway-f09da946d66357aa",
+      "name": "Te Hana, NZ",
+      "latitude": -36.23673,
+      "longitude": 174.51211,
+      "coordinate_quality": "map_site_coordinate"
+    },
+    {
+      "id": "map-gateway-0b52ac1b8b6f9480",
+      "name": "Ketchikan, AK",
+      "latitude": 55.3737,
+      "longitude": -131.7189889,
+      "coordinate_quality": "map_site_coordinate"
+    },
+    {
+      "id": "map-gateway-07e31cea3c9f44f0",
+      "name": "Puerto Saavedra, CL",
+      "latitude": -38.81476,
+      "longitude": -73.39724,
+      "coordinate_quality": "map_site_coordinate"
+    },
+    {
+      "id": "map-gateway-deac1612d3de3a31",
+      "name": "Garrettstown, IE",
+      "latitude": 51.64498,
+      "longitude": -8.58805,
+      "coordinate_quality": "map_site_coordinate"
+    },
+    {
+      "id": "map-gateway-91aa179c6bf6a71c",
+      "name": "Afjord, NO",
+      "latitude": 64.096,
+      "longitude": 10.149,
+      "coordinate_quality": "approximate_or_uncertain"
+    }
+  ]
+}
