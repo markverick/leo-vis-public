@@ -11,8 +11,13 @@
   },
   {
     "path": "topology.html",
-    "bytes": 2624147,
-    "sha256": "55247e5b0d05f0abc5b094a5c74045ba3cdb49faca649ecd3ef7074f2471b579"
+    "bytes": 3595696,
+    "sha256": "dcad0f86a4108c788cdef28fd17376e9a5956e115be08c2f71bb6969909f4703"
+  },
+  {
+    "path": "THREE-LICENSE.txt",
+    "bytes": 1081,
+    "sha256": "8b378ebe60e2fe500158cb0ac71cb5e8b7d92953c2abcc63a0eb90499653b5bc"
   },
   {
     "path": "data/users.csv",
