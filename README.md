@@ -17,7 +17,7 @@ python3 -m http.server 8000 --directory site
 
 ## GitHub Pages
 
-In repository **Settings → Pages → Build and deployment → Source**, select **GitHub Actions**. The `Publish static visualizations` workflow deploys `site/` on pushes to `main` and can be rerun from Actions.
+The root entry page opens `site/` when Pages serves the `main` branch from `/ (root)`. No Jekyll processing is needed. Alternatively, select **GitHub Actions** in **Settings → Pages → Build and deployment → Source**; the `Publish static visualizations` workflow deploys `site/` directly on pushes to `main` and can be rerun from Actions.
 
 ## Refreshing the frozen export
 
