@@ -8,6 +8,12 @@ Gateway mapping is selectable: `mapping=closest` preserves geographically closes
 
 Expected Pages URL: https://markverick.github.io/leo-vis-public/
 
+The Topology / shell selector also includes 32 GP-catalog scenarios: the full 11,156-object Starlink snapshot, four major inclination families, and eleven altitude/inclination bands, each with proximity and plus-grid link models. Example: https://markverick.github.io/leo-vis-public/topology.html?topology=gp-all-proximity&view=3d&mapping=anycast
+
+The full catalog retains small/unmatched populations, including objects whose operational state is unknown. The display bands are not certified shells. GP positions are propagated to one common epoch; new links assume a uniform four-terminal budget and sampled geometry limits, with cross-band links disabled by default. These are modeled ISLs, not measured connectivity. OCM remains its separately pinned single-shell reference. Some selections cannot reach every sampled user; the UI reports that without dropping users.
+
+Additional shell datasets are compressed processed JSON loaded on selection. Serving through HTTP and a browser with native gzip `DecompressionStream` support are required. No live external catalog query runs in the browser. The source catalog metadata retains epochs and hashes; raw OCM and collection source trees are not included.
+
 The site contains processed data and source/assumption audits under `site/data/`, with a SHA-256 manifest. No runtime API, map service, or package installation is required. Open the grid inspector to switch between logical plane/slot, geographic, and orbital views.
 
 Coverage is historical (April 9, 2024), gateway deployment includes documented community-source assumptions, and ISLs are inferred. The landing page explains the cost convention and fixed-gateway versus optimistic anycast results. Upstream attribution and rights are retained; no blanket license is asserted for upstream data.

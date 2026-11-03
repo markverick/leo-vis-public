@@ -1,0 +1,42 @@
+{
+  "before": {
+    "satellites": 158,
+    "isls": 131,
+    "topology": "gp-band-215-71-proximity",
+    "isl_degree_counts": {
+      "0": 19,
+      "1": 57,
+      "2": 48,
+      "3": 27,
+      "4": 7
+    },
+    "attachments_recomputed_and_matched": true,
+    "anycast_paths_match_converged_dv": true,
+    "mapping_cutoffs": {
+      "closest": null,
+      "anycast": null
+    },
+    "isl_length_km_min": 185.29691075435542,
+    "isl_length_km_max": 1494.5481961335695
+  },
+  "after": {
+    "satellites": 158,
+    "isls": 131,
+    "topology": "gp-band-215-71-proximity",
+    "isl_degree_counts": {
+      "0": 19,
+      "1": 57,
+      "2": 48,
+      "3": 27,
+      "4": 7
+    },
+    "attachments_recomputed_and_matched": true,
+    "anycast_paths_match_converged_dv": true,
+    "mapping_cutoffs": {
+      "closest": null,
+      "anycast": null
+    },
+    "isl_length_km_min": 174.8311442659181,
+    "isl_length_km_max": 1449.1913335964011
+  }
+}

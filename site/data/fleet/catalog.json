@@ -1,0 +1,238 @@
+{
+  "source": {
+    "url": "https://celestrak.org/NORAD/elements/gp.php?GROUP=starlink&FORMAT=json",
+    "sha256": "f30ca31707358b9dae3766ccdb6e639f7b91be95046593cb8b60e2484de031d6",
+    "bytes": 4683682,
+    "transport": "explicit_supplied_snapshot",
+    "source_last_modified": null
+  },
+  "objects": 11156,
+  "models": [
+    {
+      "id": "gp-all-proximity",
+      "label": "All catalogued Starlink objects / proximity",
+      "experiment": "gp-all-proximity",
+      "satellites": 11156,
+      "isls": 18322
+    },
+    {
+      "id": "gp-all-plus-grid",
+      "label": "All catalogued Starlink objects / plus-grid",
+      "experiment": "gp-all-plus-grid",
+      "satellites": 11156,
+      "isls": 8340
+    },
+    {
+      "id": "gp-inc-43-proximity",
+      "label": "43\u00b0 inclination family / proximity",
+      "experiment": "gp-inc-43-proximity",
+      "satellites": 3608,
+      "isls": 6700
+    },
+    {
+      "id": "gp-inc-43-plus-grid",
+      "label": "43\u00b0 inclination family / plus-grid",
+      "experiment": "gp-inc-43-plus-grid",
+      "satellites": 3608,
+      "isls": 2929
+    },
+    {
+      "id": "gp-inc-53-proximity",
+      "label": "53\u00b0 inclination family / proximity",
+      "experiment": "gp-inc-53-proximity",
+      "satellites": 5076,
+      "isls": 8165
+    },
+    {
+      "id": "gp-inc-53-plus-grid",
+      "label": "53\u00b0 inclination family / plus-grid",
+      "experiment": "gp-inc-53-plus-grid",
+      "satellites": 5076,
+      "isls": 4349
+    },
+    {
+      "id": "gp-inc-70-proximity",
+      "label": "70\u00b0 inclination family / proximity",
+      "experiment": "gp-inc-70-proximity",
+      "satellites": 951,
+      "isls": 795
+    },
+    {
+      "id": "gp-inc-70-plus-grid",
+      "label": "70\u00b0 inclination family / plus-grid",
+      "experiment": "gp-inc-70-plus-grid",
+      "satellites": 951,
+      "isls": 311
+    },
+    {
+      "id": "gp-inc-97-proximity",
+      "label": "97\u00b0 inclination family / proximity",
+      "experiment": "gp-inc-97-proximity",
+      "satellites": 1514,
+      "isls": 2662
+    },
+    {
+      "id": "gp-inc-97-plus-grid",
+      "label": "97\u00b0 inclination family / plus-grid",
+      "experiment": "gp-inc-97-plus-grid",
+      "satellites": 1514,
+      "isls": 751
+    },
+    {
+      "id": "gp-band-215-70-proximity",
+      "label": "43.0\u00b0 \u00b7 350\u2013355 km catalog band / proximity",
+      "experiment": "gp-band-215-70-proximity",
+      "satellites": 174,
+      "isls": 161
+    },
+    {
+      "id": "gp-band-215-70-plus-grid",
+      "label": "43.0\u00b0 \u00b7 350\u2013355 km catalog band / plus-grid",
+      "experiment": "gp-band-215-70-plus-grid",
+      "satellites": 174,
+      "isls": 21
+    },
+    {
+      "id": "gp-band-215-71-proximity",
+      "label": "43.0\u00b0 \u00b7 355\u2013360 km catalog band / proximity",
+      "experiment": "gp-band-215-71-proximity",
+      "satellites": 158,
+      "isls": 131
+    },
+    {
+      "id": "gp-band-215-71-plus-grid",
+      "label": "43.0\u00b0 \u00b7 355\u2013360 km catalog band / plus-grid",
+      "experiment": "gp-band-215-71-plus-grid",
+      "satellites": 158,
+      "isls": 8
+    },
+    {
+      "id": "gp-band-215-96-proximity",
+      "label": "43.0\u00b0 \u00b7 480\u2013485 km catalog band / proximity",
+      "experiment": "gp-band-215-96-proximity",
+      "satellites": 3222,
+      "isls": 6408
+    },
+    {
+      "id": "gp-band-215-96-plus-grid",
+      "label": "43.0\u00b0 \u00b7 480\u2013485 km catalog band / plus-grid",
+      "experiment": "gp-band-215-96-plus-grid",
+      "satellites": 3222,
+      "isls": 2900
+    },
+    {
+      "id": "gp-band-266-71-proximity",
+      "label": "53.2\u00b0 \u00b7 355\u2013360 km catalog band / proximity",
+      "experiment": "gp-band-266-71-proximity",
+      "satellites": 312,
+      "isls": 302
+    },
+    {
+      "id": "gp-band-266-71-plus-grid",
+      "label": "53.2\u00b0 \u00b7 355\u2013360 km catalog band / plus-grid",
+      "experiment": "gp-band-266-71-plus-grid",
+      "satellites": 312,
+      "isls": 20
+    },
+    {
+      "id": "gp-band-266-91-proximity",
+      "label": "53.2\u00b0 \u00b7 455\u2013460 km catalog band / proximity",
+      "experiment": "gp-band-266-91-proximity",
+      "satellites": 197,
+      "isls": 212
+    },
+    {
+      "id": "gp-band-266-91-plus-grid",
+      "label": "53.2\u00b0 \u00b7 455\u2013460 km catalog band / plus-grid",
+      "experiment": "gp-band-266-91-plus-grid",
+      "satellites": 197,
+      "isls": 35
+    },
+    {
+      "id": "gp-band-266-92-proximity",
+      "label": "53.2\u00b0 \u00b7 460\u2013465 km catalog band / proximity",
+      "experiment": "gp-band-266-92-proximity",
+      "satellites": 3304,
+      "isls": 6561
+    },
+    {
+      "id": "gp-band-266-92-plus-grid",
+      "label": "53.2\u00b0 \u00b7 460\u2013465 km catalog band / plus-grid",
+      "experiment": "gp-band-266-92-plus-grid",
+      "satellites": 3304,
+      "isls": 4111
+    },
+    {
+      "id": "gp-band-266-94-proximity",
+      "label": "53.2\u00b0 \u00b7 470\u2013475 km catalog band / proximity",
+      "experiment": "gp-band-266-94-proximity",
+      "satellites": 584,
+      "isls": 953
+    },
+    {
+      "id": "gp-band-266-94-plus-grid",
+      "label": "53.2\u00b0 \u00b7 470\u2013475 km catalog band / plus-grid",
+      "experiment": "gp-band-266-94-plus-grid",
+      "satellites": 584,
+      "isls": 149
+    },
+    {
+      "id": "gp-band-350-94-proximity",
+      "label": "70.0\u00b0 \u00b7 470\u2013475 km catalog band / proximity",
+      "experiment": "gp-band-350-94-proximity",
+      "satellites": 352,
+      "isls": 419
+    },
+    {
+      "id": "gp-band-350-94-plus-grid",
+      "label": "70.0\u00b0 \u00b7 470\u2013475 km catalog band / plus-grid",
+      "experiment": "gp-band-350-94-plus-grid",
+      "satellites": 352,
+      "isls": 105
+    },
+    {
+      "id": "gp-band-350-95-proximity",
+      "label": "70.0\u00b0 \u00b7 475\u2013480 km catalog band / proximity",
+      "experiment": "gp-band-350-95-proximity",
+      "satellites": 149,
+      "isls": 130
+    },
+    {
+      "id": "gp-band-350-95-plus-grid",
+      "label": "70.0\u00b0 \u00b7 475\u2013480 km catalog band / plus-grid",
+      "experiment": "gp-band-350-95-plus-grid",
+      "satellites": 149,
+      "isls": 71
+    },
+    {
+      "id": "gp-band-350-114-proximity",
+      "label": "70.0\u00b0 \u00b7 570\u2013575 km catalog band / proximity",
+      "experiment": "gp-band-350-114-proximity",
+      "satellites": 116,
+      "isls": 58
+    },
+    {
+      "id": "gp-band-350-114-plus-grid",
+      "label": "70.0\u00b0 \u00b7 570\u2013575 km catalog band / plus-grid",
+      "experiment": "gp-band-350-114-plus-grid",
+      "satellites": 116,
+      "isls": 14
+    },
+    {
+      "id": "gp-band-486-93-proximity",
+      "label": "97.2\u00b0 \u00b7 465\u2013470 km catalog band / proximity",
+      "experiment": "gp-band-486-93-proximity",
+      "satellites": 1445,
+      "isls": 2650
+    },
+    {
+      "id": "gp-band-486-93-plus-grid",
+      "label": "97.2\u00b0 \u00b7 465\u2013470 km catalog band / plus-grid",
+      "experiment": "gp-band-486-93-plus-grid",
+      "satellites": 1445,
+      "isls": 739
+    }
+  ],
+  "expected_models": 32,
+  "complete": true
+}

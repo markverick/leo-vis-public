@@ -1,0 +1,37 @@
+{
+  "name": "gp-all-proximity",
+  "display_name": "All catalogued Starlink objects / proximity",
+  "kind": "catalog_snapshot",
+  "source": {
+    "url": "https://celestrak.org/NORAD/elements/gp.php?GROUP=starlink&FORMAT=json",
+    "sha256": "f30ca31707358b9dae3766ccdb6e639f7b91be95046593cb8b60e2484de031d6",
+    "bytes": 4683682,
+    "transport": "explicit_supplied_snapshot",
+    "source_last_modified": null
+  },
+  "source_url": "https://celestrak.org/NORAD/elements/gp.php?GROUP=starlink&FORMAT=json",
+  "epoch_utc": "2026-11-02T08:00:01.999008+00:00",
+  "positions_description": "SGP4 from CelesTrak GP/OMM, TEME rotated with GMST to approximate Earth-fixed axes",
+  "selection": {
+    "id": "all",
+    "label": "All catalogued Starlink objects"
+  },
+  "satellites": 11156,
+  "isls": 18322,
+  "isl_policy": "proximity",
+  "maximum_range_km": 1500,
+  "isl_budget": 4,
+  "inter_shell_links": false,
+  "gateway_minimum_elevation_deg": 10.0,
+  "gateway_capacity": 32,
+  "user_minimum_elevation_deg": 25.0,
+  "limitations": [
+    "GP catalog membership does not establish operational service or ISL capability.",
+    "Catalog bands are 0.2-degree inclination and 5-km mean-altitude display bins, not official shells.",
+    "RAAN groups use a 0.6-degree gap tolerance; plane/slot labels are inferred.",
+    "All ISLs are modeled with a uniform assumed terminal budget, not observed Starlink connectivity.",
+    "Links meet range and Earth-clearance at the exported sample times only; not continuous validation.",
+    "No inter-band links unless inter_shell_links is explicitly enabled.",
+    "Earth-fixed transform neglects polar motion and precession/nutation corrections."
+  ]
+}

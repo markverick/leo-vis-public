@@ -2,6 +2,7 @@
 import hashlib
 from html.parser import HTMLParser
 import json
+import gzip
 from pathlib import Path
 from urllib.parse import urlsplit, unquote
 
@@ -28,6 +29,8 @@ for row in manifest:
 for path in root.rglob("*"):
     if path.suffix in (".json", ".geojson"):
         json.loads(path.read_text())
+    if path.name.endswith(".json.gz"):
+        json.loads(gzip.decompress(path.read_bytes()))
     if path.suffix == ".html":
         parser = Links()
         parser.directory = path.parent

@@ -1,0 +1,133 @@
+{
+  "source": {
+    "url": "https://celestrak.org/NORAD/elements/gp.php?GROUP=starlink&FORMAT=json",
+    "sha256": "f30ca31707358b9dae3766ccdb6e639f7b91be95046593cb8b60e2484de031d6",
+    "bytes": 4683682,
+    "transport": "explicit_supplied_snapshot",
+    "source_last_modified": null
+  },
+  "count": 11156,
+  "reference_epoch_utc": "2026-11-02T08:00:01.999008+00:00",
+  "source_epoch_min": "2026-10-30T10:40:11.814816",
+  "source_epoch_max": "2026-11-02T19:58:07.540608",
+  "sgp4_statuses": {},
+  "selections": [
+    {
+      "id": "all",
+      "label": "All catalogued Starlink objects"
+    },
+    {
+      "id": "inc-43",
+      "label": "43\u00b0 inclination family",
+      "inclination_min": 42.5,
+      "inclination_max": 43.5
+    },
+    {
+      "id": "inc-53",
+      "label": "53\u00b0 inclination family",
+      "inclination_min": 52.5,
+      "inclination_max": 53.5
+    },
+    {
+      "id": "inc-70",
+      "label": "70\u00b0 inclination family",
+      "inclination_min": 69.5,
+      "inclination_max": 70.5
+    },
+    {
+      "id": "inc-97",
+      "label": "97\u00b0 inclination family",
+      "inclination_min": 96.5,
+      "inclination_max": 97.5
+    },
+    {
+      "id": "band-215-70",
+      "label": "43.0\u00b0 \u00b7 350\u2013355 km catalog band",
+      "inclination_min": 42.9,
+      "inclination_max": 43.1,
+      "altitude_min": 350,
+      "altitude_max": 355
+    },
+    {
+      "id": "band-215-71",
+      "label": "43.0\u00b0 \u00b7 355\u2013360 km catalog band",
+      "inclination_min": 42.9,
+      "inclination_max": 43.1,
+      "altitude_min": 355,
+      "altitude_max": 360
+    },
+    {
+      "id": "band-215-96",
+      "label": "43.0\u00b0 \u00b7 480\u2013485 km catalog band",
+      "inclination_min": 42.9,
+      "inclination_max": 43.1,
+      "altitude_min": 480,
+      "altitude_max": 485
+    },
+    {
+      "id": "band-266-71",
+      "label": "53.2\u00b0 \u00b7 355\u2013360 km catalog band",
+      "inclination_min": 53.1,
+      "inclination_max": 53.300000000000004,
+      "altitude_min": 355,
+      "altitude_max": 360
+    },
+    {
+      "id": "band-266-91",
+      "label": "53.2\u00b0 \u00b7 455\u2013460 km catalog band",
+      "inclination_min": 53.1,
+      "inclination_max": 53.300000000000004,
+      "altitude_min": 455,
+      "altitude_max": 460
+    },
+    {
+      "id": "band-266-92",
+      "label": "53.2\u00b0 \u00b7 460\u2013465 km catalog band",
+      "inclination_min": 53.1,
+      "inclination_max": 53.300000000000004,
+      "altitude_min": 460,
+      "altitude_max": 465
+    },
+    {
+      "id": "band-266-94",
+      "label": "53.2\u00b0 \u00b7 470\u2013475 km catalog band",
+      "inclination_min": 53.1,
+      "inclination_max": 53.300000000000004,
+      "altitude_min": 470,
+      "altitude_max": 475
+    },
+    {
+      "id": "band-350-94",
+      "label": "70.0\u00b0 \u00b7 470\u2013475 km catalog band",
+      "inclination_min": 69.9,
+      "inclination_max": 70.1,
+      "altitude_min": 470,
+      "altitude_max": 475
+    },
+    {
+      "id": "band-350-95",
+      "label": "70.0\u00b0 \u00b7 475\u2013480 km catalog band",
+      "inclination_min": 69.9,
+      "inclination_max": 70.1,
+      "altitude_min": 475,
+      "altitude_max": 480
+    },
+    {
+      "id": "band-350-114",
+      "label": "70.0\u00b0 \u00b7 570\u2013575 km catalog band",
+      "inclination_min": 69.9,
+      "inclination_max": 70.1,
+      "altitude_min": 570,
+      "altitude_max": 575
+    },
+    {
+      "id": "band-486-93",
+      "label": "97.2\u00b0 \u00b7 465\u2013470 km catalog band",
+      "inclination_min": 97.10000000000001,
+      "inclination_max": 97.3,
+      "altitude_min": 465,
+      "altitude_max": 470
+    }
+  ],
+  "grouping": "display bands only; no official shell or operational-status claim"
+}
