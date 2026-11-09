@@ -20,6 +20,14 @@ class Links(HTMLParser):
             assert (self.directory / unquote(parsed.path)).is_file(), value
 
 
+# Private evaluation figures must never enter a public Pages artifact.
+for private_path in (
+    'figures/plus-grid-gateway-hops-t0.png',
+    'figures/ocm-gateway-hops-t0.png',
+    'figures/index.html',
+):
+    assert not (root / private_path).exists(), f'Private artifact in public export: {private_path}'
+
 manifest = json.loads((root / "data/manifest.json").read_text())
 for row in manifest:
     path = root / row["path"]
