@@ -1,5 +1,5 @@
 {
-  "snapshot_sha256": "1a00c13160824a1ee2c9b1f29ffb0cf8f54828ce201776a09c048a162b2fbcd1",
+  "snapshot_sha256": "30a7dc06232855036d06597032c4354574ad2f24b1764d47f9cedce70ae7c5f1",
   "planes": 89,
   "slots": 31,
   "isls": [
@@ -71529,6 +71529,9 @@
         ]
       },
       "orbital_median_inclination_deg": 53.1584,
+      "orbital_inclination_groups_deg": [
+        53.1584
+      ],
       "audit": {
         "satellites": 2549,
         "isls": 3778,
@@ -115222,6 +115225,9 @@
         ]
       },
       "orbital_median_inclination_deg": 53.1584,
+      "orbital_inclination_groups_deg": [
+        53.1584
+      ],
       "audit": {
         "satellites": 2549,
         "isls": 3778,
@@ -128064,6 +128070,15 @@
       "name": "Lockport, NY",
       "latitude": 43.1665556,
       "longitude": -78.7551111
+    },
+    {
+      "id": "map-gateway-44b236ad041510c2",
+      "destination_prefix": "/gateway/map-gateway-44b236ad041510c2",
+      "attachments_before": [],
+      "attachments_after": [],
+      "name": "Kuparuk, AK",
+      "latitude": 70.3176667,
+      "longitude": -148.9411944
     },
     {
       "id": "map-gateway-5d27441155617595",
@@ -141737,42 +141752,18 @@
       "longitude": -122.035306
     }
   ],
-  "excluded_gateways": [
-    {
-      "id": "map-gateway-44b236ad041510c2",
-      "name": "Kuparuk, AK",
-      "latitude": 70.3176667,
-      "longitude": -148.9411944
-    }
-  ],
+  "excluded_gateways": [],
   "provenance": {
     "kind": "deployed_coverage_population_sample",
     "topology": "starlinkocm_463km_version_budget",
     "gateway_exclusions": {
-      "gateway_dataset": "gateways/community_map_reported_live",
-      "shell": "starlinkocm_463km_version_budget",
-      "reason": "No eligible attachment at tested times; explicit experiment exclusions.",
-      "tested_seconds": [
-        0,
-        60,
-        1800,
-        3600
-      ],
-      "minimum_elevation_deg": 10.0,
-      "input_sha256": {
-        "data/generated/gateways/community_map_reported_live.csv": "c2be7944d2de0e45a467cc94b4558796052696e923a3ca16f9301df1c51d94ac",
-        "data/generated/satellites/starlinkocm_463km_version_budget.csv": "b38053a82d01d63fa705763011dd004877b627d3ddf26a35d85971ac449d3508",
-        "data/generated/isls/starlinkocm_463km_version_budget.csv": "c4d128e5f649158a4c12641d287c8c6dd9436492711c22a74777f85af42da3cb",
-        "data/generated/positions/starlinkocm_463km_version_budget.csv": "d7b02ae147a047cae8c3d6e64b7bd5c84f14200715a14d324a7b357f10195081"
-      },
-      "gateway_ids": {
-        "map-gateway-44b236ad041510c2": "Kuparuk, AK"
-      }
+      "gateway_ids": {},
+      "reason": "All source gateway sites retained, including zero attachments"
     },
     "gateway_dataset": "gateways/community_map_reported_live",
     "gateway_csv": "data/generated/gateways/community_map_reported_live.csv",
     "sample_csv": "data/generated/evaluations/explicit_residential_20240409_500/users.csv",
-    "registration": "fixed nearest non-excluded gateway; ties by gateway ID",
+    "registration": "fixed nearest source gateway regardless of attachment; ties by gateway ID",
     "destination_model": "one unique prefix per gateway; no PoP mapping",
     "sampling": {
       "parameters": {
@@ -141830,9 +141821,9 @@
       "data/generated/gateways/community_map_reported_live.csv": "c2be7944d2de0e45a467cc94b4558796052696e923a3ca16f9301df1c51d94ac",
       "data/generated/satellites/starlinkocm_463km_version_budget.csv": "b38053a82d01d63fa705763011dd004877b627d3ddf26a35d85971ac449d3508",
       "data/generated/isls/starlinkocm_463km_version_budget.csv": "c4d128e5f649158a4c12641d287c8c6dd9436492711c22a74777f85af42da3cb",
-      "data/generated/positions/starlinkocm_463km_version_budget.csv": "d7b02ae147a047cae8c3d6e64b7bd5c84f14200715a14d324a7b357f10195081",
-      "tools/locality/gateway_exclusions/community_map_outside_starlinkocm_463km_version_budget.json": "5fc50da7ac209f54899ccf6e50236bc7e598881e357d346bba04856f2daa7877"
-    }
+      "data/generated/positions/starlinkocm_463km_version_budget.csv": "d7b02ae147a047cae8c3d6e64b7bd5c84f14200715a14d324a7b357f10195081"
+    },
+    "inventory_rebuilder_sha256": "4b4cde2ec19a9f30c6369202767962a0dfdc89d528cbf3444f4e83f61fcd8548"
   },
   "boundaries": [
     {

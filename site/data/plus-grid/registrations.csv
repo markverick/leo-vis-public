@@ -1,5 +1,5 @@
 user_id,latitude,longitude,registered_gateway_id,registration_distance_km,registration_method,destination_prefix
-user-000,59.8620833,10.6629166,map-gateway-29f740443078154e,919.083970,fixed_nearest_gateway_great_circle,/gateway/map-gateway-29f740443078154e
+user-000,59.8620833,10.6629166,map-gateway-91aa179c6bf6a71c,471.551495,fixed_nearest_gateway_great_circle,/gateway/map-gateway-91aa179c6bf6a71c
 user-001,59.2870833,17.9212500,map-gateway-5d62139e8164e2d3,613.185335,fixed_nearest_gateway_great_circle,/gateway/map-gateway-5d62139e8164e2d3
 user-002,56.2954166,-3.7120833,map-gateway-f224bd3fede84158,244.887090,fixed_nearest_gateway_great_circle,/gateway/map-gateway-f224bd3fede84158
 user-003,55.9204166,-4.2287500,map-gateway-f224bd3fede84158,198.812281,fixed_nearest_gateway_great_circle,/gateway/map-gateway-f224bd3fede84158

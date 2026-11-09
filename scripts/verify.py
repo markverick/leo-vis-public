@@ -36,3 +36,16 @@ for path in root.rglob("*"):
         parser.directory = path.parent
         parser.feed(path.read_text())
 print(f"Verified {len(manifest)} exported files, JSON payloads, and local links.")
+
+# Every model must retain all admitted source destinations, even without GSLs.
+import csv
+inventory = {g['gateway_id'] for g in csv.DictReader((root/'data/gateways.csv').open())}
+models = [root/'data/snapshot.json', root/'data/plus-grid/snapshot.json',
+          root/'data/ocm/topology.data.json', root/'data/plus-grid/topology.data.json']
+models += list((root/'data/fleet').glob('*.json.gz'))
+for path in models:
+    document = json.loads(gzip.decompress(path.read_bytes()) if path.name.endswith('.gz') else path.read_bytes())
+    actual = [g['id'] for g in document['gateways']]
+    assert len(actual) == len(inventory) and set(actual) == inventory, path
+    assert not document['provenance'].get('gateway_exclusions', {}).get('gateway_ids'), path
+print(f'Verified all {len(models)} model payloads retain the same {len(inventory)} gateway sites.')

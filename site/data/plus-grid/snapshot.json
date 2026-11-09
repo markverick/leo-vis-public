@@ -3,33 +3,13 @@
     "kind": "deployed_coverage_population_sample",
     "topology": "hypatia_starlink_550",
     "gateway_exclusions": {
-      "gateway_dataset": "gateways/community_map_reported_live",
-      "shell": "hypatia_starlink_550",
-      "reason": "No eligible attachment at tested times; explicit experiment exclusions.",
-      "tested_seconds": [
-        0,
-        15,
-        1800,
-        3600
-      ],
-      "minimum_elevation_deg": 25.0,
-      "input_sha256": {
-        "data/generated/gateways/community_map_reported_live.csv": "c2be7944d2de0e45a467cc94b4558796052696e923a3ca16f9301df1c51d94ac",
-        "data/generated/satellites/hypatia_starlink_550.csv": "b1416b580173f0e896fe039b7ba116c64a34d468ea6e6e9a25c88578557fe6e9",
-        "data/generated/isls/hypatia_starlink_550.csv": "037f0daa4c918cfef094e7a8bf4b50d61b1038540fe41a2d1c3284679e69a961"
-      },
-      "gateway_ids": {
-        "map-gateway-39bda0d41a3688ba": "Anchorage, AK",
-        "map-gateway-44b236ad041510c2": "Kuparuk, AK",
-        "map-gateway-a17e89d0b3209189": "Fairbanks, AK",
-        "map-gateway-35a4b7a57b413735": "Anchorage, AK - Great Alaskan GW",
-        "map-gateway-91aa179c6bf6a71c": "Afjord, NO"
-      }
+      "gateway_ids": {},
+      "reason": "All source gateway sites retained, including zero attachments"
     },
     "gateway_dataset": "gateways/community_map_reported_live",
     "gateway_csv": "data/generated/gateways/community_map_reported_live.csv",
     "sample_csv": "data/generated/evaluations/explicit_residential_20240409_500/users.csv",
-    "registration": "fixed nearest non-excluded gateway; ties by gateway ID",
+    "registration": "fixed nearest source gateway regardless of attachment; ties by gateway ID",
     "destination_model": "one unique prefix per gateway; no PoP mapping",
     "sampling": {
       "parameters": {
@@ -86,9 +66,9 @@
       "data/generated/evaluations/explicit_residential_20240409_500/users.metadata.json": "218ce0bf25941948cb2c0159e18cce476293936030b049851c8b2c500d21465f",
       "data/generated/gateways/community_map_reported_live.csv": "c2be7944d2de0e45a467cc94b4558796052696e923a3ca16f9301df1c51d94ac",
       "data/generated/satellites/hypatia_starlink_550.csv": "b1416b580173f0e896fe039b7ba116c64a34d468ea6e6e9a25c88578557fe6e9",
-      "data/generated/isls/hypatia_starlink_550.csv": "037f0daa4c918cfef094e7a8bf4b50d61b1038540fe41a2d1c3284679e69a961",
-      "tools/locality/gateway_exclusions/community_map_outside_hypatia_starlink_550.json": "c8be57f6cf73dcdb013c8869fbb108a5bef5f73d941b54397fa63cf71f99cb3f"
-    }
+      "data/generated/isls/hypatia_starlink_550.csv": "037f0daa4c918cfef094e7a8bf4b50d61b1038540fe41a2d1c3284679e69a961"
+    },
+    "inventory_rebuilder_sha256": "4b4cde2ec19a9f30c6369202767962a0dfdc89d528cbf3444f4e83f61fcd8548"
   },
   "satellites": [
     "sat-0",
@@ -16744,6 +16724,12 @@
       ]
     },
     {
+      "id": "map-gateway-39bda0d41a3688ba",
+      "destination_prefix": "/gateway/map-gateway-39bda0d41a3688ba",
+      "attachments_before": [],
+      "attachments_after": []
+    },
+    {
       "id": "map-gateway-e13cdf5f297f68f7",
       "destination_prefix": "/gateway/map-gateway-e13cdf5f297f68f7",
       "attachments_before": [
@@ -17080,6 +17066,12 @@
       ]
     },
     {
+      "id": "map-gateway-44b236ad041510c2",
+      "destination_prefix": "/gateway/map-gateway-44b236ad041510c2",
+      "attachments_before": [],
+      "attachments_after": []
+    },
+    {
       "id": "map-gateway-5d27441155617595",
       "destination_prefix": "/gateway/map-gateway-5d27441155617595",
       "attachments_before": [
@@ -17146,6 +17138,12 @@
         "sat-889",
         "sat-932"
       ]
+    },
+    {
+      "id": "map-gateway-a17e89d0b3209189",
+      "destination_prefix": "/gateway/map-gateway-a17e89d0b3209189",
+      "attachments_before": [],
+      "attachments_after": []
     },
     {
       "id": "map-gateway-73a9549a6c92c570",
@@ -19166,6 +19164,12 @@
       ]
     },
     {
+      "id": "map-gateway-35a4b7a57b413735",
+      "destination_prefix": "/gateway/map-gateway-35a4b7a57b413735",
+      "attachments_before": [],
+      "attachments_after": []
+    },
+    {
       "id": "map-gateway-966c89cf8782dbf2",
       "destination_prefix": "/gateway/map-gateway-966c89cf8782dbf2",
       "attachments_before": [
@@ -20976,6 +20980,12 @@
       ]
     },
     {
+      "id": "map-gateway-91aa179c6bf6a71c",
+      "destination_prefix": "/gateway/map-gateway-91aa179c6bf6a71c",
+      "attachments_before": [],
+      "attachments_after": []
+    },
+    {
       "id": "map-gateway-ece8e5889d920e7a",
       "destination_prefix": "/gateway/map-gateway-ece8e5889d920e7a",
       "attachments_before": [
@@ -21340,8 +21350,8 @@
     {
       "id": "user-000",
       "satellite": "sat-115",
-      "destination_prefix": "/gateway/map-gateway-29f740443078154e",
-      "registered_gateway_id": "map-gateway-29f740443078154e"
+      "destination_prefix": "/gateway/map-gateway-91aa179c6bf6a71c",
+      "registered_gateway_id": "map-gateway-91aa179c6bf6a71c"
     },
     {
       "id": "user-001",
