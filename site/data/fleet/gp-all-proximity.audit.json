@@ -2,6 +2,13 @@
   "before": {
     "satellites": 11156,
     "isls": 18322,
+    "gsl": {
+      "links": 9920,
+      "attached_satellites": 2484,
+      "maximum_gateways_per_satellite": 24,
+      "satellite_limits_enforced": true,
+      "gateway_limits_enforced": true
+    },
     "topology": "gp-all-proximity",
     "isl_degree_counts": {
       "0": 1018,
@@ -25,6 +32,13 @@
   "after": {
     "satellites": 11156,
     "isls": 18322,
+    "gsl": {
+      "links": 9920,
+      "attached_satellites": 2495,
+      "maximum_gateways_per_satellite": 22,
+      "satellite_limits_enforced": true,
+      "gateway_limits_enforced": true
+    },
     "topology": "gp-all-proximity",
     "isl_degree_counts": {
       "0": 1018,

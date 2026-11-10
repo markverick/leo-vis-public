@@ -58,7 +58,7 @@
     "before_seconds": 0,
     "after_seconds": 15,
     "positions": "SGP4 2.25 WGS72; TEME to pseudo-Earth-fixed via GMST; UT1=UTC, polar motion ignored",
-    "ground": "WGS84 ellipsoid, altitude zero; users: nearest satellite at minimum elevation 25 degrees; gateways: up to 8 nearest satellites at minimum elevation 25 degrees",
+    "ground": "WGS84, altitude zero; gateway cap 8, elevation 25 degrees; satellite GSL limits and selection in attachment_rules",
     "user_attachments": "held fixed at before time; unattached users retained as baseline-unreachable",
     "update_scope": "all gateway attachment changes between the two times",
     "input_sha256": {
@@ -68,7 +68,24 @@
       "data/generated/satellites/hypatia_starlink_550.csv": "b1416b580173f0e896fe039b7ba116c64a34d468ea6e6e9a25c88578557fe6e9",
       "data/generated/isls/hypatia_starlink_550.csv": "037f0daa4c918cfef094e7a8bf4b50d61b1038540fe41a2d1c3284679e69a961"
     },
-    "inventory_rebuilder_sha256": "4b4cde2ec19a9f30c6369202767962a0dfdc89d528cbf3444f4e83f61fcd8548"
+    "inventory_rebuilder_sha256": "928a86e7e4fbd84daaf3d2c076814c162d71f6379b9db08ed55e03e576be52d9",
+    "attachment_rules": {
+      "policy_version": 1,
+      "gateway": {
+        "capacity": 8,
+        "minimum_elevation_deg": 25.0
+      },
+      "satellite": {
+        "gateway_capacity_by_version": {},
+        "default_gateway_capacity": null
+      },
+      "user": {
+        "capacity": 1,
+        "minimum_elevation_deg": 25.0
+      },
+      "selection": "nearest_per_gateway",
+      "implementation_sha256": "914a79eda60eb77a9f65366ee9f09bff91493c4fa1ead78f2153ff613803ca0b"
+    }
   },
   "satellites": [
     "sat-0",

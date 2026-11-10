@@ -2,6 +2,13 @@
   "before": {
     "satellites": 2549,
     "isls": 3778,
+    "gsl": {
+      "links": 3159,
+      "attached_satellites": 1300,
+      "maximum_gateways_per_satellite": 3,
+      "satellite_limits_enforced": true,
+      "gateway_limits_enforced": true
+    },
     "topology": "starlinkocm_463km_version_budget",
     "isl_degree_counts": {
       "1": 17,
@@ -12,7 +19,7 @@
     "attachments_recomputed_and_matched": true,
     "anycast_paths_match_converged_dv": true,
     "mapping_cutoffs": {
-      "closest": 8,
+      "closest": null,
       "anycast": 4,
       "pop": null
     },
@@ -24,6 +31,13 @@
   "after": {
     "satellites": 2549,
     "isls": 3778,
+    "gsl": {
+      "links": 3190,
+      "attached_satellites": 1322,
+      "maximum_gateways_per_satellite": 3,
+      "satellite_limits_enforced": true,
+      "gateway_limits_enforced": true
+    },
     "topology": "starlinkocm_463km_version_budget",
     "isl_degree_counts": {
       "1": 17,
@@ -34,7 +48,7 @@
     "attachments_recomputed_and_matched": true,
     "anycast_paths_match_converged_dv": true,
     "mapping_cutoffs": {
-      "closest": 8,
+      "closest": null,
       "anycast": 4,
       "pop": null
     },

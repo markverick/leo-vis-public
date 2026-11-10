@@ -2,6 +2,13 @@
   "before": {
     "satellites": 1584,
     "isls": 3168,
+    "gsl": {
+      "links": 2267,
+      "attached_satellites": 449,
+      "maximum_gateways_per_satellite": 32,
+      "satellite_limits_enforced": true,
+      "gateway_limits_enforced": true
+    },
     "topology": "hypatia_starlink_550",
     "isl_degree_counts": {
       "4": 1584
@@ -21,6 +28,13 @@
   "after": {
     "satellites": 1584,
     "isls": 3168,
+    "gsl": {
+      "links": 2277,
+      "attached_satellites": 449,
+      "maximum_gateways_per_satellite": 31,
+      "satellite_limits_enforced": true,
+      "gateway_limits_enforced": true
+    },
     "topology": "hypatia_starlink_550",
     "isl_degree_counts": {
       "4": 1584

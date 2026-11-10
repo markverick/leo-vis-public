@@ -58,6 +58,38 @@ for path in models:
     assert not document['provenance'].get('gateway_exclusions', {}).get('gateway_ids'), path
 print(f'Verified all {len(models)} model payloads retain the same {len(inventory)} gateway sites.')
 
+# GSL limits apply to the complete graph, independently of route/radius selection.
+from collections import Counter
+for path in models:
+    document = json.loads(gzip.decompress(path.read_bytes()) if path.name.endswith('.gz') else path.read_bytes())
+    rules = document['provenance']['attachment_rules']
+    topology = document['provenance']['topology']
+    if topology == 'hypatia_starlink_550':
+        assert rules['gateway'] == {'capacity': 8, 'minimum_elevation_deg': 25.0}, path
+        assert rules['satellite']['gateway_capacity_by_version'] == {}, path
+        assert rules['satellite']['default_gateway_capacity'] is None, path
+    if topology == 'starlinkocm_463km_version_budget':
+        assert rules['gateway'] == {'capacity': 32, 'minimum_elevation_deg': 10.0}, path
+        assert rules['satellite']['gateway_capacity_by_version'] == {'V1.5': 2, 'V2 Mini': 3, 'V2 Mini optimized': 3}, path
+        assert rules['selection'] == 'shortest_distance_pairs_first', path
+    caps = rules['satellite']['gateway_capacity_by_version']
+    # Raw snapshots identify satellites by name; the adjacent processed CSV
+    # provides their versions. Viewer payloads carry versions directly.
+    if document['satellites'] and isinstance(document['satellites'][0], str):
+        source = root / ('data/satellites.csv' if topology.startswith('starlinkocm') else 'data/plus-grid/satellites.csv')
+        versions = {'sat-' + r['satellite_id']: r.get('version') for r in csv.DictReader(source.open())}
+    else:
+        versions = {'sat-' + r['satellite_id']: r.get('version') for r in document['satellites']}
+    for phase in ('before', 'after'):
+        counts = Counter()
+        for gateway in document['gateways']:
+            links = gateway['attachments_' + phase]
+            assert len(links) <= rules['gateway']['capacity'] and len(links) == len(set(links)), path
+            counts.update(links)
+        if caps:
+            assert all(versions[s] in caps and count <= caps[versions[s]] for s, count in counts.items()), path
+print('Verified satellite-side and gateway-side GSL limits in every exported model.')
+
 # PoP mode must keep each physical destination in the user's modeled region.
 for path in models:
     if path.name == 'snapshot.json':

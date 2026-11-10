@@ -11,8 +11,8 @@
   },
   {
     "path": "topology.html",
-    "bytes": 6626582,
-    "sha256": "83976533564374c676286a8fd5e384ea35fd5cbdc5703530484f6c683055c7d2"
+    "bytes": 4526962,
+    "sha256": "43f90b42870272036874788b1d5bd9d5169b36093bb35c3b0a26a88b4b7c9499"
   },
   {
     "path": "THREE-LICENSE.txt",
@@ -41,13 +41,13 @@
   },
   {
     "path": "data/snapshot.json",
-    "bytes": 1063455,
-    "sha256": "30a7dc06232855036d06597032c4354574ad2f24b1764d47f9cedce70ae7c5f1"
+    "bytes": 682875,
+    "sha256": "d9678e5d674422ca22df0661aae99b2680c46db95014dd52975d80c0f1676794"
   },
   {
     "path": "data/report.json",
-    "bytes": 853933,
-    "sha256": "921f2892df3d11bc808fbd7608f2e335f2489b5b8ddfa62e3f6d92ba7ef9512a"
+    "bytes": 856748,
+    "sha256": "43511750539630820583922704546cd4b4e4be988cdd88d26442c5d36833bf0f"
   },
   {
     "path": "data/registrations.csv",
@@ -56,28 +56,28 @@
   },
   {
     "path": "data/anycast_sensitivity.json",
-    "bytes": 1149705,
-    "sha256": "eecb4ec8fa4694797f696449e5516ff27f9fb51881b97722765dc0f2c4dd2ce0"
+    "bytes": 1150135,
+    "sha256": "2935ed6f8b6fb6fe20d62b3d3e27a8511feb016f896739ed35142deb2d4b328f"
   },
   {
     "path": "data/gateway_research_audit.json",
-    "bytes": 2378,
-    "sha256": "d29865ad10c38deb4d60c3c85d146af34bc3ab21c558994a752736ab8d820551"
+    "bytes": 2935,
+    "sha256": "1da0248162e288f110ad822be03326fe23099bc237fc57e4263cf4301429f711"
   },
   {
     "path": "data/topology.audit.json",
-    "bytes": 1143,
-    "sha256": "a11cc6cc4b587f6d6bc4941b0bc1fbdef72405ef2498dcacf34f0497ab719c00"
+    "bytes": 1545,
+    "sha256": "3a71a25631aab2bb00206ccf281330afa6cb6e0a6b2e3ffa830d3863dd79de9f"
   },
   {
     "path": "data/plus-grid/snapshot.json",
-    "bytes": 425278,
-    "sha256": "fa93d69c41e20c75d2efc53a774e1bf5fa49613d289059522d9067d67cd1e0d0"
+    "bytes": 425722,
+    "sha256": "6b52078a292d6dce0567898ffcc94f0af5829254d2525b37f53a612cef71c195"
   },
   {
     "path": "data/plus-grid/report.json",
-    "bytes": 853986,
-    "sha256": "51e338e0af8b939b628ba36381bb882c7dfaca79720da421e8cb983b8d9ebac9"
+    "bytes": 854430,
+    "sha256": "d96ab4e28a873180a419617e60d57d7bb1b553cfa3fd67bfe6ee48b8110e9286"
   },
   {
     "path": "data/plus-grid/registrations.csv",
@@ -86,18 +86,18 @@
   },
   {
     "path": "data/plus-grid/topology.audit.json",
-    "bytes": 1030,
-    "sha256": "b1515524ca7fa0b2b948cf297989374b9e04871f42a54b63a3d0e7d51d0d073f"
+    "bytes": 1426,
+    "sha256": "ab3051ffc206da009f424fbb1b17947331936de8bf65ce891d038e3450d6341d"
   },
   {
     "path": "data/plus-grid/topology.data.json",
-    "bytes": 5822844,
-    "sha256": "95d187e7ac55b0d73cb2f32ff66c6e53d6ce79c5aa2ebff4eea997a380e857de"
+    "bytes": 2490529,
+    "sha256": "259c72a09457dda8d595af7e56f0e68d71093d6deca8e632e291577ac26fbfc2"
   },
   {
     "path": "data/ocm/topology.data.json",
-    "bytes": 7245580,
-    "sha256": "d60e8903f01613e34e46a0b8ee75d4685c3da222896eb60e1bab35b1e42397cc"
+    "bytes": 3715413,
+    "sha256": "f1668f15fb437a61dc6ed3599c7de50f94062a32a86f65c2f0f209962c891717"
   },
   {
     "path": "data/plus-grid/satellites.csv",
@@ -111,13 +111,13 @@
   },
   {
     "path": "data/fleet/gp-all-proximity.json.gz",
-    "bytes": 2247600,
-    "sha256": "215487a7ff5b32d7e385b94c8999dd1c402a9157c798e98ce616dc995d8ba2c2"
+    "bytes": 1878703,
+    "sha256": "93b6fccc86378054101459329b0ffa0e22004b816f8bb223da634a5b8ec54590"
   },
   {
     "path": "data/fleet/gp-all-proximity.audit.json",
-    "bytes": 1163,
-    "sha256": "3c701ed174707d34202ec028bae0d3786dd9f37a273c84f46e21592fa2e62f92"
+    "bytes": 1561,
+    "sha256": "986afe94e3c2d4e0b0c15629b4c2530a936fa1c04e36a14d8104854f79a84a43"
   },
   {
     "path": "data/fleet/gp-all-proximity.definition.json",
@@ -136,13 +136,13 @@
   },
   {
     "path": "data/fleet/gp-all-plus-grid.json.gz",
-    "bytes": 2182940,
-    "sha256": "d68bdc416e11fd6374bed614aa0ccadac57133148d680dec14efee82b4840c98"
+    "bytes": 1813840,
+    "sha256": "7593c459a192dc2febb2d3fe158265ea8ef0a8759331a5739c29784bff31e36e"
   },
   {
     "path": "data/fleet/gp-all-plus-grid.audit.json",
-    "bytes": 1166,
-    "sha256": "3efbb8f5d9953c45897560c2de8646a9c8f0f3c684ba1f3037c9eadb41eeaa07"
+    "bytes": 1564,
+    "sha256": "0d2337c6e3a4f4461ef14198f16867c6323383f93f6c237696ef1e23562a6e7e"
   },
   {
     "path": "data/fleet/gp-all-plus-grid.definition.json",
@@ -161,13 +161,13 @@
   },
   {
     "path": "data/fleet/gp-inc-43-proximity.json.gz",
-    "bytes": 1047687,
-    "sha256": "281da8893796379eca657c18c222bd996b808d752f09937fc10ff46b5bacd3ee"
+    "bytes": 679556,
+    "sha256": "c02408e3b55c9607d24a8d396b5920167899b0354d217dc81da06f36cfe78ca5"
   },
   {
     "path": "data/fleet/gp-inc-43-proximity.audit.json",
-    "bytes": 1162,
-    "sha256": "55f53c3426564f937a31e09219ec532dd8c266542d09f3c3e539adf7fefd1fd3"
+    "bytes": 1560,
+    "sha256": "80894b9a273ba0b886b778cbe78520b2b57f8a9f2a5f4f95456bb5cecdb9e6f9"
   },
   {
     "path": "data/fleet/gp-inc-43-proximity.definition.json",
@@ -186,13 +186,13 @@
   },
   {
     "path": "data/fleet/gp-inc-43-plus-grid.json.gz",
-    "bytes": 1030044,
-    "sha256": "934ef8de8bc00df6eec333f365138af75c17f219406c4d4d3ada5b72c77ab57b"
+    "bytes": 660939,
+    "sha256": "d869fddb6d9cb7982b4a170728e3c5547b99c49e5182c0b764cedc340cb86554"
   },
   {
     "path": "data/fleet/gp-inc-43-plus-grid.audit.json",
-    "bytes": 1163,
-    "sha256": "3f94b8674e0cb6464585edc1a495117a5b19d0681dded9df63cc13b281a8ca79"
+    "bytes": 1561,
+    "sha256": "6bbdb14185b6458b1c6648bbd2a5b94926e71fc86e98e559813d19a231df4569"
   },
   {
     "path": "data/fleet/gp-inc-43-plus-grid.definition.json",
@@ -211,13 +211,13 @@
   },
   {
     "path": "data/fleet/gp-inc-53-proximity.json.gz",
-    "bytes": 1280536,
-    "sha256": "56aa3c589ccea83ebfdd4aca5a8a994e88e7ba09bfdb3219988ce709c1d4ba92"
+    "bytes": 912390,
+    "sha256": "38afc65b502e9fe331a8d816ce8dcf628d945b7a2e648a078d0c2a84e87cafe7"
   },
   {
     "path": "data/fleet/gp-inc-53-proximity.audit.json",
-    "bytes": 1165,
-    "sha256": "e3583d6c867c85e14b4f1015b52fc0e8e291812305e12f71f3808d5f7774728e"
+    "bytes": 1563,
+    "sha256": "e31dc06c7f38da45ac02431fd0b6a952a387cfce94baf487a0bc4a44d7afb448"
   },
   {
     "path": "data/fleet/gp-inc-53-proximity.definition.json",
@@ -236,13 +236,13 @@
   },
   {
     "path": "data/fleet/gp-inc-53-plus-grid.json.gz",
-    "bytes": 1256450,
-    "sha256": "b41cfecc5645c2263027df2ad64ecf175ef6381f42de476d4129f0dd0a5b0721"
+    "bytes": 887408,
+    "sha256": "d870760820b0c092395bd14e6f4b1b46aa4162333c8ae1e020d335f880106b3a"
   },
   {
     "path": "data/fleet/gp-inc-53-plus-grid.audit.json",
-    "bytes": 1170,
-    "sha256": "a8445c677d8a7dd07c3c99f68627a1efa92cddf17148a2933d18b01c61b3f81d"
+    "bytes": 1568,
+    "sha256": "8ac9d0a0bfb37209ef1fbf0eea056604f96c1f1e180d82327c0f9c996585334b"
   },
   {
     "path": "data/fleet/gp-inc-53-plus-grid.definition.json",
@@ -261,13 +261,13 @@
   },
   {
     "path": "data/fleet/gp-inc-70-proximity.json.gz",
-    "bytes": 587829,
-    "sha256": "f81eb24a221db461cb88c1c898e9af65c6487573a10925f9186250e9e1060460"
+    "bytes": 219580,
+    "sha256": "a0f54341753011e539425ed6e0a73fdd748c514e83c464140b97ca2a35e8c70c"
   },
   {
     "path": "data/fleet/gp-inc-70-proximity.audit.json",
-    "bytes": 1158,
-    "sha256": "ae340bf93e19b94d5396fcdd49792f92f195261a7254876654ad2132a132dc5b"
+    "bytes": 1554,
+    "sha256": "b392fa0dcafe017b1269188d19892f821c534442c6867a089a1f943860adedf3"
   },
   {
     "path": "data/fleet/gp-inc-70-proximity.definition.json",
@@ -286,13 +286,13 @@
   },
   {
     "path": "data/fleet/gp-inc-70-plus-grid.json.gz",
-    "bytes": 585241,
-    "sha256": "8282f13ec531d9b98ae6a7d1251a985300c8dbc513a0b30ff9eb6b9367944648"
+    "bytes": 217006,
+    "sha256": "1e21481d85bb7c42d44b7a528f9a5b9e917cf176bb240ae5b63dd9c517c22dcb"
   },
   {
     "path": "data/fleet/gp-inc-70-plus-grid.audit.json",
-    "bytes": 1124,
-    "sha256": "5d80e64251279830cfa1be2ca6f8003058ad8edaca743efd7fe226fd69c7be48"
+    "bytes": 1520,
+    "sha256": "dac85b46f0c3bf42d53fe648a890b32915aee6616e1d2ba7f51c595f58d265b9"
   },
   {
     "path": "data/fleet/gp-inc-70-plus-grid.definition.json",
@@ -311,13 +311,13 @@
   },
   {
     "path": "data/fleet/gp-inc-97-proximity.json.gz",
-    "bytes": 680178,
-    "sha256": "5d949402400bcfbbbf4586690f5cac6124c8ce0d41d5a39399ed303fb2e031f5"
+    "bytes": 311183,
+    "sha256": "569620947b97a0ae622861fe10dfb7a11e4a8774535b54f37fab2c7b25302570"
   },
   {
     "path": "data/fleet/gp-inc-97-proximity.audit.json",
-    "bytes": 1157,
-    "sha256": "e4ae45e639903453b0c144119812396620a2a803ab6f6ebbc449c54b94f4f17f"
+    "bytes": 1553,
+    "sha256": "babb4af874a3278386e07ebea7ef4dcf4a128e8cb614df4b9610f390371749db"
   },
   {
     "path": "data/fleet/gp-inc-97-proximity.definition.json",
@@ -336,13 +336,13 @@
   },
   {
     "path": "data/fleet/gp-inc-97-plus-grid.json.gz",
-    "bytes": 669060,
-    "sha256": "1e1790f74e3606f1e4f075829641b73b000ab1c6c97bc8910cad03f590ab22c8"
+    "bytes": 300472,
+    "sha256": "1a2b51aeb2a5b115d94019bd013fd524cd73077e702a14412ea4677ff3ee08b2"
   },
   {
     "path": "data/fleet/gp-inc-97-plus-grid.audit.json",
-    "bytes": 1098,
-    "sha256": "33f92c5c56a08f60f8399afb365738a4674fef249745b0875bc5521714d6ea2b"
+    "bytes": 1494,
+    "sha256": "cd1253d0057cc9771777f633d749780752adee8ae02eecb875c36409e6ded2a3"
   },
   {
     "path": "data/fleet/gp-inc-97-plus-grid.definition.json",
@@ -361,13 +361,13 @@
   },
   {
     "path": "data/fleet/gp-band-215-70-proximity.json.gz",
-    "bytes": 451958,
-    "sha256": "48ab3c2a05b8d746e01c9e58b6d1c36168e3dbb64a43dc6d43fe63e39e7b7229"
+    "bytes": 82645,
+    "sha256": "eb55fb25aeee1e813a7b3e9acb79c989d22ee253deff06c371a705d1d7b01a0e"
   },
   {
     "path": "data/fleet/gp-band-215-70-proximity.audit.json",
-    "bytes": 1160,
-    "sha256": "ecee6d3897db2967a9307f58b9b5adf20fcfe58d3cf1bd29f22c750246da0e39"
+    "bytes": 1552,
+    "sha256": "0e9c85e1651184312cfbe3052cf65e5bc741fcba7d167e369ae996d6f2863875"
   },
   {
     "path": "data/fleet/gp-band-215-70-proximity.definition.json",
@@ -386,13 +386,13 @@
   },
   {
     "path": "data/fleet/gp-band-215-70-plus-grid.json.gz",
-    "bytes": 450830,
-    "sha256": "274c4f4c5a41b7ce81743df65e42efa102f203a1dfeaca0592a8bd3731535ca3"
+    "bytes": 81560,
+    "sha256": "89bd10d0d46cdd73357684ee64de70606f250b01dcdc63e1f742fa3bd3b8faaf"
   },
   {
     "path": "data/fleet/gp-band-215-70-plus-grid.audit.json",
-    "bytes": 1096,
-    "sha256": "b9d60fb13874c55840e7747628125b6e54e05c60f20536cfe5369bd4c1e050ec"
+    "bytes": 1488,
+    "sha256": "6a309e771246ce339dc5f71aad0305afa0816b092e311b0356222368a27790f0"
   },
   {
     "path": "data/fleet/gp-band-215-70-plus-grid.definition.json",
@@ -411,13 +411,13 @@
   },
   {
     "path": "data/fleet/gp-band-215-71-proximity.json.gz",
-    "bytes": 448152,
-    "sha256": "4478c8ab56d07ffe431b83cbe3a3ff40f67e68d6655d12afcba1ad2a10150a0d"
+    "bytes": 79030,
+    "sha256": "cb9ab33efe1c59b4651de8ce0e4e90e68da7f6ff7a4d0fb6c1b030bc96367047"
   },
   {
     "path": "data/fleet/gp-band-215-71-proximity.audit.json",
-    "bytes": 1157,
-    "sha256": "818507a75ce08f69d0e5e750589dfabae7101f9d6b1ab2b05b83576b2de9289b"
+    "bytes": 1549,
+    "sha256": "d53879f43e702c01d6e5f78a9c2358f983dc4929ad2f51f6e9e5863707368b5d"
   },
   {
     "path": "data/fleet/gp-band-215-71-proximity.definition.json",
@@ -436,13 +436,13 @@
   },
   {
     "path": "data/fleet/gp-band-215-71-plus-grid.json.gz",
-    "bytes": 447100,
-    "sha256": "25b201342505e4d7337eb8dcf3b9821f013d630a84b30f11b8068982887b08bb"
+    "bytes": 78018,
+    "sha256": "c5e4ecda1ae20a047fbb8d38cedbefa11bae4ec3f1cb622e6643e6769c555c02"
   },
   {
     "path": "data/fleet/gp-band-215-71-plus-grid.audit.json",
-    "bytes": 1066,
-    "sha256": "915aebca5d9fe44afaf043913fec3ad80ec35d05aed3d90be3b081740a70e5ec"
+    "bytes": 1458,
+    "sha256": "cc8281923ffd141f8d1e96be84005c17904e8b40f988a8a10e3c362c34ee6230"
   },
   {
     "path": "data/fleet/gp-band-215-71-plus-grid.definition.json",
@@ -461,13 +461,13 @@
   },
   {
     "path": "data/fleet/gp-band-215-96-proximity.json.gz",
-    "bytes": 988239,
-    "sha256": "59cb1488d6e4d5c1c0ee634f2db98f42d667c09581d7892c67f0a7b8ff74159f"
+    "bytes": 619794,
+    "sha256": "df3273aca7c577f968f3563054aaac6840754cd491517fcdb0417c137820d033"
   },
   {
     "path": "data/fleet/gp-band-215-96-proximity.audit.json",
-    "bytes": 1104,
-    "sha256": "1089d0adc44d1962ae2711837c0cdf20359dd3ee8d5c97df174cb9acaf373a41"
+    "bytes": 1502,
+    "sha256": "f6f75c783d98087a1f441c32582c02fbb8180f61d9f098386763fe06117a4356"
   },
   {
     "path": "data/fleet/gp-band-215-96-proximity.definition.json",
@@ -486,13 +486,13 @@
   },
   {
     "path": "data/fleet/gp-band-215-96-plus-grid.json.gz",
-    "bytes": 972684,
-    "sha256": "022b7cc2ee6af26d02363734d879aac5e7a138f4b61ed95e9c2e1c3898836c82"
+    "bytes": 603580,
+    "sha256": "e6dd25c00e96a266d07da477f5c4d6da748a5595d3cd73ae7ed1c44437835da0"
   },
   {
     "path": "data/fleet/gp-band-215-96-plus-grid.audit.json",
-    "bytes": 1173,
-    "sha256": "a5bc20578d8c5c5755d503ea7ac2486a5ead971a58eae8b8fc6786ada3c86544"
+    "bytes": 1571,
+    "sha256": "5fd1fe0248f28cb382ea2d2daa880bc045fc6ac8a9e8890aabb1bec4300bcd51"
   },
   {
     "path": "data/fleet/gp-band-215-96-plus-grid.definition.json",
@@ -511,13 +511,13 @@
   },
   {
     "path": "data/fleet/gp-band-266-71-proximity.json.gz",
-    "bytes": 478927,
-    "sha256": "092f8ba1399233ae703a5bbbad26943b1e4381ace01708c72778c18b31c6a351"
+    "bytes": 109710,
+    "sha256": "60ab79f4d5e0ea5107c9e68af05cb8d27d5bc79f6005b251272753f715395ede"
   },
   {
     "path": "data/fleet/gp-band-266-71-proximity.audit.json",
-    "bytes": 1162,
-    "sha256": "923bc600cc85a20fe3526fc07537a70f076525f612611335b26556833da96e13"
+    "bytes": 1558,
+    "sha256": "8cd001b0a83472f2d3ea9a2f053e92c14710da5f99e1a35364fa19f448356dd6"
   },
   {
     "path": "data/fleet/gp-band-266-71-proximity.definition.json",
@@ -536,13 +536,13 @@
   },
   {
     "path": "data/fleet/gp-band-266-71-plus-grid.json.gz",
-    "bytes": 476812,
-    "sha256": "72947f490f88e2c488e2fbf25da745ee43da1dac77a5a4601504deda0c0e3970"
+    "bytes": 107715,
+    "sha256": "91277ba6ca76dd5e31bed18769da926cbee4d1ac1556002ced746526f43ee068"
   },
   {
     "path": "data/fleet/gp-band-266-71-plus-grid.audit.json",
-    "bytes": 1097,
-    "sha256": "e390b6932ecbc88700965e0997e1288b78d67919fcab3c681db50324491f8868"
+    "bytes": 1493,
+    "sha256": "49c4d976efb244a9099f9a07e13b94ff9e3dace8cf9bb55ef267cb157ac8783c"
   },
   {
     "path": "data/fleet/gp-band-266-71-plus-grid.definition.json",
@@ -561,13 +561,13 @@
   },
   {
     "path": "data/fleet/gp-band-266-91-proximity.json.gz",
-    "bytes": 457608,
-    "sha256": "b2532fbddf0deb04f8c3cfd998f5915919f9d69d495805e6cb81afe495be731e"
+    "bytes": 88223,
+    "sha256": "3625d81b7643225cfe51ea07cab2d013d0cfc5744bcff40a9d9bac120cf84e3c"
   },
   {
     "path": "data/fleet/gp-band-266-91-proximity.audit.json",
-    "bytes": 1158,
-    "sha256": "b50ed210963fa6f18e2da0308b49688f699925fff72ba1d9705ec22b6c3b93c4"
+    "bytes": 1553,
+    "sha256": "08581d26108c0144ab0293af6e6104230d7aa9d771ca223a9cc52686efc512b6"
   },
   {
     "path": "data/fleet/gp-band-266-91-proximity.definition.json",
@@ -586,13 +586,13 @@
   },
   {
     "path": "data/fleet/gp-band-266-91-plus-grid.json.gz",
-    "bytes": 456494,
-    "sha256": "cfcf8184f3769a0f2d74d81e9e5e7f8cbfc5253a7433275405ccb7258d6b3494"
+    "bytes": 87105,
+    "sha256": "6bb981bfe28fdf4c69128e9cbcb59860db08871906cbec8700defacb93d3815a"
   },
   {
     "path": "data/fleet/gp-band-266-91-plus-grid.audit.json",
-    "bytes": 1095,
-    "sha256": "f95c62e568c179ddd6d8116fd596140e3e2a19abbacf3df025fadd332482183c"
+    "bytes": 1490,
+    "sha256": "3f8fb4328ea8e30bc44ae01f9290f24ac490930d793fb4867eaacbf9193634ec"
   },
   {
     "path": "data/fleet/gp-band-266-91-plus-grid.definition.json",
@@ -611,13 +611,13 @@
   },
   {
     "path": "data/fleet/gp-band-266-92-proximity.json.gz",
-    "bytes": 1008722,
-    "sha256": "5d1eeb371c53204e760c08ddd54255c8f46abe57445ec9990bd5e8ae2a0b9822"
+    "bytes": 639593,
+    "sha256": "3d18509cc3ee1af5b41951be6c54ae5adb52c29423b9380d3d5ba876242e1d47"
   },
   {
     "path": "data/fleet/gp-band-266-92-proximity.audit.json",
-    "bytes": 1095,
-    "sha256": "06e7c5d692d8e08c1b5f6dcef218ed856d2927e1eb50f14043fc3396cba7c376"
+    "bytes": 1493,
+    "sha256": "7c3fd41165daffa658ad8ea8cefddeccb2763f419aad0a2905bd631de0952388"
   },
   {
     "path": "data/fleet/gp-band-266-92-proximity.definition.json",
@@ -636,13 +636,13 @@
   },
   {
     "path": "data/fleet/gp-band-266-92-plus-grid.json.gz",
-    "bytes": 992315,
-    "sha256": "fe226294731838586a32213eafc7f69d2a33bf2d3cdc2464d1428b630aa79277"
+    "bytes": 624114,
+    "sha256": "039f21fe8d16c34331e76e73192c778abeda7005579b56df5fda206255ae4494"
   },
   {
     "path": "data/fleet/gp-band-266-92-plus-grid.audit.json",
-    "bytes": 1170,
-    "sha256": "65a1f5933e0d3fe52c901c16032c87b21e40484c7d03450ae73dc43b3dcd1045"
+    "bytes": 1568,
+    "sha256": "85da37817d9de2a255f6568a537cec1529df633ef0f254431bfed2b64a834792"
   },
   {
     "path": "data/fleet/gp-band-266-92-plus-grid.definition.json",
@@ -661,13 +661,13 @@
   },
   {
     "path": "data/fleet/gp-band-266-94-proximity.json.gz",
-    "bytes": 536046,
-    "sha256": "0bc7074ef2ef1ac67acce62ca8b83c958f06df2308fdeed4e1d4a49b488464de"
+    "bytes": 167013,
+    "sha256": "57d8a4cbb6fcab8afad4954710530f6d141ca62bc88578046d0d883d477e3880"
   },
   {
     "path": "data/fleet/gp-band-266-94-proximity.audit.json",
-    "bytes": 1158,
-    "sha256": "6518f8f80b88b1bb911242befd3683fa86e6e22d857dc0d9515a176f40ebfd18"
+    "bytes": 1554,
+    "sha256": "16db9b44e15c49f4e5424fe64c6f3678a08f9c6beaf9105b3c19c51e4b8b36ec"
   },
   {
     "path": "data/fleet/gp-band-266-94-proximity.definition.json",
@@ -686,13 +686,13 @@
   },
   {
     "path": "data/fleet/gp-band-266-94-plus-grid.json.gz",
-    "bytes": 530164,
-    "sha256": "f478fc5688b2cf1fc16becec3dbdb198e8636b0b14df257b51dc1dac33edcb84"
+    "bytes": 161936,
+    "sha256": "afcb6a89245b7638d9ab696082566115c9ab6b22ff24ea08bac845abb00a2c2d"
   },
   {
     "path": "data/fleet/gp-band-266-94-plus-grid.audit.json",
-    "bytes": 1102,
-    "sha256": "73e3648d2f00ab0e8b4649467c09596b16aa033afb04595dd41ccf36aa5a3fe1"
+    "bytes": 1498,
+    "sha256": "bd49bea030aec47ea6f858f2897d6312d5d286a6d2780d999edb0f93835c3d06"
   },
   {
     "path": "data/fleet/gp-band-266-94-plus-grid.definition.json",
@@ -711,13 +711,13 @@
   },
   {
     "path": "data/fleet/gp-band-350-94-proximity.json.gz",
-    "bytes": 484977,
-    "sha256": "e863404a62d7870f2756be3da4b1e96dec99cd3a65cb77d80c695af9c17998e6"
+    "bytes": 115639,
+    "sha256": "8a2ed7d45489ac84872671ac6f316d5abcff87d4d720f777ec73e2d2920a45d9"
   },
   {
     "path": "data/fleet/gp-band-350-94-proximity.audit.json",
-    "bytes": 1162,
-    "sha256": "19ef961c287061e1e967ada4a08a193fd438cc551c7e71abeb32739032eeacd8"
+    "bytes": 1558,
+    "sha256": "b8795fe3637e77decc2a55857a6d8335f75c3af420a7adcad13171ad2a54343e"
   },
   {
     "path": "data/fleet/gp-band-350-94-proximity.definition.json",
@@ -736,13 +736,13 @@
   },
   {
     "path": "data/fleet/gp-band-350-94-plus-grid.json.gz",
-    "bytes": 483183,
-    "sha256": "f01fbac7b1ad390ec56feb99dd0ff188d3fb28a263b2be7450286483aae280ab"
+    "bytes": 113851,
+    "sha256": "3d3f200ec048d701aa93915ed67d6eb2696db133e0f37467fc6483ed2d9746a2"
   },
   {
     "path": "data/fleet/gp-band-350-94-plus-grid.audit.json",
-    "bytes": 1126,
-    "sha256": "da5bc559f547b9ea163897e73d1dba547c9714a7c31406559c73a27dbeb838f2"
+    "bytes": 1522,
+    "sha256": "83e1035849115e44139990ae9fc49b37d4671a8d838f2f95de715a58dcc4c778"
   },
   {
     "path": "data/fleet/gp-band-350-94-plus-grid.definition.json",
@@ -761,13 +761,13 @@
   },
   {
     "path": "data/fleet/gp-band-350-95-proximity.json.gz",
-    "bytes": 444332,
-    "sha256": "e825886a8bc5cd8a164b9adf15e142b8722f82afd9ce8b1f24bdfcb0c15c00bf"
+    "bytes": 75997,
+    "sha256": "beb1e3626ba32ab333fcb7236dae33eb96493835abcf7a0a3d4e0cb03aa4496f"
   },
   {
     "path": "data/fleet/gp-band-350-95-proximity.audit.json",
-    "bytes": 1158,
-    "sha256": "93629d049b5edbf588391263668051c045c0c9df8cdaded6e194d1c26a107967"
+    "bytes": 1550,
+    "sha256": "95b97e21c29e2b2fa68cb6f207916a03601c98eb496d5b62152eb21f972af3da"
   },
   {
     "path": "data/fleet/gp-band-350-95-proximity.definition.json",
@@ -786,13 +786,13 @@
   },
   {
     "path": "data/fleet/gp-band-350-95-plus-grid.json.gz",
-    "bytes": 443997,
-    "sha256": "bbeec2e8d453a47d2edcd9533849bef77ed5bb646fd6789b0e08a0ae4dbf5707"
+    "bytes": 75700,
+    "sha256": "9a452b1bc6b2d177f9353da44c4ea237ea8d3c7650055416f89739d75fca1baa"
   },
   {
     "path": "data/fleet/gp-band-350-95-plus-grid.audit.json",
-    "bytes": 1095,
-    "sha256": "222c3a19cf15fc26d4e86bc49ed4879d0e55cb7b03871e6c6697e3b66619063b"
+    "bytes": 1487,
+    "sha256": "c27e1044220a1461b50dd3f4df950b165b4d84a777b3c2c534f414a9b0040c86"
   },
   {
     "path": "data/fleet/gp-band-350-95-plus-grid.definition.json",
@@ -811,13 +811,13 @@
   },
   {
     "path": "data/fleet/gp-band-350-114-proximity.json.gz",
-    "bytes": 438459,
-    "sha256": "5193fd0400f73e5233998af0ddcbea323052dd35372cdc4c38791c06517da88b"
+    "bytes": 69613,
+    "sha256": "3d7cd2de8d72707f0ae3c78e63417b531d60c9e41549f9727776d3a14caefc61"
   },
   {
     "path": "data/fleet/gp-band-350-114-proximity.audit.json",
-    "bytes": 1128,
-    "sha256": "d8df75097d93d371d53d057a779020c4b8c6f7fb36bad7c71d74e83ab73a59d3"
+    "bytes": 1520,
+    "sha256": "9c9d0c8b833e8de7885545664c48a034d93b64a8f9e33e69e96e7420f0585018"
   },
   {
     "path": "data/fleet/gp-band-350-114-proximity.definition.json",
@@ -836,13 +836,13 @@
   },
   {
     "path": "data/fleet/gp-band-350-114-plus-grid.json.gz",
-    "bytes": 438281,
-    "sha256": "6cb42f58f6aff40a137244a6300e84750e8ccb7ee1a4081d682ac328d7cfc292"
+    "bytes": 69388,
+    "sha256": "7adb2a144826c043c7195476c0f0c7f6665679df2e46c9970f4e6f0564105e7a"
   },
   {
     "path": "data/fleet/gp-band-350-114-plus-grid.audit.json",
-    "bytes": 1098,
-    "sha256": "c9c3c92152b4f031dc8a831cc31ea145361674fd434dbdc04cc775e0cdfd5dc2"
+    "bytes": 1490,
+    "sha256": "8f402699d4e240e8f6f040458e1e0053029c399d7286aad867411e3a61d05974"
   },
   {
     "path": "data/fleet/gp-band-350-114-plus-grid.definition.json",
@@ -861,13 +861,13 @@
   },
   {
     "path": "data/fleet/gp-band-486-93-proximity.json.gz",
-    "bytes": 669112,
-    "sha256": "71d70eabb9d04668d0c8429a871ab4398b13c724f1b983b5c10419ab5295eb3b"
+    "bytes": 300316,
+    "sha256": "89bf3029d9d93fc82dd0479f8393384284fb6b8ed84503472998747ec337dae6"
   },
   {
     "path": "data/fleet/gp-band-486-93-proximity.audit.json",
-    "bytes": 1167,
-    "sha256": "1476c1ebbd5bf84701a4dcfa4dfc7d388ca8fc54d5eb154ebdc2d4b753b1a6c4"
+    "bytes": 1563,
+    "sha256": "8e0d46ac0230ef016cf36b13bce99a060713e4b6b621fdd6a1efc580e1c6360d"
   },
   {
     "path": "data/fleet/gp-band-486-93-proximity.definition.json",
@@ -886,13 +886,13 @@
   },
   {
     "path": "data/fleet/gp-band-486-93-plus-grid.json.gz",
-    "bytes": 659734,
-    "sha256": "b5787c7773252ce14b0921b10eb53dc28e07ee85c0a0ef6d76eadaba454da4bf"
+    "bytes": 290555,
+    "sha256": "68a8e2388a679fde52cb55013d8d1fdd2f8388996898eba5af288b4ba6e4fd97"
   },
   {
     "path": "data/fleet/gp-band-486-93-plus-grid.audit.json",
-    "bytes": 1107,
-    "sha256": "b0a581b49761ff3e35af63d647b35f843a40a93c50b6eea86e6cf84289bf6043"
+    "bytes": 1503,
+    "sha256": "af00a430d2ea5002f5e808dd2fec8510e850c2f2e1269256f1031b052bd55572"
   },
   {
     "path": "data/fleet/gp-band-486-93-plus-grid.definition.json",

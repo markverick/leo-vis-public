@@ -16,8 +16,8 @@
   "eligibility_assumption": "Every admitted gateway can advertise the same study prefix; optimistic sensitivity, not a measured PoP mapping.",
   "phases": {
     "before": {
-      "fixed_gateway_minimum_cost_cutoff": 8,
-      "fixed_gateway_max_physical_network_hops": 7,
+      "fixed_gateway_minimum_cost_cutoff": null,
+      "fixed_gateway_max_physical_network_hops": null,
       "anycast_minimum_cost_cutoff": 4,
       "anycast_max_physical_network_hops": 3,
       "anycast_max_isl_hops": 2,
@@ -32,8 +32,8 @@
       ]
     },
     "after": {
-      "fixed_gateway_minimum_cost_cutoff": 8,
-      "fixed_gateway_max_physical_network_hops": 7,
+      "fixed_gateway_minimum_cost_cutoff": null,
+      "fixed_gateway_max_physical_network_hops": null,
       "anycast_minimum_cost_cutoff": 4,
       "anycast_max_physical_network_hops": 3,
       "anycast_max_isl_hops": 2,
@@ -49,11 +49,32 @@
     }
   },
   "input_sha256": {
-    "data/generated/evaluations/explicit_residential_20240409_map_ocm_463_500/snapshot.json": "30a7dc06232855036d06597032c4354574ad2f24b1764d47f9cedce70ae7c5f1",
-    "data/generated/evaluations/explicit_residential_20240409_map_ocm_463_500/report.json": "921f2892df3d11bc808fbd7608f2e335f2489b5b8ddfa62e3f6d92ba7ef9512a",
-    "data/generated/evaluations/explicit_residential_20240409_map_ocm_463_500/anycast_sensitivity.json": "eecb4ec8fa4694797f696449e5516ff27f9fb51881b97722765dc0f2c4dd2ce0",
+    "data/generated/evaluations/explicit_residential_20240409_map_ocm_463_500/snapshot.json": "d9678e5d674422ca22df0661aae99b2680c46db95014dd52975d80c0f1676794",
+    "data/generated/evaluations/explicit_residential_20240409_map_ocm_463_500/report.json": "43511750539630820583922704546cd4b4e4be988cdd88d26442c5d36833bf0f",
+    "data/generated/evaluations/explicit_residential_20240409_map_ocm_463_500/anycast_sensitivity.json": "2935ed6f8b6fb6fe20d62b3d3e27a8511feb016f896739ed35142deb2d4b328f",
     "data/generated/gateways/community_map_reported_live.csv": "c2be7944d2de0e45a467cc94b4558796052696e923a3ca16f9301df1c51d94ac"
   },
   "retained_sites": 310,
-  "attachment_exclusions": []
+  "attachment_exclusions": [],
+  "attachment_rules": {
+    "policy_version": 1,
+    "gateway": {
+      "capacity": 32,
+      "minimum_elevation_deg": 10.0
+    },
+    "satellite": {
+      "gateway_capacity_by_version": {
+        "V1.5": 2,
+        "V2 Mini": 3,
+        "V2 Mini optimized": 3
+      },
+      "default_gateway_capacity": null
+    },
+    "user": {
+      "capacity": 1,
+      "minimum_elevation_deg": 25.0
+    },
+    "selection": "shortest_distance_pairs_first",
+    "implementation_sha256": "914a79eda60eb77a9f65366ee9f09bff91493c4fa1ead78f2153ff613803ca0b"
+  }
 }
