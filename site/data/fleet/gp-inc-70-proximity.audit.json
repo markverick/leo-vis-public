@@ -14,10 +14,13 @@
     "anycast_paths_match_converged_dv": true,
     "mapping_cutoffs": {
       "closest": null,
-      "anycast": null
+      "anycast": null,
+      "pop": null
     },
     "isl_length_km_min": 7.926722158535955,
-    "isl_length_km_max": 1499.7639477329878
+    "isl_length_km_max": 1499.7639477329878,
+    "pop_paths_no_gateway_transit": true,
+    "pop_paths_independent_forward_bfs": true
   },
   "after": {
     "satellites": 951,
@@ -34,9 +37,12 @@
     "anycast_paths_match_converged_dv": true,
     "mapping_cutoffs": {
       "closest": null,
-      "anycast": null
+      "anycast": null,
+      "pop": null
     },
     "isl_length_km_min": 7.901505594553793,
-    "isl_length_km_max": 1490.6363422482307
+    "isl_length_km_max": 1490.6363422482307,
+    "pop_paths_no_gateway_transit": true,
+    "pop_paths_independent_forward_bfs": true
   }
 }

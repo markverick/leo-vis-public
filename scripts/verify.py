@@ -57,3 +57,32 @@ for path in models:
     assert len(actual) == len(inventory) and set(actual) == inventory, path
     assert not document['provenance'].get('gateway_exclusions', {}).get('gateway_ids'), path
 print(f'Verified all {len(models)} model payloads retain the same {len(inventory)} gateway sites.')
+
+# PoP mode must keep each physical destination in the user's modeled region.
+for path in models:
+    if path.name == 'snapshot.json':
+        continue
+    document = json.loads(gzip.decompress(path.read_bytes()) if path.name.endswith('.gz') else path.read_bytes())
+    pops = {p['pop_id'] for p in document['pops']}
+    gateways = {g['id']:g for g in document['gateways']}
+    users = {u['id']:u for u in document['users']}
+    edges = {tuple(sorted(e)) for e in document['isls']}
+    assert len(pops) == 52, path
+    assert all(g['assigned_pop_id'] in pops for g in gateways.values()), path
+    for phase, state in document['snapshots'].items():
+        assert set(state['pop_paths']) == set(users), path
+        assert state['audit']['pop_paths_independent_forward_bfs'], path
+        for uid, route in state['pop_paths'].items():
+            assert route['pop_id'] == users[uid]['assigned_pop_id'], path
+            assert route['destination_prefix'] == '/pop/'+route['pop_id'], path
+            nodes = route['nodes']
+            if nodes:
+                assert nodes[0] == users[uid]['satellite'], path
+                assert nodes[-1] == route['selected_gateway_id'], path
+                assert gateways[nodes[-1]]['assigned_pop_id'] == route['pop_id'], path
+                assert nodes[-2] in gateways[nodes[-1]]['attachments_'+phase], path
+                assert route['network_hops'] == len(nodes)-1 and route['isl_hops'] == len(nodes)-2, path
+                assert all(tuple(sorted((a,b))) in edges for a,b in zip(nodes[:-2],nodes[1:-1])), path
+            else:
+                assert route['selected_gateway_id'] is None and route['network_hops'] is None, path
+print('Verified PoP prefixes, regional destinations, and physical paths in every topology.')
