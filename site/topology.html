@@ -4306,8 +4306,9 @@ for(const user of data.users){
  option.textContent=`${user.id} → ${gateways.get(user.registered_gateway_id).name}`;
  $("user").append(option);
 }
-$("user").value=data.users.reduce((a,b)=>(data.snapshots.before.paths[b.id].cost??-1)>(data.snapshots.before.paths[a.id].cost??-1)?b:a).id;
 if(["closest","anycast","pop"].includes(query.get("mapping")))$("mapping").value=query.get("mapping");
+const initialPaths=$("mapping").value==="pop"?data.snapshots.before.pop_paths:$("mapping").value==="anycast"?data.snapshots.before.anycast_paths:data.snapshots.before.paths;
+$("user").value=data.users.reduce((a,b)=>(initialPaths[b.id].cost??-1)>(initialPaths[a.id].cost??-1)?b:a).id;
 const requestedView=new URLSearchParams(location.search).get("view");
 if(["3d","map","grid","orbital"].includes(requestedView))$("view").value=requestedView;
 let globe=null;
