@@ -966,8 +966,8 @@
   },
   {
     "path": "routing-demo/app.mjs",
-    "bytes": 14758,
-    "sha256": "617606dcecaadf6df555b1175f563d2c3380c66347fc366e96a699066baa196d"
+    "bytes": 14945,
+    "sha256": "cb416d10f8aff2a317766db939f333ef7b6b5f535ef54b673c4a8f93d1b97f8a"
   },
   {
     "path": "routing-demo/icon.svg",
@@ -976,8 +976,8 @@
   },
   {
     "path": "routing-demo/index.html",
-    "bytes": 6331,
-    "sha256": "88a6b77da7b0a19b7199dc2e8188be78720b094908a388a3c766982d03d0107b"
+    "bytes": 5012,
+    "sha256": "23d96bcf8b6a9cabe861e753f4f6a73a3ff091b55a698f8800bbad77b63562a2"
   },
   {
     "path": "routing-demo/model.mjs",
@@ -986,12 +986,12 @@
   },
   {
     "path": "routing-demo/scenarios.json",
-    "bytes": 134096,
-    "sha256": "e02e67e9911de81093f0709fc8e7c3be97462efb2dbff3154d8494ff2cf1f439"
+    "bytes": 455683,
+    "sha256": "538c6e3079350222748052b1b1a4b3c92ab12509f2e168ae3618e14f1b9edb63"
   },
   {
     "path": "routing-demo/style.css",
-    "bytes": 6988,
-    "sha256": "8f065b1087ab554f99f5ff78889a3592d26bf0b8383d9fa6efc21d6d1a970013"
+    "bytes": 7961,
+    "sha256": "014cc5130ad060de4156b24135efabd0153cb0345d6392b6470c16c4d7addf93"
   }
 ]

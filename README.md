@@ -34,36 +34,20 @@ The root entry page opens `site/` when Pages serves the `main` branch from `/ (r
 
 The originating research workspace exports an explicit allowlist with `python -m tools.locality.publish_static /path/to/leo-vis-public/site` after regenerating and auditing its maps. Commit the resulting files here. CI verifies manifest hashes, JSON, and relative links before deployment.
 
-## Animated routing example
+## Interactive routing examples
 
 https://markverick.github.io/leo-vis-public/routing-demo/
 
-A standalone animation compares poisoned reverse, simple split horizon, and no
-reverse suppression with stable per-flow ECMP. Play, pause, drag the shared time
-slider, step individual events, inspect routers, and toggle retained higher-cost
-backups. Two synthetic scenes show a surviving contact that lets a backup recover
-a packet, and stale mutually dependent routes after both contacts are withdrawn.
-The second scene includes TTL exhaustion and no-route drops.
+Five synthetic scenes compare reverse suppression, retained backups,
+receiver-specific advertisements, shared gateway exits, and trigger cooldowns.
+The synchronized slider replays checked simulator traces; each scene includes
+packet outcomes, router inspection, event logs, and a 1,000-flow timing sweep.
+Model settings are available in a collapsed section.
 
-The animation replays only processed toy events and a checked packet trace.
-It does not ship the research simulator, private evaluation results, user samples,
-or research figures. The drawing is schematic; the synthetic 550 km satellite
-positions give 5 ms ISLs and 2 ms gateway links. Assumptions are shown on the page.
-
-GitHub Actions runs the trace/state tests and export integrity verification before
-deploying the existing Pages artifact. Tests need only Node.js (22 in CI):
+Only processed synthetic traces and viewer assets are published here.
+GitHub Actions tests the traces and export integrity before deployment:
 
 ```sh
 node scripts/routing-demo.test.mjs
+python3 scripts/verify.py
 ```
-
-The recovery scene deliberately selects flow 0 at −2.50 ms, inside a transient
-recovery window. A published 1,000-flow timing sweep shows that all three policies
-deliver at the tested times outside that window. The ECMP policy suppresses toward every active next
-hop and does not compute per-neighbor alternative advertisements. This is a model
-choice, not a general superiority claim or an RFC-prescribed ECMP extension.
-
-Events sharing a timestamp are grouped by the slider. The diagram shows the state
-after the group, while the event list preserves the simulator's recorded control
-processing order. Advertisements in flight reflect their sender's state at send
-time. Backup toggling compares separately prepared runs.

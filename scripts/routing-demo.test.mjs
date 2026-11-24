@@ -6,7 +6,7 @@ const data=JSON.parse(fs.readFileSync(new URL('../site/routing-demo/scenarios.js
 const first=data.scenes.find(s=>s.id==='surviving-contact'),second=data.scenes.find(s=>s.id==='stale-backup');
 
 test('processed traces cover all policies with and without retained backups',()=>{
-  assert.equal(data.schema,1);assert.equal(data.scenes.length,2);
+  assert.equal(data.schema,2);assert.equal(data.scenes.length,5);
   for(const scene of data.scenes){assert.equal(Object.keys(scene.cases).length,6);
     const physical=new Set(scene.links.map(e=>[e.source,e.target].sort().join(':')));
     for(const run of Object.values(scene.cases)){
@@ -85,4 +85,16 @@ test('timing sweep discloses phases where every policy already delivers',()=>{
   const selected=sweep.rows.find(r=>r.injection_ms===-2.5);
   assert.equal(selected.results.poisoned_reverse.delivered,505);
   assert.equal(selected.results.none.delivered,1000);
+});
+
+test('new comparisons retain both successful and failed paths',()=>{
+ const find=id=>data.scenes.find(s=>s.id===id);
+ assert.equal(find('neighbor-exports').cases['neighbor_specific:1'].packet.outcome,'delivered');
+ for(const r of Object.values(find('shared-exit').cases))assert.notEqual(r.packet.outcome,'delivered');
+ for(const [id,hops,outcome] of [['cooldown_0',3,'delivered'],['cooldown_50',9,'delivered'],['cooldown_500',63,'ttl_expired']]){
+  const r=find('trigger-cooldown').cases[id+':1'];assert.equal(r.packet.isls,hops);assert.equal(r.packet.outcome,outcome);
+ }
+ for(const scene of data.scenes)for(const row of scene.timing_sensitivity.rows)for(const c of scene.comparisons){
+  const r=row.results[c.id];assert.equal(r.delivered+r.no_route+r.ttl_drops,scene.timing_sensitivity.flows);
+ }
 });

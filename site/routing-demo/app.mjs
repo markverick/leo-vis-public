@@ -1,9 +1,8 @@
-import {EPS,stateAt,packetAt,timeStops,timeline,formatMs} from './model.mjs';
+import {EPS,stateAt,packetAt,timeStops,timeline,formatMs} from './model.mjs?v=4';
 const $=id=>document.getElementById(id);
 const escape=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 let data,scene,runs,stops,events,time=0,playing=false,lastFrame=0,selected=0,frameId=0;
-const policies=['poisoned_reverse','simple_split_horizon','none'];
-const rules={poisoned_reverse:'Advertise ∞ back to every active successor',simple_split_horizon:'Omit the reverse entry; silence is not withdrawal',none:'Advertise the finite metric in both directions'};
+let policies=[],comparisons=[];
 const colors={active:'#19755a',backup:'#8055a9',packet:'#c23785',message:'#c2771b',poison:'#b44848'};
 const outcomeLabel=s=>({pending:'Not injected',in_flight:'In flight',delivered:'Delivered',no_route:'Dropped: no route',ttl_expired:'Dropped: TTL'})[s];
 const edgeKey=(a,b)=>[a,b].sort((x,y)=>x-y).join(':');
@@ -13,7 +12,7 @@ function svgLine(points,extra=''){return `<line x1="${points.x1}" y1="${points.y
 function graph(run,index){
   const states=stateAt(run,time).nodes,packet=packetAt(scene,run,time),nodes=scene.nodes;
   const withdrawn=new Set(scene.withdrawals.filter(w=>w.time<=time+EPS).map(w=>edgeKey(w.source,w.target)));
-  let svg=`<svg class="graph" viewBox="0 0 500 310" role="img" aria-label="${escape(data.policies[index].label)} topology at ${formatMs(time)}"><defs><marker id="active-${index}" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto" markerUnits="strokeWidth"><path d="M0,0 L6,3 L0,6" fill="${colors.active}"/></marker><marker id="backup-${index}" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto" markerUnits="strokeWidth"><path d="M0,0 L6,3 L0,6" fill="${colors.backup}"/></marker></defs>`;
+  let svg=`<svg class="graph" viewBox="${scene.viewBox.join(' ')}" role="img" aria-label="${escape(comparisons[index].label)} topology at ${formatMs(time)}"><defs><marker id="active-${index}" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto" markerUnits="strokeWidth"><path d="M0,0 L6,3 L0,6" fill="${colors.active}"/></marker><marker id="backup-${index}" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto" markerUnits="strokeWidth"><path d="M0,0 L6,3 L0,6" fill="${colors.backup}"/></marker></defs>`;
   for(const e of scene.links){const a=nodes[e.source],b=nodes[e.target],l=line(a,b);const off=withdrawn.has(edgeKey(a.id,b.id));
     svg+=svgLine(l,`stroke="${off?'#c28a43':'#dce1e3'}" stroke-width="${off?2:3}" ${off?'stroke-dasharray="5 5"':''}`);
     const center=position(a,b,.5);svg+=`<text x="${center.x}" y="${center.y+(e.kind==='isl'?-13:0)}" text-anchor="middle" fill="#83909a" font-size="10">${e.delay_ms} ms${off?' · withdrawn':''}</text>`;
@@ -44,13 +43,13 @@ function inspection(run){
   const node=scene.nodes[selected],state=stateAt(run,time).nodes[selected],metric=state.metric>=9?'∞':state.metric;
   if(node.kind==='gateway')return `<h4>${escape(node.label)} · prefix origin</h4><p class="node-state">Origin metric 1. All gateways in this scene advertise the same destination prefix.</p>`;
   const names=ids=>ids.map(i=>scene.nodes[i].label).join(', ')||'none';
-  let html=`<h4>Inspect ${escape(node.label)} <span style="font-weight:400;color:#7a8490">· click any node above</span></h4><p class="node-state">Metric <strong>${metric}</strong> · active: <strong>${escape(names(state.active))}</strong><br>Standby: ${escape(names(state.standby))}</p><table><thead><tr><th>Via</th><th>Local cost</th><th>Role</th><th>Receipt age</th></tr></thead><tbody>`;
+  let html=`<h4>Inspect ${escape(node.label)} <span style="font-weight:400;color:#7a8490">· click any node above</span></h4><p class="node-state">Metric <strong>${metric}</strong> · active: <strong>${escape(names(state.active))}</strong><br>Standby: ${escape(names(state.standby))}</p><table><thead><tr><th>Via</th><th>Local cost</th><th>Role</th></tr></thead><tbody>`;
   const peers=scene.links.filter(e=>e.source===selected||e.target===selected).map(e=>e.source===selected?e.target:e.source);
   for(const peer of peers){const candidate=state.candidates.find(c=>c.neighbor===peer),role=state.active.includes(peer)?'active':state.standby.includes(peer)?'backup':null;
     const received=run.messages.filter(m=>m.kind!=='request'&&m.source===peer&&m.target===selected&&m.delivered&&m.arrival<=time+EPS).at(-1);
     const cost=candidate?candidate.cost:received?.metric>=9?'∞':'—';
     const age=candidate?`${Math.max(0,(time-candidate.received)/1000).toFixed(3)} s`:'—';
-    html+=`<tr><td>${escape(scene.nodes[peer].label)}</td><td>${cost}</td><td>${role?`<span class="tag ${role}">${role}</span>`:'not retained'}</td><td>${age}</td></tr>`;
+    html+=`<tr><td>${escape(scene.nodes[peer].label)}</td><td title="${candidate?`Last received ${age} ago`:received?.metric>=9?'Last received: infinity':'No retained candidate'}">${cost}</td><td>${role?`<span class="tag ${role}">${role}</span>`:'not retained'}</td></tr>`;
   }
   return html+'</tbody></table>';
 }
@@ -77,12 +76,19 @@ function frame(now){if(!playing)return;const dt=Math.min(150,now-lastFrame);last
 }
 function chooseScene(reset=true){
   pause();scene=data.scenes.find(s=>s.id===$('scene').value);if(selected>=scene.nodes.length)selected=0;
+  comparisons=scene.comparisons;policies=comparisons.map(c=>c.id);
   runs=policies.map(p=>scene.cases[`${p}:${$('backups').checked?1:0}`]);events=runs.map(r=>timeline(scene,r));stops=timeStops(scene,runs);
   $('time').min=scene.view[0];$('time').max=scene.view[1];$('start-time').textContent=formatMs(scene.view[0]);$('end-time').textContent=formatMs(scene.view[1]);
   $('scene-title').textContent=scene.title;$('scene-description').textContent=scene.description;
-  $('scene-note').textContent=$('backups').checked?'Selected example: one flow sends at −2.50 ms. All learned backups are retained. Orange means routing withdrawal, not radio failure; the physical 5-second guard remains.':'Higher-cost backups are discarded. Equal-cost multipath remains enabled. Compare the final outcomes with backups turned on.';
-  $('panels').innerHTML=policies.map((p,i)=>`<article class="panel" data-policy="${p}"><div class="panel-head"><h3>${escape(data.policies[i].label)}</h3><p class="policy-rule">${rules[p]}</p></div><div class="metrics"><div>ISL hops sent<strong class="isls">0</strong></div><div>Revisits<strong class="revisits">0</strong></div><div>Packet state<strong class="status">Pending</strong></div></div><p class="packet-path">Arrivals so far: <samp></samp></p><div class="graph-host"></div><div class="inspect"></div><div class="events"><h4>Latest events · newest first</h4><div class="event-list"></div></div></article>`).join('');
-  $('comparison').innerHTML=runs.map((r,i)=>`<tr><td>${escape(data.policies[i].label)}</td><td>${outcomeLabel(r.packet.outcome)}</td><td>${r.packet.isls}</td><td>${r.packet.revisits}</td><td>${(r.packet.finished-r.packet.injected).toFixed(2)} ms</td></tr>`).join('');
+  const cooldowns=[...new Set(comparisons.map(c=>c.cooldown_ms))];
+  $('scene-note').textContent=`Flow 0 · injected ${formatMs(runs[0].packet.injected)} · ECMP · backups ${$('backups').checked?'retained':'discarded'} · cooldown ${cooldowns.join(' / ')} ms`;
+  $('panels').innerHTML=policies.map((p,i)=>`<article class="panel" data-policy="${p}"><div class="panel-head"><h3>${escape(comparisons[i].label)}</h3><p class="policy-rule">${escape(comparisons[i].rule)}</p></div><div class="metrics"><div>ISL hops sent<strong class="isls">0</strong></div><div>Revisits<strong class="revisits">0</strong></div><div>Packet state<strong class="status">Pending</strong></div></div><p class="packet-path">Arrivals so far: <samp></samp></p><div class="graph-host"></div><div class="inspect"></div><details class="events"><summary>Event log</summary><div class="event-list"></div></details></article>`).join('');
+  $('comparison').innerHTML=runs.map((r,i)=>`<tr><td>${escape(comparisons[i].label)}</td><td>${outcomeLabel(r.packet.outcome)}</td><td>${r.packet.isls}</td><td>${r.packet.revisits}</td><td>${(r.packet.finished-r.packet.injected).toFixed(2)} ms</td><td>${r.messages.filter(m=>m.sent>=scene.view[0]-EPS&&m.sent<=scene.view[1]+EPS).length}</td></tr>`).join('');
+  const sensitivity=scene.timing_sensitivity;
+  $('sweep-description').textContent=`${sensitivity.flows.toLocaleString()} flow IDs at B, one packet per flow at each injection time, with backups retained.`;
+  $('sweep-head').innerHTML='<tr><th>Injection time</th>'+comparisons.map(c=>`<th>${escape(c.label)}</th>`).join('')+'</tr>';
+  $('sweep-results').innerHTML=sensitivity.rows.map(r=>`<tr><td>${formatMs(r.injection_ms)}</td>${policies.map(p=>`<td>${r.results[p].delivered.toLocaleString()} / ${sensitivity.flows.toLocaleString()}</td>`).join('')}</tr>`).join('');
+  $('assumptions').innerHTML=`<dl class="model-grid"><dt>Topology</dt><dd>${scene.nodes.filter(n=>n.kind==='satellite').length} satellites · ${scene.nodes.filter(n=>n.kind==='gateway').length} gateways · shared anycast prefix</dd><dt>Propagation</dt><dd>5 ms ISLs · 2 ms GSLs · 550 km altitude</dd><dt>Routing metric</dt><dd>Unit link costs · origin metric 1 · infinity 9</dd><dt>Packet</dt><dd>Flow 0 · stable per-flow hash 42002 · TTL 64 (63 transmissions)</dd><dt>Triggers</dt><dd>Fixed cooldown ${cooldowns.join(' / ')} ms; forwarding entries update on receipt</dd><dt>Timers</dt><dd>Periodic 30 ± 5 s · receipt expiry 180 s · garbage collection 120 s</dd><dt>Preparation</dt><dd>600 s · timer seed 42 · one request round on loss of the last finite route</dd><dt>Contact events</dt><dd>Routing withdrawals, 5 s before scheduled physical loss</dd><dt>Timing model</dt><dd>Fixed positions · propagation only · no queues, random loss or retransmission</dd></dl>`;
   setTime(reset?scene.view[0]:time);
 }
 $('play').addEventListener('click',()=>playing?pause():play());$('time').addEventListener('input',e=>{pause();setTime(Number(e.target.value));});
@@ -94,14 +100,10 @@ document.querySelectorAll('[data-jump]').forEach(button=>button.addEventListener
 function selectNode(e){const target=e.target.closest('[data-node]');if(!target)return;if(e.type==='keydown'&&!['Enter',' '].includes(e.key))return;if(e.type==='keydown')e.preventDefault();selected=Number(target.dataset.node);render();}
 $('panels').addEventListener('click',selectNode);$('panels').addEventListener('keydown',selectNode);
 try{
-  const response=await fetch('./scenarios.json');if(!response.ok)throw new Error(`Trace request failed (${response.status})`);data=await response.json();
-  if(data.schema!==1)throw new Error('Unsupported trace schema');
+  const response=await fetch('./scenarios.json?v=4');if(!response.ok)throw new Error(`Trace request failed (${response.status})`);data=await response.json();
+  if(data.schema!==2)throw new Error('Unsupported trace schema');
   const params=new URLSearchParams(location.search);if(data.scenes.some(s=>s.id===params.get('scene')))$('scene').value=params.get('scene');
-  $('backups').checked=params.get('backups')!=='0';selected=Math.max(0,Math.min(3,Number(params.get('node'))||0));
-  const c=data.constants;$('assumptions').innerHTML=`<ul><li>ISL propagation: ${c.isl_delay_ms} ms</li><li>GSL propagation: ${c.gsl_delay_ms} ms</li><li>Infinity: ${c.infinity}; unit link costs, origin metric 1</li><li>TTL: ${c.ttl} (at most 63 transmissions)</li><li>Triggered-update cooldown: ${c.trigger_cooldown_ms} ms</li><li>Receipt timeout: ${c.route_timeout_seconds} s</li><li>Periodic update: 30 ± 5 s</li><li>Frozen preparation: ${c.frozen_warmup_seconds} s</li><li>Stable per-flow hashing; flow ${c.flow_id}</li><li>All equal-cost active hops; optional higher-cost standbys</li><li>One request round after losing the last finite route (recovery extension)</li><li>Protocol timer seed ${c.protocol_seed}; garbage collection ${c.garbage_collection_seconds} s</li></ul>`;
-  const sensitivity=data.timing_sensitivity;
-  $('sweep-description').textContent=`${sensitivity.flows.toLocaleString()} synthetic flow IDs at B, each tested at nine injection times, with backups enabled. This is a timing sensitivity check of this scene, not a traffic-frequency estimate.`;
-  $('sweep-results').innerHTML=sensitivity.rows.map(r=>`<tr><td>${formatMs(r.injection_ms)}</td>${policies.map(p=>`<td>${r.results[p].delivered.toLocaleString()} / ${sensitivity.flows.toLocaleString()}</td>`).join('')}</tr>`).join('');
+  $('backups').checked=params.get('backups')!=='0';selected=Math.max(0,Math.trunc(Number(params.get('node'))||0));
   chooseScene();if(params.has('t')&&Number.isFinite(Number(params.get('t'))))setTime(Number(params.get('t')));
   window.routingDemo={get time(){return time;},get scene(){return scene.id;},get playing(){return playing;},setTime,
     snapshot:()=>runs.map(r=>packetAt(scene,r,time))};
