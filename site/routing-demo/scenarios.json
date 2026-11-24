@@ -1,0 +1,4423 @@
+{
+  "schema": 1,
+  "title": "Backups, reverse suppression, and transient loops",
+  "constants": {
+    "infinity": 9,
+    "ttl": 64,
+    "trigger_cooldown_ms": 0,
+    "isl_delay_ms": 5,
+    "gsl_delay_ms": 2,
+    "periodic_seconds": 30,
+    "periodic_jitter_seconds": 5,
+    "route_timeout_seconds": 180,
+    "frozen_warmup_seconds": 600,
+    "withdrawal_guard_seconds": 5,
+    "flow_id": 0,
+    "flow_hash_seed": 42002,
+    "altitude_km": 550,
+    "metric": "Unit link costs; gateway origin metric 1",
+    "limitations": "Synthetic fixed-position LEO snapshot; selected contacts, propagation-only timing. No queues, serialization, random loss, retransmission, or satellite motion during the short scene. Tree routing is not used."
+  },
+  "policies": [
+    {
+      "id": "poisoned_reverse",
+      "label": "Poisoned reverse"
+    },
+    {
+      "id": "simple_split_horizon",
+      "label": "Simple split horizon"
+    },
+    {
+      "id": "none",
+      "label": "No suppression"
+    }
+  ],
+  "scenes": [
+    {
+      "id": "surviving-contact",
+      "title": "A backup carries the packet through a brief loop",
+      "description": "A\u2019s gateway contact is withdrawn. C\u2019s contact stays available. The same packet starts at B just before withdrawal.",
+      "view": [
+        -10,
+        35
+      ],
+      "nodes": [
+        {
+          "id": 0,
+          "label": "A",
+          "kind": "satellite",
+          "x": 95,
+          "y": 88
+        },
+        {
+          "id": 1,
+          "label": "B",
+          "kind": "satellite",
+          "x": 250,
+          "y": 88
+        },
+        {
+          "id": 2,
+          "label": "C",
+          "kind": "satellite",
+          "x": 405,
+          "y": 88
+        },
+        {
+          "id": 3,
+          "label": "G",
+          "kind": "gateway",
+          "x": 250,
+          "y": 248
+        }
+      ],
+      "links": [
+        {
+          "source": 0,
+          "target": 1,
+          "kind": "isl",
+          "delay_ms": 5.0
+        },
+        {
+          "source": 1,
+          "target": 2,
+          "kind": "isl",
+          "delay_ms": 5.0
+        },
+        {
+          "source": 0,
+          "target": 3,
+          "kind": "gsl",
+          "delay_ms": 2.0
+        },
+        {
+          "source": 2,
+          "target": 3,
+          "kind": "gsl",
+          "delay_ms": 2.0
+        }
+      ],
+      "withdrawals": [
+        {
+          "time": 0.0,
+          "source": 0,
+          "target": 3,
+          "physical_down": 5000.0
+        }
+      ],
+      "cases": {
+        "poisoned_reverse:1": {
+          "policy": "poisoned_reverse",
+          "backups": true,
+          "states": [
+            {
+              "time": -200.0,
+              "nodes": [
+                {
+                  "metric": 2,
+                  "active": [
+                    3
+                  ],
+                  "standby": [],
+                  "candidates": [
+                    {
+                      "neighbor": 3,
+                      "cost": 2,
+                      "received": -31280.789268792,
+                      "expires": 148719.210731208
+                    }
+                  ]
+                },
+                {
+                  "metric": 3,
+                  "active": [
+                    0,
+                    2
+                  ],
+                  "standby": [],
+                  "candidates": [
+                    {
+                      "neighbor": 0,
+                      "cost": 3,
+                      "received": -27064.083060891,
+                      "expires": 152935.916939109
+                    },
+                    {
+                      "neighbor": 2,
+                      "cost": 3,
+                      "received": -2437.222631741,
+                      "expires": 177562.777368259
+                    }
+                  ]
+                },
+                {
+                  "metric": 2,
+                  "active": [
+                    3
+                  ],
+                  "standby": [],
+                  "candidates": [
+                    {
+                      "neighbor": 3,
+                      "cost": 2,
+                      "received": -31280.789268792,
+                      "expires": 148719.210731208
+                    }
+                  ]
+                },
+                {
+                  "metric": 1,
+                  "active": [],
+                  "standby": [],
+                  "candidates": []
+                }
+              ]
+            },
+            {
+              "time": 0.0,
+              "nodes": [
+                {
+                  "metric": 9,
+                  "active": [],
+                  "standby": [],
+                  "candidates": []
+                },
+                {
+                  "metric": 3,
+                  "active": [
+                    0,
+                    2
+                  ],
+                  "standby": [],
+                  "candidates": [
+                    {
+                      "neighbor": 0,
+                      "cost": 3,
+                      "received": -27064.083060891,
+                      "expires": 152935.916939109
+                    },
+                    {
+                      "neighbor": 2,
+                      "cost": 3,
+                      "received": -2437.222631741,
+                      "expires": 177562.777368259
+                    }
+                  ]
+                },
+                {
+                  "metric": 2,
+                  "active": [
+                    3
+                  ],
+                  "standby": [],
+                  "candidates": [
+                    {
+                      "neighbor": 3,
+                      "cost": 2,
+                      "received": -31280.789268792,
+                      "expires": 148719.210731208
+                    }
+                  ]
+                },
+                {
+                  "metric": 1,
+                  "active": [],
+                  "standby": [],
+                  "candidates": []
+                }
+              ]
+            },
+            {
+              "time": 5.0,
+              "nodes": [
+                {
+                  "metric": 9,
+                  "active": [],
+                  "standby": [],
+                  "candidates": []
+                },
+                {
+                  "metric": 3,
+                  "active": [
+                    2
+                  ],
+                  "standby": [],
+                  "candidates": [
+                    {
+                      "neighbor": 2,
+                      "cost": 3,
+                      "received": -2437.222631741,
+                      "expires": 177562.777368259
+                    }
+                  ]
+                },
+                {
+                  "metric": 2,
+                  "active": [
+                    3
+                  ],
+                  "standby": [],
+                  "candidates": [
+                    {
+                      "neighbor": 3,
+                      "cost": 2,
+                      "received": -31280.789268792,
+                      "expires": 148719.210731208
+                    }
+                  ]
+                },
+                {
+                  "metric": 1,
+                  "active": [],
+                  "standby": [],
+                  "candidates": []
+                }
+              ]
+            },
+            {
+              "time": 10.0,
+              "nodes": [
+                {
+                  "metric": 4,
+                  "active": [
+                    1
+                  ],
+                  "standby": [],
+                  "candidates": [
+                    {
+                      "neighbor": 1,
+                      "cost": 4,
+                      "received": 10.0,
+                      "expires": 180010.0
+                    }
+                  ]
+                },
+                {
+                  "metric": 3,
+                  "active": [
+                    2
+                  ],
+                  "standby": [],
+                  "candidates": [
+                    {
+                      "neighbor": 2,
+                      "cost": 3,
+                      "received": -2437.222631741,
+                      "expires": 177562.777368259
+                    }
+                  ]
+                },
+                {
+                  "metric": 2,
+                  "active": [
+                    3
+                  ],
+                  "standby": [],
+                  "candidates": [
+                    {
+                      "neighbor": 3,
+                      "cost": 2,
+                      "received": -31280.789268792,
+                      "expires": 148719.210731208
+                    }
+                  ]
+                },
+                {
+                  "metric": 1,
+                  "active": [],
+                  "standby": [],
+                  "candidates": []
+                }
+              ]
+            }
+          ],
+          "messages": [
+            {
+              "id": 0,
+              "sent": 0.0,
+              "arrival": 5.0,
+              "source": 0,
+              "target": 1,
+              "kind": "request",
+              "metric": null,
+              "delivered": true
+            },
+            {
+              "id": 1,
+              "sent": 0.0,
+              "arrival": 5.0,
+              "source": 0,
+              "target": 1,
+              "kind": "trigger",
+              "metric": 9,
+              "delivered": true
+            },
+            {
+              "id": 2,
+              "sent": 5.0,
+              "arrival": 10.0,
+              "source": 1,
+              "target": 0,
+              "kind": "response",
+              "metric": 9,
+              "delivered": true
+            },
+            {
+              "id": 3,
+              "sent": 5.0,
+              "arrival": 10.0,
+              "source": 1,
+              "target": 0,
+              "kind": "trigger",
+              "metric": 3,
+              "delivered": true
+            },
+            {
+              "id": 4,
+              "sent": 5.0,
+              "arrival": 10.0,
+              "source": 1,
+              "target": 2,
+              "kind": "trigger",
+              "metric": 9,
+              "delivered": true
+            },
+            {
+              "id": 5,
+              "sent": 10.0,
+              "arrival": 15.0,
+              "source": 0,
+              "target": 1,
+              "kind": "trigger",
+              "metric": 9,
+              "delivered": true
+            }
+          ],
+          "omissions": [],
+          "packet": {
+            "injected": -2.5,
+            "path": [
+              1,
+              0
+            ],
+            "arrivals": [
+              -2.5,
+              2.5
+            ],
+            "finished": 2.5,
+            "outcome": "no_route",
+            "transmissions": 1,
+            "isls": 1,
+            "revisits": 0,
+            "native_verified": true
+          }
+        },
+        "simple_split_horizon:1": {
+          "policy": "simple_split_horizon",
+          "backups": true,
+          "states": [
+            {
+              "time": -200.0,
+              "nodes": [
+                {
+                  "metric": 2,
+                  "active": [
+                    3
+                  ],
+                  "standby": [],
+                  "candidates": [
+                    {
+                      "neighbor": 3,
+                      "cost": 2,
+                      "received": -31280.789268792,
+                      "expires": 148719.210731208
+                    }
+                  ]
+                },
+                {
+                  "metric": 3,
+                  "active": [
+                    0,
+                    2
+                  ],
+                  "standby": [],
+                  "candidates": [
+                    {
+                      "neighbor": 0,
+                      "cost": 3,
+                      "received": -27064.083060891,
+                      "expires": 152935.916939109
+                    },
+                    {
+                      "neighbor": 2,
+                      "cost": 3,
+                      "received": -2437.222631741,
+                      "expires": 177562.777368259
+                    }
+                  ]
+                },
+                {
+                  "metric": 2,
+                  "active": [
+                    3
+                  ],
+                  "standby": [],
+                  "candidates": [
+                    {
+                      "neighbor": 3,
+                      "cost": 2,
+                      "received": -31280.789268792,
+                      "expires": 148719.210731208
+                    }
+                  ]
+                },
+                {
+                  "metric": 1,
+                  "active": [],
+                  "standby": [],
+                  "candidates": []
+                }
+              ]
+            },
+            {
+              "time": 0.0,
+              "nodes": [
+                {
+                  "metric": 9,
+                  "active": [],
+                  "standby": [],
+                  "candidates": []
+                },
+                {
+                  "metric": 3,
+                  "active": [
+                    0,
+                    2
+                  ],
+                  "standby": [],
+                  "candidates": [
+                    {
+                      "neighbor": 0,
+                      "cost": 3,
+                      "received": -27064.083060891,
+                      "expires": 152935.916939109
+                    },
+                    {
+                      "neighbor": 2,
+                      "cost": 3,
+                      "received": -2437.222631741,
+                      "expires": 177562.777368259
+                    }
+                  ]
+                },
+                {
+                  "metric": 2,
+                  "active": [
+                    3
+                  ],
+                  "standby": [],
+                  "candidates": [
+                    {
+                      "neighbor": 3,
+                      "cost": 2,
+                      "received": -31280.789268792,
+                      "expires": 148719.210731208
+                    }
+                  ]
+                },
+                {
+                  "metric": 1,
+                  "active": [],
+                  "standby": [],
+                  "candidates": []
+                }
+              ]
+            },
+            {
+              "time": 5.0,
+              "nodes": [
+                {
+                  "metric": 9,
+                  "active": [],
+                  "standby": [],
+                  "candidates": []
+                },
+                {
+                  "metric": 3,
+                  "active": [
+                    2
+                  ],
+                  "standby": [],
+                  "candidates": [
+                    {
+                      "neighbor": 2,
+                      "cost": 3,
+                      "received": -2437.222631741,
+                      "expires": 177562.777368259
+                    }
+                  ]
+                },
+                {
+                  "metric": 2,
+                  "active": [
+                    3
+                  ],
+                  "standby": [],
+                  "candidates": [
+                    {
+                      "neighbor": 3,
+                      "cost": 2,
+                      "received": -31280.789268792,
+                      "expires": 148719.210731208
+                    }
+                  ]
+                },
+                {
+                  "metric": 1,
+                  "active": [],
+                  "standby": [],
+                  "candidates": []
+                }
+              ]
+            },
+            {
+              "time": 10.0,
+              "nodes": [
+                {
+                  "metric": 4,
+                  "active": [
+                    1
+                  ],
+                  "standby": [],
+                  "candidates": [
+                    {
+                      "neighbor": 1,
+                      "cost": 4,
+                      "received": 10.0,
+                      "expires": 180010.0
+                    }
+                  ]
+                },
+                {
+                  "metric": 3,
+                  "active": [
+                    2
+                  ],
+                  "standby": [],
+                  "candidates": [
+                    {
+                      "neighbor": 2,
+                      "cost": 3,
+                      "received": -2437.222631741,
+                      "expires": 177562.777368259
+                    }
+                  ]
+                },
+                {
+                  "metric": 2,
+                  "active": [
+                    3
+                  ],
+                  "standby": [],
+                  "candidates": [
+                    {
+                      "neighbor": 3,
+                      "cost": 2,
+                      "received": -31280.789268792,
+                      "expires": 148719.210731208
+                    }
+                  ]
+                },
+                {
+                  "metric": 1,
+                  "active": [],
+                  "standby": [],
+                  "candidates": []
+                }
+              ]
+            }
+          ],
+          "messages": [
+            {
+              "id": 0,
+              "sent": 0.0,
+              "arrival": 5.0,
+              "source": 0,
+              "target": 1,
+              "kind": "request",
+              "metric": null,
+              "delivered": true
+            },
+            {
+              "id": 1,
+              "sent": 0.0,
+              "arrival": 5.0,
+              "source": 0,
+              "target": 1,
+              "kind": "trigger",
+              "metric": 9,
+              "delivered": true
+            },
+            {
+              "id": 2,
+              "sent": 5.0,
+              "arrival": 10.0,
+              "source": 1,
+              "target": 0,
+              "kind": "trigger",
+              "metric": 3,
+              "delivered": true
+            }
+          ],
+          "omissions": [
+            {
+              "time": 5.0,
+              "source": 1,
+              "target": 0,
+              "kind": "response"
+            },
+            {
+              "time": 5.0,
+              "source": 1,
+              "target": 2,
+              "kind": "trigger"
+            },
+            {
+              "time": 10.0,
+              "source": 0,
+              "target": 1,
+              "kind": "trigger"
+            }
+          ],
+          "packet": {
+            "injected": -2.5,
+            "path": [
+              1,
+              0
+            ],
+            "arrivals": [
+              -2.5,
+              2.5
+            ],
+            "finished": 2.5,
+            "outcome": "no_route",
+            "transmissions": 1,
+            "isls": 1,
+            "revisits": 0,
+            "native_verified": true
+          }
+        },
+        "none:1": {
+          "policy": "none",
+          "backups": true,
+          "states": [
+            {
+              "time": -200.0,
+              "nodes": [
+                {
+                  "metric": 2,
+                  "active": [
+                    3
+                  ],
+                  "standby": [
+                    1
+                  ],
+                  "candidates": [
+                    {
+                      "neighbor": 1,
+                      "cost": 4,
+                      "received": -30737.535723013,
+                      "expires": 149262.464276987
+                    },
+                    {
+                      "neighbor": 3,
+                      "cost": 2,
+                      "received": -31280.789268792,
+                      "expires": 148719.210731208
+                    }
+                  ]
+                },
+                {
+                  "metric": 3,
+                  "active": [
+                    0,
+                    2
+                  ],
+                  "standby": [],
+                  "candidates": [
+                    {
+                      "neighbor": 0,
+                      "cost": 3,
+                      "received": -27064.083060891,
+                      "expires": 152935.916939109
+                    },
+                    {
+                      "neighbor": 2,
+                      "cost": 3,
+                      "received": -2437.222631741,
+                      "expires": 177562.777368259
+                    }
+                  ]
+                },
+                {
+                  "metric": 2,
+                  "active": [
+                    3
+                  ],
+                  "standby": [
+                    1
+                  ],
+                  "candidates": [
+                    {
+                      "neighbor": 1,
+                      "cost": 4,
+                      "received": -30737.535723013,
+                      "expires": 149262.464276987
+                    },
+                    {
+                      "neighbor": 3,
+                      "cost": 2,
+                      "received": -31280.789268792,
+                      "expires": 148719.210731208
+                    }
+                  ]
+                },
+                {
+                  "metric": 1,
+                  "active": [],
+                  "standby": [],
+                  "candidates": []
+                }
+              ]
+            },
+            {
+              "time": 0.0,
+              "nodes": [
+                {
+                  "metric": 4,
+                  "active": [
+                    1
+                  ],
+                  "standby": [],
+                  "candidates": [
+                    {
+                      "neighbor": 1,
+                      "cost": 4,
+                      "received": -30737.535723013,
+                      "expires": 149262.464276987
+                    }
+                  ]
+                },
+                {
+                  "metric": 3,
+                  "active": [
+                    0,
+                    2
+                  ],
+                  "standby": [],
+                  "candidates": [
+                    {
+                      "neighbor": 0,
+                      "cost": 3,
+                      "received": -27064.083060891,
+                      "expires": 152935.916939109
+                    },
+                    {
+                      "neighbor": 2,
+                      "cost": 3,
+                      "received": -2437.222631741,
+                      "expires": 177562.777368259
+                    }
+                  ]
+                },
+                {
+                  "metric": 2,
+                  "active": [
+                    3
+                  ],
+                  "standby": [
+                    1
+                  ],
+                  "candidates": [
+                    {
+                      "neighbor": 1,
+                      "cost": 4,
+                      "received": -30737.535723013,
+                      "expires": 149262.464276987
+                    },
+                    {
+                      "neighbor": 3,
+                      "cost": 2,
+                      "received": -31280.789268792,
+                      "expires": 148719.210731208
+                    }
+                  ]
+                },
+                {
+                  "metric": 1,
+                  "active": [],
+                  "standby": [],
+                  "candidates": []
+                }
+              ]
+            },
+            {
+              "time": 5.0,
+              "nodes": [
+                {
+                  "metric": 4,
+                  "active": [
+                    1
+                  ],
+                  "standby": [],
+                  "candidates": [
+                    {
+                      "neighbor": 1,
+                      "cost": 4,
+                      "received": -30737.535723013,
+                      "expires": 149262.464276987
+                    }
+                  ]
+                },
+                {
+                  "metric": 3,
+                  "active": [
+                    2
+                  ],
+                  "standby": [
+                    0
+                  ],
+                  "candidates": [
+                    {
+                      "neighbor": 0,
+                      "cost": 5,
+                      "received": 5.0,
+                      "expires": 180005.0
+                    },
+                    {
+                      "neighbor": 2,
+                      "cost": 3,
+                      "received": -2437.222631741,
+                      "expires": 177562.777368259
+                    }
+                  ]
+                },
+                {
+                  "metric": 2,
+                  "active": [
+                    3
+                  ],
+                  "standby": [
+                    1
+                  ],
+                  "candidates": [
+                    {
+                      "neighbor": 1,
+                      "cost": 4,
+                      "received": -30737.535723013,
+                      "expires": 149262.464276987
+                    },
+                    {
+                      "neighbor": 3,
+                      "cost": 2,
+                      "received": -31280.789268792,
+                      "expires": 148719.210731208
+                    }
+                  ]
+                },
+                {
+                  "metric": 1,
+                  "active": [],
+                  "standby": [],
+                  "candidates": []
+                }
+              ]
+            },
+            {
+              "time": 10.0,
+              "nodes": [
+                {
+                  "metric": 4,
+                  "active": [
+                    1
+                  ],
+                  "standby": [],
+                  "candidates": [
+                    {
+                      "neighbor": 1,
+                      "cost": 4,
+                      "received": 10.0,
+                      "expires": 180010.0
+                    }
+                  ]
+                },
+                {
+                  "metric": 3,
+                  "active": [
+                    2
+                  ],
+                  "standby": [
+                    0
+                  ],
+                  "candidates": [
+                    {
+                      "neighbor": 0,
+                      "cost": 5,
+                      "received": 5.0,
+                      "expires": 180005.0
+                    },
+                    {
+                      "neighbor": 2,
+                      "cost": 3,
+                      "received": -2437.222631741,
+                      "expires": 177562.777368259
+                    }
+                  ]
+                },
+                {
+                  "metric": 2,
+                  "active": [
+                    3
+                  ],
+                  "standby": [
+                    1
+                  ],
+                  "candidates": [
+                    {
+                      "neighbor": 1,
+                      "cost": 4,
+                      "received": 10.0,
+                      "expires": 180010.0
+                    },
+                    {
+                      "neighbor": 3,
+                      "cost": 2,
+                      "received": -31280.789268792,
+                      "expires": 148719.210731208
+                    }
+                  ]
+                },
+                {
+                  "metric": 1,
+                  "active": [],
+                  "standby": [],
+                  "candidates": []
+                }
+              ]
+            }
+          ],
+          "messages": [
+            {
+              "id": 0,
+              "sent": 0.0,
+              "arrival": 5.0,
+              "source": 0,
+              "target": 1,
+              "kind": "trigger",
+              "metric": 4,
+              "delivered": true
+            },
+            {
+              "id": 1,
+              "sent": 5.0,
+              "arrival": 10.0,
+              "source": 1,
+              "target": 0,
+              "kind": "trigger",
+              "metric": 3,
+              "delivered": true
+            },
+            {
+              "id": 2,
+              "sent": 5.0,
+              "arrival": 10.0,
+              "source": 1,
+              "target": 2,
+              "kind": "trigger",
+              "metric": 3,
+              "delivered": true
+            }
+          ],
+          "omissions": [],
+          "packet": {
+            "injected": -2.5,
+            "path": [
+              1,
+              0,
+              1,
+              2,
+              3
+            ],
+            "arrivals": [
+              -2.5,
+              2.5,
+              7.5,
+              12.5,
+              14.5
+            ],
+            "finished": 14.5,
+            "outcome": "delivered",
+            "transmissions": 4,
+            "isls": 3,
+            "revisits": 1,
+            "native_verified": true
+          }
+        },
+        "poisoned_reverse:0": {
+          "policy": "poisoned_reverse",
+          "backups": false,
+          "states": [
+            {
+              "time": -200.0,
+              "nodes": [
+                {
+                  "metric": 2,
+                  "active": [
+                    3
+                  ],
+                  "standby": [],
+                  "candidates": [
+                    {
+                      "neighbor": 3,
+                      "cost": 2,
+                      "received": -31280.789268792,
+                      "expires": 148719.210731208
+                    }
+                  ]
+                },
+                {
+                  "metric": 3,
+                  "active": [
+                    0,
+                    2
+                  ],
+                  "standby": [],
+                  "candidates": [
+                    {
+                      "neighbor": 0,
+                      "cost": 3,
+                      "received": -27064.083060891,
+                      "expires": 152935.916939109
+                    },
+                    {
+                      "neighbor": 2,
+                      "cost": 3,
+                      "received": -2437.222631741,
+                      "expires": 177562.777368259
+                    }
+                  ]
+                },
+                {
+                  "metric": 2,
+                  "active": [
+                    3
+                  ],
+                  "standby": [],
+                  "candidates": [
+                    {
+                      "neighbor": 3,
+                      "cost": 2,
+                      "received": -31280.789268792,
+                      "expires": 148719.210731208
+                    }
+                  ]
+                },
+                {
+                  "metric": 1,
+                  "active": [],
+                  "standby": [],
+                  "candidates": []
+                }
+              ]
+            },
+            {
+              "time": 0.0,
+              "nodes": [
+                {
+                  "metric": 9,
+                  "active": [],
+                  "standby": [],
+                  "candidates": []
+                },
+                {
+                  "metric": 3,
+                  "active": [
+                    0,
+                    2
+                  ],
+                  "standby": [],
+                  "candidates": [
+                    {
+                      "neighbor": 0,
+                      "cost": 3,
+                      "received": -27064.083060891,
+                      "expires": 152935.916939109
+                    },
+                    {
+                      "neighbor": 2,
+                      "cost": 3,
+                      "received": -2437.222631741,
+                      "expires": 177562.777368259
+                    }
+                  ]
+                },
+                {
+                  "metric": 2,
+                  "active": [
+                    3
+                  ],
+                  "standby": [],
+                  "candidates": [
+                    {
+                      "neighbor": 3,
+                      "cost": 2,
+                      "received": -31280.789268792,
+                      "expires": 148719.210731208
+                    }
+                  ]
+                },
+                {
+                  "metric": 1,
+                  "active": [],
+                  "standby": [],
+                  "candidates": []
+                }
+              ]
+            },
+            {
+              "time": 5.0,
+              "nodes": [
+                {
+                  "metric": 9,
+                  "active": [],
+                  "standby": [],
+                  "candidates": []
+                },
+                {
+                  "metric": 3,
+                  "active": [
+                    2
+                  ],
+                  "standby": [],
+                  "candidates": [
+                    {
+                      "neighbor": 2,
+                      "cost": 3,
+                      "received": -2437.222631741,
+                      "expires": 177562.777368259
+                    }
+                  ]
+                },
+                {
+                  "metric": 2,
+                  "active": [
+                    3
+                  ],
+                  "standby": [],
+                  "candidates": [
+                    {
+                      "neighbor": 3,
+                      "cost": 2,
+                      "received": -31280.789268792,
+                      "expires": 148719.210731208
+                    }
+                  ]
+                },
+                {
+                  "metric": 1,
+                  "active": [],
+                  "standby": [],
+                  "candidates": []
+                }
+              ]
+            },
+            {
+              "time": 10.0,
+              "nodes": [
+                {
+                  "metric": 4,
+                  "active": [
+                    1
+                  ],
+                  "standby": [],
+                  "candidates": [
+                    {
+                      "neighbor": 1,
+                      "cost": 4,
+                      "received": 10.0,
+                      "expires": 180010.0
+                    }
+                  ]
+                },
+                {
+                  "metric": 3,
+                  "active": [
+                    2
+                  ],
+                  "standby": [],
+                  "candidates": [
+                    {
+                      "neighbor": 2,
+                      "cost": 3,
+                      "received": -2437.222631741,
+                      "expires": 177562.777368259
+                    }
+                  ]
+                },
+                {
+                  "metric": 2,
+                  "active": [
+                    3
+                  ],
+                  "standby": [],
+                  "candidates": [
+                    {
+                      "neighbor": 3,
+                      "cost": 2,
+                      "received": -31280.789268792,
+                      "expires": 148719.210731208
+                    }
+                  ]
+                },
+                {
+                  "metric": 1,
+                  "active": [],
+                  "standby": [],
+                  "candidates": []
+                }
+              ]
+            }
+          ],
+          "messages": [
+            {
+              "id": 0,
+              "sent": 0.0,
+              "arrival": 5.0,
+              "source": 0,
+              "target": 1,
+              "kind": "request",
+              "metric": null,
+              "delivered": true
+            },
+            {
+              "id": 1,
+              "sent": 0.0,
+              "arrival": 5.0,
+              "source": 0,
+              "target": 1,
+              "kind": "trigger",
+              "metric": 9,
+              "delivered": true
+            },
+            {
+              "id": 2,
+              "sent": 5.0,
+              "arrival": 10.0,
+              "source": 1,
+              "target": 0,
+              "kind": "response",
+              "metric": 9,
+              "delivered": true
+            },
+            {
+              "id": 3,
+              "sent": 5.0,
+              "arrival": 10.0,
+              "source": 1,
+              "target": 0,
+              "kind": "trigger",
+              "metric": 3,
+              "delivered": true
+            },
+            {
+              "id": 4,
+              "sent": 5.0,
+              "arrival": 10.0,
+              "source": 1,
+              "target": 2,
+              "kind": "trigger",
+              "metric": 9,
+              "delivered": true
+            },
+            {
+              "id": 5,
+              "sent": 10.0,
+              "arrival": 15.0,
+              "source": 0,
+              "target": 1,
+              "kind": "trigger",
+              "metric": 9,
+              "delivered": true
+            }
+          ],
+          "omissions": [],
+          "packet": {
+            "injected": -2.5,
+            "path": [
+              1,
+              0
+            ],
+            "arrivals": [
+              -2.5,
+              2.5
+            ],
+            "finished": 2.5,
+            "outcome": "no_route",
+            "transmissions": 1,
+            "isls": 1,
+            "revisits": 0,
+            "native_verified": true
+          }
+        },
+        "simple_split_horizon:0": {
+          "policy": "simple_split_horizon",
+          "backups": false,
+          "states": [
+            {
+              "time": -200.0,
+              "nodes": [
+                {
+                  "metric": 2,
+                  "active": [
+                    3
+                  ],
+                  "standby": [],
+                  "candidates": [
+                    {
+                      "neighbor": 3,
+                      "cost": 2,
+                      "received": -31280.789268792,
+                      "expires": 148719.210731208
+                    }
+                  ]
+                },
+                {
+                  "metric": 3,
+                  "active": [
+                    0,
+                    2
+                  ],
+                  "standby": [],
+                  "candidates": [
+                    {
+                      "neighbor": 0,
+                      "cost": 3,
+                      "received": -27064.083060891,
+                      "expires": 152935.916939109
+                    },
+                    {
+                      "neighbor": 2,
+                      "cost": 3,
+                      "received": -2437.222631741,
+                      "expires": 177562.777368259
+                    }
+                  ]
+                },
+                {
+                  "metric": 2,
+                  "active": [
+                    3
+                  ],
+                  "standby": [],
+                  "candidates": [
+                    {
+                      "neighbor": 3,
+                      "cost": 2,
+                      "received": -31280.789268792,
+                      "expires": 148719.210731208
+                    }
+                  ]
+                },
+                {
+                  "metric": 1,
+                  "active": [],
+                  "standby": [],
+                  "candidates": []
+                }
+              ]
+            },
+            {
+              "time": 0.0,
+              "nodes": [
+                {
+                  "metric": 9,
+                  "active": [],
+                  "standby": [],
+                  "candidates": []
+                },
+                {
+                  "metric": 3,
+                  "active": [
+                    0,
+                    2
+                  ],
+                  "standby": [],
+                  "candidates": [
+                    {
+                      "neighbor": 0,
+                      "cost": 3,
+                      "received": -27064.083060891,
+                      "expires": 152935.916939109
+                    },
+                    {
+                      "neighbor": 2,
+                      "cost": 3,
+                      "received": -2437.222631741,
+                      "expires": 177562.777368259
+                    }
+                  ]
+                },
+                {
+                  "metric": 2,
+                  "active": [
+                    3
+                  ],
+                  "standby": [],
+                  "candidates": [
+                    {
+                      "neighbor": 3,
+                      "cost": 2,
+                      "received": -31280.789268792,
+                      "expires": 148719.210731208
+                    }
+                  ]
+                },
+                {
+                  "metric": 1,
+                  "active": [],
+                  "standby": [],
+                  "candidates": []
+                }
+              ]
+            },
+            {
+              "time": 5.0,
+              "nodes": [
+                {
+                  "metric": 9,
+                  "active": [],
+                  "standby": [],
+                  "candidates": []
+                },
+                {
+                  "metric": 3,
+                  "active": [
+                    2
+                  ],
+                  "standby": [],
+                  "candidates": [
+                    {
+                      "neighbor": 2,
+                      "cost": 3,
+                      "received": -2437.222631741,
+                      "expires": 177562.777368259
+                    }
+                  ]
+                },
+                {
+                  "metric": 2,
+                  "active": [
+                    3
+                  ],
+                  "standby": [],
+                  "candidates": [
+                    {
+                      "neighbor": 3,
+                      "cost": 2,
+                      "received": -31280.789268792,
+                      "expires": 148719.210731208
+                    }
+                  ]
+                },
+                {
+                  "metric": 1,
+                  "active": [],
+                  "standby": [],
+                  "candidates": []
+                }
+              ]
+            },
+            {
+              "time": 10.0,
+              "nodes": [
+                {
+                  "metric": 4,
+                  "active": [
+                    1
+                  ],
+                  "standby": [],
+                  "candidates": [
+                    {
+                      "neighbor": 1,
+                      "cost": 4,
+                      "received": 10.0,
+                      "expires": 180010.0
+                    }
+                  ]
+                },
+                {
+                  "metric": 3,
+                  "active": [
+                    2
+                  ],
+                  "standby": [],
+                  "candidates": [
+                    {
+                      "neighbor": 2,
+                      "cost": 3,
+                      "received": -2437.222631741,
+                      "expires": 177562.777368259
+                    }
+                  ]
+                },
+                {
+                  "metric": 2,
+                  "active": [
+                    3
+                  ],
+                  "standby": [],
+                  "candidates": [
+                    {
+                      "neighbor": 3,
+                      "cost": 2,
+                      "received": -31280.789268792,
+                      "expires": 148719.210731208
+                    }
+                  ]
+                },
+                {
+                  "metric": 1,
+                  "active": [],
+                  "standby": [],
+                  "candidates": []
+                }
+              ]
+            }
+          ],
+          "messages": [
+            {
+              "id": 0,
+              "sent": 0.0,
+              "arrival": 5.0,
+              "source": 0,
+              "target": 1,
+              "kind": "request",
+              "metric": null,
+              "delivered": true
+            },
+            {
+              "id": 1,
+              "sent": 0.0,
+              "arrival": 5.0,
+              "source": 0,
+              "target": 1,
+              "kind": "trigger",
+              "metric": 9,
+              "delivered": true
+            },
+            {
+              "id": 2,
+              "sent": 5.0,
+              "arrival": 10.0,
+              "source": 1,
+              "target": 0,
+              "kind": "trigger",
+              "metric": 3,
+              "delivered": true
+            }
+          ],
+          "omissions": [
+            {
+              "time": 5.0,
+              "source": 1,
+              "target": 0,
+              "kind": "response"
+            },
+            {
+              "time": 5.0,
+              "source": 1,
+              "target": 2,
+              "kind": "trigger"
+            },
+            {
+              "time": 10.0,
+              "source": 0,
+              "target": 1,
+              "kind": "trigger"
+            }
+          ],
+          "packet": {
+            "injected": -2.5,
+            "path": [
+              1,
+              0
+            ],
+            "arrivals": [
+              -2.5,
+              2.5
+            ],
+            "finished": 2.5,
+            "outcome": "no_route",
+            "transmissions": 1,
+            "isls": 1,
+            "revisits": 0,
+            "native_verified": true
+          }
+        },
+        "none:0": {
+          "policy": "none",
+          "backups": false,
+          "states": [
+            {
+              "time": -200.0,
+              "nodes": [
+                {
+                  "metric": 2,
+                  "active": [
+                    3
+                  ],
+                  "standby": [],
+                  "candidates": [
+                    {
+                      "neighbor": 3,
+                      "cost": 2,
+                      "received": -31280.789268792,
+                      "expires": 148719.210731208
+                    }
+                  ]
+                },
+                {
+                  "metric": 3,
+                  "active": [
+                    0,
+                    2
+                  ],
+                  "standby": [],
+                  "candidates": [
+                    {
+                      "neighbor": 0,
+                      "cost": 3,
+                      "received": -27064.083060891,
+                      "expires": 152935.916939109
+                    },
+                    {
+                      "neighbor": 2,
+                      "cost": 3,
+                      "received": -2437.222631741,
+                      "expires": 177562.777368259
+                    }
+                  ]
+                },
+                {
+                  "metric": 2,
+                  "active": [
+                    3
+                  ],
+                  "standby": [],
+                  "candidates": [
+                    {
+                      "neighbor": 3,
+                      "cost": 2,
+                      "received": -31280.789268792,
+                      "expires": 148719.210731208
+                    }
+                  ]
+                },
+                {
+                  "metric": 1,
+                  "active": [],
+                  "standby": [],
+                  "candidates": []
+                }
+              ]
+            },
+            {
+              "time": 0.0,
+              "nodes": [
+                {
+                  "metric": 9,
+                  "active": [],
+                  "standby": [],
+                  "candidates": []
+                },
+                {
+                  "metric": 3,
+                  "active": [
+                    0,
+                    2
+                  ],
+                  "standby": [],
+                  "candidates": [
+                    {
+                      "neighbor": 0,
+                      "cost": 3,
+                      "received": -27064.083060891,
+                      "expires": 152935.916939109
+                    },
+                    {
+                      "neighbor": 2,
+                      "cost": 3,
+                      "received": -2437.222631741,
+                      "expires": 177562.777368259
+                    }
+                  ]
+                },
+                {
+                  "metric": 2,
+                  "active": [
+                    3
+                  ],
+                  "standby": [],
+                  "candidates": [
+                    {
+                      "neighbor": 3,
+                      "cost": 2,
+                      "received": -31280.789268792,
+                      "expires": 148719.210731208
+                    }
+                  ]
+                },
+                {
+                  "metric": 1,
+                  "active": [],
+                  "standby": [],
+                  "candidates": []
+                }
+              ]
+            },
+            {
+              "time": 5.0,
+              "nodes": [
+                {
+                  "metric": 9,
+                  "active": [],
+                  "standby": [],
+                  "candidates": []
+                },
+                {
+                  "metric": 3,
+                  "active": [
+                    2
+                  ],
+                  "standby": [],
+                  "candidates": [
+                    {
+                      "neighbor": 2,
+                      "cost": 3,
+                      "received": -2437.222631741,
+                      "expires": 177562.777368259
+                    }
+                  ]
+                },
+                {
+                  "metric": 2,
+                  "active": [
+                    3
+                  ],
+                  "standby": [],
+                  "candidates": [
+                    {
+                      "neighbor": 3,
+                      "cost": 2,
+                      "received": -31280.789268792,
+                      "expires": 148719.210731208
+                    }
+                  ]
+                },
+                {
+                  "metric": 1,
+                  "active": [],
+                  "standby": [],
+                  "candidates": []
+                }
+              ]
+            },
+            {
+              "time": 10.0,
+              "nodes": [
+                {
+                  "metric": 4,
+                  "active": [
+                    1
+                  ],
+                  "standby": [],
+                  "candidates": [
+                    {
+                      "neighbor": 1,
+                      "cost": 4,
+                      "received": 10.0,
+                      "expires": 180010.0
+                    }
+                  ]
+                },
+                {
+                  "metric": 3,
+                  "active": [
+                    2
+                  ],
+                  "standby": [],
+                  "candidates": [
+                    {
+                      "neighbor": 2,
+                      "cost": 3,
+                      "received": -2437.222631741,
+                      "expires": 177562.777368259
+                    }
+                  ]
+                },
+                {
+                  "metric": 2,
+                  "active": [
+                    3
+                  ],
+                  "standby": [],
+                  "candidates": [
+                    {
+                      "neighbor": 3,
+                      "cost": 2,
+                      "received": -31280.789268792,
+                      "expires": 148719.210731208
+                    }
+                  ]
+                },
+                {
+                  "metric": 1,
+                  "active": [],
+                  "standby": [],
+                  "candidates": []
+                }
+              ]
+            }
+          ],
+          "messages": [
+            {
+              "id": 0,
+              "sent": 0.0,
+              "arrival": 5.0,
+              "source": 0,
+              "target": 1,
+              "kind": "request",
+              "metric": null,
+              "delivered": true
+            },
+            {
+              "id": 1,
+              "sent": 0.0,
+              "arrival": 5.0,
+              "source": 0,
+              "target": 1,
+              "kind": "trigger",
+              "metric": 9,
+              "delivered": true
+            },
+            {
+              "id": 2,
+              "sent": 5.0,
+              "arrival": 10.0,
+              "source": 1,
+              "target": 0,
+              "kind": "response",
+              "metric": 3,
+              "delivered": true
+            },
+            {
+              "id": 3,
+              "sent": 5.0,
+              "arrival": 10.0,
+              "source": 1,
+              "target": 0,
+              "kind": "trigger",
+              "metric": 3,
+              "delivered": true
+            },
+            {
+              "id": 4,
+              "sent": 5.0,
+              "arrival": 10.0,
+              "source": 1,
+              "target": 2,
+              "kind": "trigger",
+              "metric": 3,
+              "delivered": true
+            },
+            {
+              "id": 5,
+              "sent": 10.0,
+              "arrival": 15.0,
+              "source": 0,
+              "target": 1,
+              "kind": "trigger",
+              "metric": 4,
+              "delivered": true
+            }
+          ],
+          "omissions": [],
+          "packet": {
+            "injected": -2.5,
+            "path": [
+              1,
+              0
+            ],
+            "arrivals": [
+              -2.5,
+              2.5
+            ],
+            "finished": 2.5,
+            "outcome": "no_route",
+            "transmissions": 1,
+            "isls": 1,
+            "revisits": 0,
+            "native_verified": true
+          }
+        }
+      }
+    },
+    {
+      "id": "stale-backup",
+      "title": "A stale backup can keep a loop alive",
+      "description": "B\u2019s contact is withdrawn 50 ms before A\u2019s. Both gateways advertise the same prefix. No admitted gateway contact remains after the second withdrawal.",
+      "view": [
+        -60,
+        330
+      ],
+      "nodes": [
+        {
+          "id": 0,
+          "label": "A",
+          "kind": "satellite",
+          "x": 130,
+          "y": 88
+        },
+        {
+          "id": 1,
+          "label": "B",
+          "kind": "satellite",
+          "x": 370,
+          "y": 88
+        },
+        {
+          "id": 2,
+          "label": "G\u2081",
+          "kind": "gateway",
+          "x": 130,
+          "y": 248
+        },
+        {
+          "id": 3,
+          "label": "G\u2082",
+          "kind": "gateway",
+          "x": 370,
+          "y": 248
+        }
+      ],
+      "links": [
+        {
+          "source": 0,
+          "target": 1,
+          "kind": "isl",
+          "delay_ms": 5.0
+        },
+        {
+          "source": 0,
+          "target": 2,
+          "kind": "gsl",
+          "delay_ms": 2.0
+        },
+        {
+          "source": 1,
+          "target": 3,
+          "kind": "gsl",
+          "delay_ms": 2.0
+        }
+      ],
+      "withdrawals": [
+        {
+          "time": -50.0,
+          "source": 1,
+          "target": 3,
+          "physical_down": 4950.0
+        },
+        {
+          "time": 0.0,
+          "source": 0,
+          "target": 2,
+          "physical_down": 5000.0
+        }
+      ],
+      "cases": {
+        "poisoned_reverse:1": {
+          "policy": "poisoned_reverse",
+          "backups": true,
+          "states": [
+            {
+              "time": -200.0,
+              "nodes": [
+                {
+                  "metric": 2,
+                  "active": [
+                    2
+                  ],
+                  "standby": [
+                    1
+                  ],
+                  "candidates": [
+                    {
+                      "neighbor": 1,
+                      "cost": 3,
+                      "received": -30737.535723013,
+                      "expires": 149262.464276987
+                    },
+                    {
+                      "neighbor": 2,
+                      "cost": 2,
+                      "received": -2440.222631741,
+                      "expires": 177559.777368259
+                    }
+                  ]
+                },
+                {
+                  "metric": 2,
+                  "active": [
+                    3
+                  ],
+                  "standby": [
+                    0
+                  ],
+                  "candidates": [
+                    {
+                      "neighbor": 0,
+                      "cost": 3,
+                      "received": -27064.083060891,
+                      "expires": 152935.916939109
+                    },
+                    {
+                      "neighbor": 3,
+                      "cost": 2,
+                      "received": -31280.789268792,
+                      "expires": 148719.210731208
+                    }
+                  ]
+                },
+                {
+                  "metric": 1,
+                  "active": [],
+                  "standby": [],
+                  "candidates": []
+                },
+                {
+                  "metric": 1,
+                  "active": [],
+                  "standby": [],
+                  "candidates": []
+                }
+              ]
+            },
+            {
+              "time": -50.0,
+              "nodes": [
+                {
+                  "metric": 2,
+                  "active": [
+                    2
+                  ],
+                  "standby": [
+                    1
+                  ],
+                  "candidates": [
+                    {
+                      "neighbor": 1,
+                      "cost": 3,
+                      "received": -30737.535723013,
+                      "expires": 149262.464276987
+                    },
+                    {
+                      "neighbor": 2,
+                      "cost": 2,
+                      "received": -2440.222631741,
+                      "expires": 177559.777368259
+                    }
+                  ]
+                },
+                {
+                  "metric": 3,
+                  "active": [
+                    0
+                  ],
+                  "standby": [],
+                  "candidates": [
+                    {
+                      "neighbor": 0,
+                      "cost": 3,
+                      "received": -27064.083060891,
+                      "expires": 152935.916939109
+                    }
+                  ]
+                },
+                {
+                  "metric": 1,
+                  "active": [],
+                  "standby": [],
+                  "candidates": []
+                },
+                {
+                  "metric": 1,
+                  "active": [],
+                  "standby": [],
+                  "candidates": []
+                }
+              ]
+            },
+            {
+              "time": -45.0,
+              "nodes": [
+                {
+                  "metric": 2,
+                  "active": [
+                    2
+                  ],
+                  "standby": [],
+                  "candidates": [
+                    {
+                      "neighbor": 2,
+                      "cost": 2,
+                      "received": -2440.222631741,
+                      "expires": 177559.777368259
+                    }
+                  ]
+                },
+                {
+                  "metric": 3,
+                  "active": [
+                    0
+                  ],
+                  "standby": [],
+                  "candidates": [
+                    {
+                      "neighbor": 0,
+                      "cost": 3,
+                      "received": -27064.083060891,
+                      "expires": 152935.916939109
+                    }
+                  ]
+                },
+                {
+                  "metric": 1,
+                  "active": [],
+                  "standby": [],
+                  "candidates": []
+                },
+                {
+                  "metric": 1,
+                  "active": [],
+                  "standby": [],
+                  "candidates": []
+                }
+              ]
+            },
+            {
+              "time": 0.0,
+              "nodes": [
+                {
+                  "metric": 9,
+                  "active": [],
+                  "standby": [],
+                  "candidates": []
+                },
+                {
+                  "metric": 3,
+                  "active": [
+                    0
+                  ],
+                  "standby": [],
+                  "candidates": [
+                    {
+                      "neighbor": 0,
+                      "cost": 3,
+                      "received": -27064.083060891,
+                      "expires": 152935.916939109
+                    }
+                  ]
+                },
+                {
+                  "metric": 1,
+                  "active": [],
+                  "standby": [],
+                  "candidates": []
+                },
+                {
+                  "metric": 1,
+                  "active": [],
+                  "standby": [],
+                  "candidates": []
+                }
+              ]
+            },
+            {
+              "time": 5.0,
+              "nodes": [
+                {
+                  "metric": 9,
+                  "active": [],
+                  "standby": [],
+                  "candidates": []
+                },
+                {
+                  "metric": 9,
+                  "active": [],
+                  "standby": [],
+                  "candidates": []
+                },
+                {
+                  "metric": 1,
+                  "active": [],
+                  "standby": [],
+                  "candidates": []
+                },
+                {
+                  "metric": 1,
+                  "active": [],
+                  "standby": [],
+                  "candidates": []
+                }
+              ]
+            }
+          ],
+          "messages": [
+            {
+              "id": 0,
+              "sent": -50.0,
+              "arrival": -45.0,
+              "source": 1,
+              "target": 0,
+              "kind": "trigger",
+              "metric": 9,
+              "delivered": true
+            },
+            {
+              "id": 1,
+              "sent": 0.0,
+              "arrival": 5.0,
+              "source": 0,
+              "target": 1,
+              "kind": "request",
+              "metric": null,
+              "delivered": true
+            },
+            {
+              "id": 2,
+              "sent": 0.0,
+              "arrival": 5.0,
+              "source": 0,
+              "target": 1,
+              "kind": "trigger",
+              "metric": 9,
+              "delivered": true
+            },
+            {
+              "id": 3,
+              "sent": 5.0,
+              "arrival": 10.0,
+              "source": 1,
+              "target": 0,
+              "kind": "response",
+              "metric": 9,
+              "delivered": true
+            },
+            {
+              "id": 4,
+              "sent": 5.0,
+              "arrival": 10.0,
+              "source": 1,
+              "target": 0,
+              "kind": "request",
+              "metric": null,
+              "delivered": true
+            },
+            {
+              "id": 5,
+              "sent": 5.0,
+              "arrival": 10.0,
+              "source": 1,
+              "target": 0,
+              "kind": "trigger",
+              "metric": 9,
+              "delivered": true
+            },
+            {
+              "id": 6,
+              "sent": 10.0,
+              "arrival": 15.0,
+              "source": 0,
+              "target": 1,
+              "kind": "response",
+              "metric": 9,
+              "delivered": true
+            }
+          ],
+          "omissions": [],
+          "packet": {
+            "injected": -2.5,
+            "path": [
+              1,
+              0
+            ],
+            "arrivals": [
+              -2.5,
+              2.5
+            ],
+            "finished": 2.5,
+            "outcome": "no_route",
+            "transmissions": 1,
+            "isls": 1,
+            "revisits": 0,
+            "native_verified": true
+          }
+        },
+        "simple_split_horizon:1": {
+          "policy": "simple_split_horizon",
+          "backups": true,
+          "states": [
+            {
+              "time": -200.0,
+              "nodes": [
+                {
+                  "metric": 2,
+                  "active": [
+                    2
+                  ],
+                  "standby": [
+                    1
+                  ],
+                  "candidates": [
+                    {
+                      "neighbor": 1,
+                      "cost": 3,
+                      "received": -30737.535723013,
+                      "expires": 149262.464276987
+                    },
+                    {
+                      "neighbor": 2,
+                      "cost": 2,
+                      "received": -2440.222631741,
+                      "expires": 177559.777368259
+                    }
+                  ]
+                },
+                {
+                  "metric": 2,
+                  "active": [
+                    3
+                  ],
+                  "standby": [
+                    0
+                  ],
+                  "candidates": [
+                    {
+                      "neighbor": 0,
+                      "cost": 3,
+                      "received": -27064.083060891,
+                      "expires": 152935.916939109
+                    },
+                    {
+                      "neighbor": 3,
+                      "cost": 2,
+                      "received": -31280.789268792,
+                      "expires": 148719.210731208
+                    }
+                  ]
+                },
+                {
+                  "metric": 1,
+                  "active": [],
+                  "standby": [],
+                  "candidates": []
+                },
+                {
+                  "metric": 1,
+                  "active": [],
+                  "standby": [],
+                  "candidates": []
+                }
+              ]
+            },
+            {
+              "time": -50.0,
+              "nodes": [
+                {
+                  "metric": 2,
+                  "active": [
+                    2
+                  ],
+                  "standby": [
+                    1
+                  ],
+                  "candidates": [
+                    {
+                      "neighbor": 1,
+                      "cost": 3,
+                      "received": -30737.535723013,
+                      "expires": 149262.464276987
+                    },
+                    {
+                      "neighbor": 2,
+                      "cost": 2,
+                      "received": -2440.222631741,
+                      "expires": 177559.777368259
+                    }
+                  ]
+                },
+                {
+                  "metric": 3,
+                  "active": [
+                    0
+                  ],
+                  "standby": [],
+                  "candidates": [
+                    {
+                      "neighbor": 0,
+                      "cost": 3,
+                      "received": -27064.083060891,
+                      "expires": 152935.916939109
+                    }
+                  ]
+                },
+                {
+                  "metric": 1,
+                  "active": [],
+                  "standby": [],
+                  "candidates": []
+                },
+                {
+                  "metric": 1,
+                  "active": [],
+                  "standby": [],
+                  "candidates": []
+                }
+              ]
+            },
+            {
+              "time": 0.0,
+              "nodes": [
+                {
+                  "metric": 3,
+                  "active": [
+                    1
+                  ],
+                  "standby": [],
+                  "candidates": [
+                    {
+                      "neighbor": 1,
+                      "cost": 3,
+                      "received": -30737.535723013,
+                      "expires": 149262.464276987
+                    }
+                  ]
+                },
+                {
+                  "metric": 3,
+                  "active": [
+                    0
+                  ],
+                  "standby": [],
+                  "candidates": [
+                    {
+                      "neighbor": 0,
+                      "cost": 3,
+                      "received": -27064.083060891,
+                      "expires": 152935.916939109
+                    }
+                  ]
+                },
+                {
+                  "metric": 1,
+                  "active": [],
+                  "standby": [],
+                  "candidates": []
+                },
+                {
+                  "metric": 1,
+                  "active": [],
+                  "standby": [],
+                  "candidates": []
+                }
+              ]
+            }
+          ],
+          "messages": [],
+          "omissions": [
+            {
+              "time": -50.0,
+              "source": 1,
+              "target": 0,
+              "kind": "trigger"
+            },
+            {
+              "time": 0.0,
+              "source": 0,
+              "target": 1,
+              "kind": "trigger"
+            }
+          ],
+          "packet": {
+            "injected": -2.5,
+            "path": [
+              1,
+              0,
+              1,
+              0,
+              1,
+              0,
+              1,
+              0,
+              1,
+              0,
+              1,
+              0,
+              1,
+              0,
+              1,
+              0,
+              1,
+              0,
+              1,
+              0,
+              1,
+              0,
+              1,
+              0,
+              1,
+              0,
+              1,
+              0,
+              1,
+              0,
+              1,
+              0,
+              1,
+              0,
+              1,
+              0,
+              1,
+              0,
+              1,
+              0,
+              1,
+              0,
+              1,
+              0,
+              1,
+              0,
+              1,
+              0,
+              1,
+              0,
+              1,
+              0,
+              1,
+              0,
+              1,
+              0,
+              1,
+              0,
+              1,
+              0,
+              1,
+              0,
+              1,
+              0
+            ],
+            "arrivals": [
+              -2.5,
+              2.5,
+              7.5,
+              12.5,
+              17.5,
+              22.5,
+              27.5,
+              32.5,
+              37.5,
+              42.5,
+              47.5,
+              52.5,
+              57.5,
+              62.5,
+              67.5,
+              72.5,
+              77.5,
+              82.5,
+              87.5,
+              92.5,
+              97.5,
+              102.5,
+              107.5,
+              112.5,
+              117.5,
+              122.5,
+              127.5,
+              132.5,
+              137.5,
+              142.5,
+              147.5,
+              152.5,
+              157.5,
+              162.5,
+              167.5,
+              172.5,
+              177.5,
+              182.5,
+              187.5,
+              192.5,
+              197.5,
+              202.5,
+              207.5,
+              212.5,
+              217.5,
+              222.5,
+              227.5,
+              232.5,
+              237.5,
+              242.5,
+              247.5,
+              252.5,
+              257.5,
+              262.5,
+              267.5,
+              272.5,
+              277.5,
+              282.5,
+              287.5,
+              292.5,
+              297.5,
+              302.5,
+              307.5,
+              312.5
+            ],
+            "finished": 312.5,
+            "outcome": "ttl_expired",
+            "transmissions": 63,
+            "isls": 63,
+            "revisits": 62,
+            "native_verified": true
+          }
+        },
+        "none:1": {
+          "policy": "none",
+          "backups": true,
+          "states": [
+            {
+              "time": -200.0,
+              "nodes": [
+                {
+                  "metric": 2,
+                  "active": [
+                    2
+                  ],
+                  "standby": [
+                    1
+                  ],
+                  "candidates": [
+                    {
+                      "neighbor": 1,
+                      "cost": 3,
+                      "received": -30737.535723013,
+                      "expires": 149262.464276987
+                    },
+                    {
+                      "neighbor": 2,
+                      "cost": 2,
+                      "received": -2440.222631741,
+                      "expires": 177559.777368259
+                    }
+                  ]
+                },
+                {
+                  "metric": 2,
+                  "active": [
+                    3
+                  ],
+                  "standby": [
+                    0
+                  ],
+                  "candidates": [
+                    {
+                      "neighbor": 0,
+                      "cost": 3,
+                      "received": -27064.083060891,
+                      "expires": 152935.916939109
+                    },
+                    {
+                      "neighbor": 3,
+                      "cost": 2,
+                      "received": -31280.789268792,
+                      "expires": 148719.210731208
+                    }
+                  ]
+                },
+                {
+                  "metric": 1,
+                  "active": [],
+                  "standby": [],
+                  "candidates": []
+                },
+                {
+                  "metric": 1,
+                  "active": [],
+                  "standby": [],
+                  "candidates": []
+                }
+              ]
+            },
+            {
+              "time": -50.0,
+              "nodes": [
+                {
+                  "metric": 2,
+                  "active": [
+                    2
+                  ],
+                  "standby": [
+                    1
+                  ],
+                  "candidates": [
+                    {
+                      "neighbor": 1,
+                      "cost": 3,
+                      "received": -30737.535723013,
+                      "expires": 149262.464276987
+                    },
+                    {
+                      "neighbor": 2,
+                      "cost": 2,
+                      "received": -2440.222631741,
+                      "expires": 177559.777368259
+                    }
+                  ]
+                },
+                {
+                  "metric": 3,
+                  "active": [
+                    0
+                  ],
+                  "standby": [],
+                  "candidates": [
+                    {
+                      "neighbor": 0,
+                      "cost": 3,
+                      "received": -27064.083060891,
+                      "expires": 152935.916939109
+                    }
+                  ]
+                },
+                {
+                  "metric": 1,
+                  "active": [],
+                  "standby": [],
+                  "candidates": []
+                },
+                {
+                  "metric": 1,
+                  "active": [],
+                  "standby": [],
+                  "candidates": []
+                }
+              ]
+            },
+            {
+              "time": -45.0,
+              "nodes": [
+                {
+                  "metric": 2,
+                  "active": [
+                    2
+                  ],
+                  "standby": [
+                    1
+                  ],
+                  "candidates": [
+                    {
+                      "neighbor": 1,
+                      "cost": 4,
+                      "received": -45.0,
+                      "expires": 179955.0
+                    },
+                    {
+                      "neighbor": 2,
+                      "cost": 2,
+                      "received": -2440.222631741,
+                      "expires": 177559.777368259
+                    }
+                  ]
+                },
+                {
+                  "metric": 3,
+                  "active": [
+                    0
+                  ],
+                  "standby": [],
+                  "candidates": [
+                    {
+                      "neighbor": 0,
+                      "cost": 3,
+                      "received": -27064.083060891,
+                      "expires": 152935.916939109
+                    }
+                  ]
+                },
+                {
+                  "metric": 1,
+                  "active": [],
+                  "standby": [],
+                  "candidates": []
+                },
+                {
+                  "metric": 1,
+                  "active": [],
+                  "standby": [],
+                  "candidates": []
+                }
+              ]
+            },
+            {
+              "time": 0.0,
+              "nodes": [
+                {
+                  "metric": 4,
+                  "active": [
+                    1
+                  ],
+                  "standby": [],
+                  "candidates": [
+                    {
+                      "neighbor": 1,
+                      "cost": 4,
+                      "received": -45.0,
+                      "expires": 179955.0
+                    }
+                  ]
+                },
+                {
+                  "metric": 3,
+                  "active": [
+                    0
+                  ],
+                  "standby": [],
+                  "candidates": [
+                    {
+                      "neighbor": 0,
+                      "cost": 3,
+                      "received": -27064.083060891,
+                      "expires": 152935.916939109
+                    }
+                  ]
+                },
+                {
+                  "metric": 1,
+                  "active": [],
+                  "standby": [],
+                  "candidates": []
+                },
+                {
+                  "metric": 1,
+                  "active": [],
+                  "standby": [],
+                  "candidates": []
+                }
+              ]
+            },
+            {
+              "time": 5.0,
+              "nodes": [
+                {
+                  "metric": 4,
+                  "active": [
+                    1
+                  ],
+                  "standby": [],
+                  "candidates": [
+                    {
+                      "neighbor": 1,
+                      "cost": 4,
+                      "received": -45.0,
+                      "expires": 179955.0
+                    }
+                  ]
+                },
+                {
+                  "metric": 5,
+                  "active": [
+                    0
+                  ],
+                  "standby": [],
+                  "candidates": [
+                    {
+                      "neighbor": 0,
+                      "cost": 5,
+                      "received": 5.0,
+                      "expires": 180005.0
+                    }
+                  ]
+                },
+                {
+                  "metric": 1,
+                  "active": [],
+                  "standby": [],
+                  "candidates": []
+                },
+                {
+                  "metric": 1,
+                  "active": [],
+                  "standby": [],
+                  "candidates": []
+                }
+              ]
+            },
+            {
+              "time": 10.0,
+              "nodes": [
+                {
+                  "metric": 6,
+                  "active": [
+                    1
+                  ],
+                  "standby": [],
+                  "candidates": [
+                    {
+                      "neighbor": 1,
+                      "cost": 6,
+                      "received": 10.0,
+                      "expires": 180010.0
+                    }
+                  ]
+                },
+                {
+                  "metric": 5,
+                  "active": [
+                    0
+                  ],
+                  "standby": [],
+                  "candidates": [
+                    {
+                      "neighbor": 0,
+                      "cost": 5,
+                      "received": 5.0,
+                      "expires": 180005.0
+                    }
+                  ]
+                },
+                {
+                  "metric": 1,
+                  "active": [],
+                  "standby": [],
+                  "candidates": []
+                },
+                {
+                  "metric": 1,
+                  "active": [],
+                  "standby": [],
+                  "candidates": []
+                }
+              ]
+            },
+            {
+              "time": 15.0,
+              "nodes": [
+                {
+                  "metric": 6,
+                  "active": [
+                    1
+                  ],
+                  "standby": [],
+                  "candidates": [
+                    {
+                      "neighbor": 1,
+                      "cost": 6,
+                      "received": 10.0,
+                      "expires": 180010.0
+                    }
+                  ]
+                },
+                {
+                  "metric": 7,
+                  "active": [
+                    0
+                  ],
+                  "standby": [],
+                  "candidates": [
+                    {
+                      "neighbor": 0,
+                      "cost": 7,
+                      "received": 15.0,
+                      "expires": 180015.0
+                    }
+                  ]
+                },
+                {
+                  "metric": 1,
+                  "active": [],
+                  "standby": [],
+                  "candidates": []
+                },
+                {
+                  "metric": 1,
+                  "active": [],
+                  "standby": [],
+                  "candidates": []
+                }
+              ]
+            },
+            {
+              "time": 20.0,
+              "nodes": [
+                {
+                  "metric": 8,
+                  "active": [
+                    1
+                  ],
+                  "standby": [],
+                  "candidates": [
+                    {
+                      "neighbor": 1,
+                      "cost": 8,
+                      "received": 20.0,
+                      "expires": 180020.0
+                    }
+                  ]
+                },
+                {
+                  "metric": 7,
+                  "active": [
+                    0
+                  ],
+                  "standby": [],
+                  "candidates": [
+                    {
+                      "neighbor": 0,
+                      "cost": 7,
+                      "received": 15.0,
+                      "expires": 180015.0
+                    }
+                  ]
+                },
+                {
+                  "metric": 1,
+                  "active": [],
+                  "standby": [],
+                  "candidates": []
+                },
+                {
+                  "metric": 1,
+                  "active": [],
+                  "standby": [],
+                  "candidates": []
+                }
+              ]
+            },
+            {
+              "time": 25.0,
+              "nodes": [
+                {
+                  "metric": 8,
+                  "active": [
+                    1
+                  ],
+                  "standby": [],
+                  "candidates": [
+                    {
+                      "neighbor": 1,
+                      "cost": 8,
+                      "received": 20.0,
+                      "expires": 180020.0
+                    }
+                  ]
+                },
+                {
+                  "metric": 9,
+                  "active": [],
+                  "standby": [],
+                  "candidates": []
+                },
+                {
+                  "metric": 1,
+                  "active": [],
+                  "standby": [],
+                  "candidates": []
+                },
+                {
+                  "metric": 1,
+                  "active": [],
+                  "standby": [],
+                  "candidates": []
+                }
+              ]
+            },
+            {
+              "time": 30.0,
+              "nodes": [
+                {
+                  "metric": 9,
+                  "active": [],
+                  "standby": [],
+                  "candidates": []
+                },
+                {
+                  "metric": 9,
+                  "active": [],
+                  "standby": [],
+                  "candidates": []
+                },
+                {
+                  "metric": 1,
+                  "active": [],
+                  "standby": [],
+                  "candidates": []
+                },
+                {
+                  "metric": 1,
+                  "active": [],
+                  "standby": [],
+                  "candidates": []
+                }
+              ]
+            }
+          ],
+          "messages": [
+            {
+              "id": 0,
+              "sent": -50.0,
+              "arrival": -45.0,
+              "source": 1,
+              "target": 0,
+              "kind": "trigger",
+              "metric": 3,
+              "delivered": true
+            },
+            {
+              "id": 1,
+              "sent": 0.0,
+              "arrival": 5.0,
+              "source": 0,
+              "target": 1,
+              "kind": "trigger",
+              "metric": 4,
+              "delivered": true
+            },
+            {
+              "id": 2,
+              "sent": 5.0,
+              "arrival": 10.0,
+              "source": 1,
+              "target": 0,
+              "kind": "trigger",
+              "metric": 5,
+              "delivered": true
+            },
+            {
+              "id": 3,
+              "sent": 10.0,
+              "arrival": 15.0,
+              "source": 0,
+              "target": 1,
+              "kind": "trigger",
+              "metric": 6,
+              "delivered": true
+            },
+            {
+              "id": 4,
+              "sent": 15.0,
+              "arrival": 20.0,
+              "source": 1,
+              "target": 0,
+              "kind": "trigger",
+              "metric": 7,
+              "delivered": true
+            },
+            {
+              "id": 5,
+              "sent": 20.0,
+              "arrival": 25.0,
+              "source": 0,
+              "target": 1,
+              "kind": "trigger",
+              "metric": 8,
+              "delivered": true
+            },
+            {
+              "id": 6,
+              "sent": 25.0,
+              "arrival": 30.0,
+              "source": 1,
+              "target": 0,
+              "kind": "request",
+              "metric": null,
+              "delivered": true
+            },
+            {
+              "id": 7,
+              "sent": 25.0,
+              "arrival": 30.0,
+              "source": 1,
+              "target": 0,
+              "kind": "trigger",
+              "metric": 9,
+              "delivered": true
+            },
+            {
+              "id": 8,
+              "sent": 30.0,
+              "arrival": 35.0,
+              "source": 0,
+              "target": 1,
+              "kind": "response",
+              "metric": 8,
+              "delivered": true
+            },
+            {
+              "id": 9,
+              "sent": 30.0,
+              "arrival": 35.0,
+              "source": 0,
+              "target": 1,
+              "kind": "request",
+              "metric": null,
+              "delivered": true
+            },
+            {
+              "id": 10,
+              "sent": 30.0,
+              "arrival": 35.0,
+              "source": 0,
+              "target": 1,
+              "kind": "trigger",
+              "metric": 9,
+              "delivered": true
+            },
+            {
+              "id": 11,
+              "sent": 35.0,
+              "arrival": 40.0,
+              "source": 1,
+              "target": 0,
+              "kind": "response",
+              "metric": 9,
+              "delivered": true
+            }
+          ],
+          "omissions": [],
+          "packet": {
+            "injected": -2.5,
+            "path": [
+              1,
+              0,
+              1,
+              0,
+              1,
+              0,
+              1
+            ],
+            "arrivals": [
+              -2.5,
+              2.5,
+              7.5,
+              12.5,
+              17.5,
+              22.5,
+              27.5
+            ],
+            "finished": 27.5,
+            "outcome": "no_route",
+            "transmissions": 6,
+            "isls": 6,
+            "revisits": 5,
+            "native_verified": true
+          }
+        },
+        "poisoned_reverse:0": {
+          "policy": "poisoned_reverse",
+          "backups": false,
+          "states": [
+            {
+              "time": -200.0,
+              "nodes": [
+                {
+                  "metric": 2,
+                  "active": [
+                    2
+                  ],
+                  "standby": [],
+                  "candidates": [
+                    {
+                      "neighbor": 2,
+                      "cost": 2,
+                      "received": -2440.222631741,
+                      "expires": 177559.777368259
+                    }
+                  ]
+                },
+                {
+                  "metric": 2,
+                  "active": [
+                    3
+                  ],
+                  "standby": [],
+                  "candidates": [
+                    {
+                      "neighbor": 3,
+                      "cost": 2,
+                      "received": -31280.789268792,
+                      "expires": 148719.210731208
+                    }
+                  ]
+                },
+                {
+                  "metric": 1,
+                  "active": [],
+                  "standby": [],
+                  "candidates": []
+                },
+                {
+                  "metric": 1,
+                  "active": [],
+                  "standby": [],
+                  "candidates": []
+                }
+              ]
+            },
+            {
+              "time": -50.0,
+              "nodes": [
+                {
+                  "metric": 2,
+                  "active": [
+                    2
+                  ],
+                  "standby": [],
+                  "candidates": [
+                    {
+                      "neighbor": 2,
+                      "cost": 2,
+                      "received": -2440.222631741,
+                      "expires": 177559.777368259
+                    }
+                  ]
+                },
+                {
+                  "metric": 9,
+                  "active": [],
+                  "standby": [],
+                  "candidates": []
+                },
+                {
+                  "metric": 1,
+                  "active": [],
+                  "standby": [],
+                  "candidates": []
+                },
+                {
+                  "metric": 1,
+                  "active": [],
+                  "standby": [],
+                  "candidates": []
+                }
+              ]
+            },
+            {
+              "time": -40.0,
+              "nodes": [
+                {
+                  "metric": 2,
+                  "active": [
+                    2
+                  ],
+                  "standby": [],
+                  "candidates": [
+                    {
+                      "neighbor": 2,
+                      "cost": 2,
+                      "received": -2440.222631741,
+                      "expires": 177559.777368259
+                    }
+                  ]
+                },
+                {
+                  "metric": 3,
+                  "active": [
+                    0
+                  ],
+                  "standby": [],
+                  "candidates": [
+                    {
+                      "neighbor": 0,
+                      "cost": 3,
+                      "received": -40.0,
+                      "expires": 179960.0
+                    }
+                  ]
+                },
+                {
+                  "metric": 1,
+                  "active": [],
+                  "standby": [],
+                  "candidates": []
+                },
+                {
+                  "metric": 1,
+                  "active": [],
+                  "standby": [],
+                  "candidates": []
+                }
+              ]
+            },
+            {
+              "time": 0.0,
+              "nodes": [
+                {
+                  "metric": 9,
+                  "active": [],
+                  "standby": [],
+                  "candidates": []
+                },
+                {
+                  "metric": 3,
+                  "active": [
+                    0
+                  ],
+                  "standby": [],
+                  "candidates": [
+                    {
+                      "neighbor": 0,
+                      "cost": 3,
+                      "received": -40.0,
+                      "expires": 179960.0
+                    }
+                  ]
+                },
+                {
+                  "metric": 1,
+                  "active": [],
+                  "standby": [],
+                  "candidates": []
+                },
+                {
+                  "metric": 1,
+                  "active": [],
+                  "standby": [],
+                  "candidates": []
+                }
+              ]
+            },
+            {
+              "time": 5.0,
+              "nodes": [
+                {
+                  "metric": 9,
+                  "active": [],
+                  "standby": [],
+                  "candidates": []
+                },
+                {
+                  "metric": 9,
+                  "active": [],
+                  "standby": [],
+                  "candidates": []
+                },
+                {
+                  "metric": 1,
+                  "active": [],
+                  "standby": [],
+                  "candidates": []
+                },
+                {
+                  "metric": 1,
+                  "active": [],
+                  "standby": [],
+                  "candidates": []
+                }
+              ]
+            }
+          ],
+          "messages": [
+            {
+              "id": 0,
+              "sent": -50.0,
+              "arrival": -45.0,
+              "source": 1,
+              "target": 0,
+              "kind": "request",
+              "metric": null,
+              "delivered": true
+            },
+            {
+              "id": 1,
+              "sent": -50.0,
+              "arrival": -45.0,
+              "source": 1,
+              "target": 0,
+              "kind": "trigger",
+              "metric": 9,
+              "delivered": true
+            },
+            {
+              "id": 2,
+              "sent": -45.0,
+              "arrival": -40.0,
+              "source": 0,
+              "target": 1,
+              "kind": "response",
+              "metric": 2,
+              "delivered": true
+            },
+            {
+              "id": 3,
+              "sent": -40.0,
+              "arrival": -35.0,
+              "source": 1,
+              "target": 0,
+              "kind": "trigger",
+              "metric": 9,
+              "delivered": true
+            },
+            {
+              "id": 4,
+              "sent": 0.0,
+              "arrival": 5.0,
+              "source": 0,
+              "target": 1,
+              "kind": "request",
+              "metric": null,
+              "delivered": true
+            },
+            {
+              "id": 5,
+              "sent": 0.0,
+              "arrival": 5.0,
+              "source": 0,
+              "target": 1,
+              "kind": "trigger",
+              "metric": 9,
+              "delivered": true
+            },
+            {
+              "id": 6,
+              "sent": 5.0,
+              "arrival": 10.0,
+              "source": 1,
+              "target": 0,
+              "kind": "response",
+              "metric": 9,
+              "delivered": true
+            },
+            {
+              "id": 7,
+              "sent": 5.0,
+              "arrival": 10.0,
+              "source": 1,
+              "target": 0,
+              "kind": "request",
+              "metric": null,
+              "delivered": true
+            },
+            {
+              "id": 8,
+              "sent": 5.0,
+              "arrival": 10.0,
+              "source": 1,
+              "target": 0,
+              "kind": "trigger",
+              "metric": 9,
+              "delivered": true
+            },
+            {
+              "id": 9,
+              "sent": 10.0,
+              "arrival": 15.0,
+              "source": 0,
+              "target": 1,
+              "kind": "response",
+              "metric": 9,
+              "delivered": true
+            }
+          ],
+          "omissions": [],
+          "packet": {
+            "injected": -2.5,
+            "path": [
+              1,
+              0
+            ],
+            "arrivals": [
+              -2.5,
+              2.5
+            ],
+            "finished": 2.5,
+            "outcome": "no_route",
+            "transmissions": 1,
+            "isls": 1,
+            "revisits": 0,
+            "native_verified": true
+          }
+        },
+        "simple_split_horizon:0": {
+          "policy": "simple_split_horizon",
+          "backups": false,
+          "states": [
+            {
+              "time": -200.0,
+              "nodes": [
+                {
+                  "metric": 2,
+                  "active": [
+                    2
+                  ],
+                  "standby": [],
+                  "candidates": [
+                    {
+                      "neighbor": 2,
+                      "cost": 2,
+                      "received": -2440.222631741,
+                      "expires": 177559.777368259
+                    }
+                  ]
+                },
+                {
+                  "metric": 2,
+                  "active": [
+                    3
+                  ],
+                  "standby": [],
+                  "candidates": [
+                    {
+                      "neighbor": 3,
+                      "cost": 2,
+                      "received": -31280.789268792,
+                      "expires": 148719.210731208
+                    }
+                  ]
+                },
+                {
+                  "metric": 1,
+                  "active": [],
+                  "standby": [],
+                  "candidates": []
+                },
+                {
+                  "metric": 1,
+                  "active": [],
+                  "standby": [],
+                  "candidates": []
+                }
+              ]
+            },
+            {
+              "time": -50.0,
+              "nodes": [
+                {
+                  "metric": 2,
+                  "active": [
+                    2
+                  ],
+                  "standby": [],
+                  "candidates": [
+                    {
+                      "neighbor": 2,
+                      "cost": 2,
+                      "received": -2440.222631741,
+                      "expires": 177559.777368259
+                    }
+                  ]
+                },
+                {
+                  "metric": 9,
+                  "active": [],
+                  "standby": [],
+                  "candidates": []
+                },
+                {
+                  "metric": 1,
+                  "active": [],
+                  "standby": [],
+                  "candidates": []
+                },
+                {
+                  "metric": 1,
+                  "active": [],
+                  "standby": [],
+                  "candidates": []
+                }
+              ]
+            },
+            {
+              "time": -40.0,
+              "nodes": [
+                {
+                  "metric": 2,
+                  "active": [
+                    2
+                  ],
+                  "standby": [],
+                  "candidates": [
+                    {
+                      "neighbor": 2,
+                      "cost": 2,
+                      "received": -2440.222631741,
+                      "expires": 177559.777368259
+                    }
+                  ]
+                },
+                {
+                  "metric": 3,
+                  "active": [
+                    0
+                  ],
+                  "standby": [],
+                  "candidates": [
+                    {
+                      "neighbor": 0,
+                      "cost": 3,
+                      "received": -40.0,
+                      "expires": 179960.0
+                    }
+                  ]
+                },
+                {
+                  "metric": 1,
+                  "active": [],
+                  "standby": [],
+                  "candidates": []
+                },
+                {
+                  "metric": 1,
+                  "active": [],
+                  "standby": [],
+                  "candidates": []
+                }
+              ]
+            },
+            {
+              "time": 0.0,
+              "nodes": [
+                {
+                  "metric": 9,
+                  "active": [],
+                  "standby": [],
+                  "candidates": []
+                },
+                {
+                  "metric": 3,
+                  "active": [
+                    0
+                  ],
+                  "standby": [],
+                  "candidates": [
+                    {
+                      "neighbor": 0,
+                      "cost": 3,
+                      "received": -40.0,
+                      "expires": 179960.0
+                    }
+                  ]
+                },
+                {
+                  "metric": 1,
+                  "active": [],
+                  "standby": [],
+                  "candidates": []
+                },
+                {
+                  "metric": 1,
+                  "active": [],
+                  "standby": [],
+                  "candidates": []
+                }
+              ]
+            },
+            {
+              "time": 5.0,
+              "nodes": [
+                {
+                  "metric": 9,
+                  "active": [],
+                  "standby": [],
+                  "candidates": []
+                },
+                {
+                  "metric": 9,
+                  "active": [],
+                  "standby": [],
+                  "candidates": []
+                },
+                {
+                  "metric": 1,
+                  "active": [],
+                  "standby": [],
+                  "candidates": []
+                },
+                {
+                  "metric": 1,
+                  "active": [],
+                  "standby": [],
+                  "candidates": []
+                }
+              ]
+            }
+          ],
+          "messages": [
+            {
+              "id": 0,
+              "sent": -50.0,
+              "arrival": -45.0,
+              "source": 1,
+              "target": 0,
+              "kind": "request",
+              "metric": null,
+              "delivered": true
+            },
+            {
+              "id": 1,
+              "sent": -50.0,
+              "arrival": -45.0,
+              "source": 1,
+              "target": 0,
+              "kind": "trigger",
+              "metric": 9,
+              "delivered": true
+            },
+            {
+              "id": 2,
+              "sent": -45.0,
+              "arrival": -40.0,
+              "source": 0,
+              "target": 1,
+              "kind": "response",
+              "metric": 2,
+              "delivered": true
+            },
+            {
+              "id": 3,
+              "sent": 0.0,
+              "arrival": 5.0,
+              "source": 0,
+              "target": 1,
+              "kind": "request",
+              "metric": null,
+              "delivered": true
+            },
+            {
+              "id": 4,
+              "sent": 0.0,
+              "arrival": 5.0,
+              "source": 0,
+              "target": 1,
+              "kind": "trigger",
+              "metric": 9,
+              "delivered": true
+            },
+            {
+              "id": 5,
+              "sent": 5.0,
+              "arrival": 10.0,
+              "source": 1,
+              "target": 0,
+              "kind": "request",
+              "metric": null,
+              "delivered": true
+            },
+            {
+              "id": 6,
+              "sent": 5.0,
+              "arrival": 10.0,
+              "source": 1,
+              "target": 0,
+              "kind": "trigger",
+              "metric": 9,
+              "delivered": true
+            },
+            {
+              "id": 7,
+              "sent": 10.0,
+              "arrival": 15.0,
+              "source": 0,
+              "target": 1,
+              "kind": "response",
+              "metric": 9,
+              "delivered": true
+            }
+          ],
+          "omissions": [
+            {
+              "time": -40.0,
+              "source": 1,
+              "target": 0,
+              "kind": "trigger"
+            },
+            {
+              "time": 5.0,
+              "source": 1,
+              "target": 0,
+              "kind": "response"
+            }
+          ],
+          "packet": {
+            "injected": -2.5,
+            "path": [
+              1,
+              0
+            ],
+            "arrivals": [
+              -2.5,
+              2.5
+            ],
+            "finished": 2.5,
+            "outcome": "no_route",
+            "transmissions": 1,
+            "isls": 1,
+            "revisits": 0,
+            "native_verified": true
+          }
+        },
+        "none:0": {
+          "policy": "none",
+          "backups": false,
+          "states": [
+            {
+              "time": -200.0,
+              "nodes": [
+                {
+                  "metric": 2,
+                  "active": [
+                    2
+                  ],
+                  "standby": [],
+                  "candidates": [
+                    {
+                      "neighbor": 2,
+                      "cost": 2,
+                      "received": -2440.222631741,
+                      "expires": 177559.777368259
+                    }
+                  ]
+                },
+                {
+                  "metric": 2,
+                  "active": [
+                    3
+                  ],
+                  "standby": [],
+                  "candidates": [
+                    {
+                      "neighbor": 3,
+                      "cost": 2,
+                      "received": -31280.789268792,
+                      "expires": 148719.210731208
+                    }
+                  ]
+                },
+                {
+                  "metric": 1,
+                  "active": [],
+                  "standby": [],
+                  "candidates": []
+                },
+                {
+                  "metric": 1,
+                  "active": [],
+                  "standby": [],
+                  "candidates": []
+                }
+              ]
+            },
+            {
+              "time": -50.0,
+              "nodes": [
+                {
+                  "metric": 2,
+                  "active": [
+                    2
+                  ],
+                  "standby": [],
+                  "candidates": [
+                    {
+                      "neighbor": 2,
+                      "cost": 2,
+                      "received": -2440.222631741,
+                      "expires": 177559.777368259
+                    }
+                  ]
+                },
+                {
+                  "metric": 9,
+                  "active": [],
+                  "standby": [],
+                  "candidates": []
+                },
+                {
+                  "metric": 1,
+                  "active": [],
+                  "standby": [],
+                  "candidates": []
+                },
+                {
+                  "metric": 1,
+                  "active": [],
+                  "standby": [],
+                  "candidates": []
+                }
+              ]
+            },
+            {
+              "time": -40.0,
+              "nodes": [
+                {
+                  "metric": 2,
+                  "active": [
+                    2
+                  ],
+                  "standby": [],
+                  "candidates": [
+                    {
+                      "neighbor": 2,
+                      "cost": 2,
+                      "received": -2440.222631741,
+                      "expires": 177559.777368259
+                    }
+                  ]
+                },
+                {
+                  "metric": 3,
+                  "active": [
+                    0
+                  ],
+                  "standby": [],
+                  "candidates": [
+                    {
+                      "neighbor": 0,
+                      "cost": 3,
+                      "received": -40.0,
+                      "expires": 179960.0
+                    }
+                  ]
+                },
+                {
+                  "metric": 1,
+                  "active": [],
+                  "standby": [],
+                  "candidates": []
+                },
+                {
+                  "metric": 1,
+                  "active": [],
+                  "standby": [],
+                  "candidates": []
+                }
+              ]
+            },
+            {
+              "time": 0.0,
+              "nodes": [
+                {
+                  "metric": 9,
+                  "active": [],
+                  "standby": [],
+                  "candidates": []
+                },
+                {
+                  "metric": 3,
+                  "active": [
+                    0
+                  ],
+                  "standby": [],
+                  "candidates": [
+                    {
+                      "neighbor": 0,
+                      "cost": 3,
+                      "received": -40.0,
+                      "expires": 179960.0
+                    }
+                  ]
+                },
+                {
+                  "metric": 1,
+                  "active": [],
+                  "standby": [],
+                  "candidates": []
+                },
+                {
+                  "metric": 1,
+                  "active": [],
+                  "standby": [],
+                  "candidates": []
+                }
+              ]
+            },
+            {
+              "time": 5.0,
+              "nodes": [
+                {
+                  "metric": 9,
+                  "active": [],
+                  "standby": [],
+                  "candidates": []
+                },
+                {
+                  "metric": 9,
+                  "active": [],
+                  "standby": [],
+                  "candidates": []
+                },
+                {
+                  "metric": 1,
+                  "active": [],
+                  "standby": [],
+                  "candidates": []
+                },
+                {
+                  "metric": 1,
+                  "active": [],
+                  "standby": [],
+                  "candidates": []
+                }
+              ]
+            },
+            {
+              "time": 10.0,
+              "nodes": [
+                {
+                  "metric": 9,
+                  "active": [],
+                  "standby": [],
+                  "candidates": []
+                },
+                {
+                  "metric": 9,
+                  "active": [],
+                  "standby": [],
+                  "candidates": []
+                },
+                {
+                  "metric": 1,
+                  "active": [],
+                  "standby": [],
+                  "candidates": []
+                },
+                {
+                  "metric": 1,
+                  "active": [],
+                  "standby": [],
+                  "candidates": []
+                }
+              ]
+            },
+            {
+              "time": 15.0,
+              "nodes": [
+                {
+                  "metric": 9,
+                  "active": [],
+                  "standby": [],
+                  "candidates": []
+                },
+                {
+                  "metric": 9,
+                  "active": [],
+                  "standby": [],
+                  "candidates": []
+                },
+                {
+                  "metric": 1,
+                  "active": [],
+                  "standby": [],
+                  "candidates": []
+                },
+                {
+                  "metric": 1,
+                  "active": [],
+                  "standby": [],
+                  "candidates": []
+                }
+              ]
+            }
+          ],
+          "messages": [
+            {
+              "id": 0,
+              "sent": -50.0,
+              "arrival": -45.0,
+              "source": 1,
+              "target": 0,
+              "kind": "request",
+              "metric": null,
+              "delivered": true
+            },
+            {
+              "id": 1,
+              "sent": -50.0,
+              "arrival": -45.0,
+              "source": 1,
+              "target": 0,
+              "kind": "trigger",
+              "metric": 9,
+              "delivered": true
+            },
+            {
+              "id": 2,
+              "sent": -45.0,
+              "arrival": -40.0,
+              "source": 0,
+              "target": 1,
+              "kind": "response",
+              "metric": 2,
+              "delivered": true
+            },
+            {
+              "id": 3,
+              "sent": -40.0,
+              "arrival": -35.0,
+              "source": 1,
+              "target": 0,
+              "kind": "trigger",
+              "metric": 3,
+              "delivered": true
+            },
+            {
+              "id": 4,
+              "sent": 0.0,
+              "arrival": 5.0,
+              "source": 0,
+              "target": 1,
+              "kind": "request",
+              "metric": null,
+              "delivered": true
+            },
+            {
+              "id": 5,
+              "sent": 0.0,
+              "arrival": 5.0,
+              "source": 0,
+              "target": 1,
+              "kind": "trigger",
+              "metric": 9,
+              "delivered": true
+            },
+            {
+              "id": 6,
+              "sent": 5.0,
+              "arrival": 10.0,
+              "source": 1,
+              "target": 0,
+              "kind": "response",
+              "metric": 3,
+              "delivered": true
+            },
+            {
+              "id": 7,
+              "sent": 5.0,
+              "arrival": 10.0,
+              "source": 1,
+              "target": 0,
+              "kind": "request",
+              "metric": null,
+              "delivered": true
+            },
+            {
+              "id": 8,
+              "sent": 5.0,
+              "arrival": 10.0,
+              "source": 1,
+              "target": 0,
+              "kind": "trigger",
+              "metric": 9,
+              "delivered": true
+            },
+            {
+              "id": 9,
+              "sent": 10.0,
+              "arrival": 15.0,
+              "source": 0,
+              "target": 1,
+              "kind": "response",
+              "metric": 4,
+              "delivered": true
+            },
+            {
+              "id": 10,
+              "sent": 10.0,
+              "arrival": 15.0,
+              "source": 0,
+              "target": 1,
+              "kind": "trigger",
+              "metric": 9,
+              "delivered": true
+            },
+            {
+              "id": 11,
+              "sent": 10.0,
+              "arrival": 15.0,
+              "source": 0,
+              "target": 1,
+              "kind": "request",
+              "metric": null,
+              "delivered": true
+            },
+            {
+              "id": 12,
+              "sent": 15.0,
+              "arrival": 20.0,
+              "source": 1,
+              "target": 0,
+              "kind": "response",
+              "metric": 9,
+              "delivered": true
+            },
+            {
+              "id": 13,
+              "sent": 15.0,
+              "arrival": 20.0,
+              "source": 1,
+              "target": 0,
+              "kind": "trigger",
+              "metric": 9,
+              "delivered": true
+            },
+            {
+              "id": 14,
+              "sent": 15.0,
+              "arrival": 20.0,
+              "source": 1,
+              "target": 0,
+              "kind": "request",
+              "metric": null,
+              "delivered": true
+            },
+            {
+              "id": 15,
+              "sent": 20.0,
+              "arrival": 25.0,
+              "source": 0,
+              "target": 1,
+              "kind": "response",
+              "metric": 9,
+              "delivered": true
+            }
+          ],
+          "omissions": [],
+          "packet": {
+            "injected": -2.5,
+            "path": [
+              1,
+              0
+            ],
+            "arrivals": [
+              -2.5,
+              2.5
+            ],
+            "finished": 2.5,
+            "outcome": "no_route",
+            "transmissions": 1,
+            "isls": 1,
+            "revisits": 0,
+            "native_verified": true
+          }
+        }
+      }
+    }
+  ]
+}

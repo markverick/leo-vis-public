@@ -33,3 +33,26 @@ The root entry page opens `site/` when Pages serves the `main` branch from `/ (r
 ## Refreshing the frozen export
 
 The originating research workspace exports an explicit allowlist with `python -m tools.locality.publish_static /path/to/leo-vis-public/site` after regenerating and auditing its maps. Commit the resulting files here. CI verifies manifest hashes, JSON, and relative links before deployment.
+
+## Animated routing example
+
+https://markverick.github.io/leo-vis-public/routing-demo/
+
+A standalone animation compares poisoned reverse, simple split horizon, and no
+reverse suppression with stable per-flow ECMP. Play, pause, drag the shared time
+slider, step individual events, inspect routers, and toggle retained higher-cost
+backups. Two synthetic scenes show a surviving contact that lets a backup recover
+a packet, and stale mutually dependent routes after both contacts are withdrawn.
+The second scene includes TTL exhaustion and no-route drops.
+
+The animation replays only processed toy events and a checked packet trace.
+It does not ship the research simulator, private evaluation results, user samples,
+or research figures. The drawing is schematic; the synthetic 550 km satellite
+positions give 5 ms ISLs and 2 ms gateway links. Assumptions are shown on the page.
+
+GitHub Actions runs the trace/state tests and export integrity verification before
+deploying the existing Pages artifact. Tests need only Node.js (22 in CI):
+
+```sh
+node scripts/routing-demo.test.mjs
+```

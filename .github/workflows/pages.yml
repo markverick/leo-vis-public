@@ -18,6 +18,11 @@ jobs:
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Test routing trace and time-slider state
+        run: node scripts/routing-demo.test.mjs
       - name: Verify processed data and links
         run: python3 scripts/verify.py
       - uses: actions/configure-pages@v5
