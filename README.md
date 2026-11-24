@@ -56,3 +56,14 @@ deploying the existing Pages artifact. Tests need only Node.js (22 in CI):
 ```sh
 node scripts/routing-demo.test.mjs
 ```
+
+The recovery scene deliberately selects flow 0 at −2.50 ms, inside a transient
+recovery window. A published 1,000-flow timing sweep shows that all three policies
+deliver at the tested times outside that window. The ECMP policy suppresses toward every active next
+hop and does not compute per-neighbor alternative advertisements. This is a model
+choice, not a general superiority claim or an RFC-prescribed ECMP extension.
+
+Events sharing a timestamp are grouped by the slider. The diagram shows the state
+after the group, while the event list preserves the simulator's recorded control
+processing order. Advertisements in flight reflect their sender's state at send
+time. Backup toggling compares separately prepared runs.

@@ -10,6 +10,12 @@
     "periodic_seconds": 30,
     "periodic_jitter_seconds": 5,
     "route_timeout_seconds": 180,
+    "garbage_collection_seconds": 120,
+    "protocol_seed": 42,
+    "recovery_request_on_loss": true,
+    "propagated_contact_expiry": false,
+    "notification": "immediate",
+    "reverse_suppression_scope": "All active ECMP successors; no neighbor-specific alternative-route advertisement",
     "frozen_warmup_seconds": 600,
     "withdrawal_guard_seconds": 5,
     "flow_id": 0,
@@ -36,7 +42,7 @@
     {
       "id": "surviving-contact",
       "title": "A backup carries the packet through a brief loop",
-      "description": "A\u2019s gateway contact is withdrawn. C\u2019s contact stays available. The same packet starts at B just before withdrawal.",
+      "description": "A\u2019s gateway contact is withdrawn. C\u2019s contact stays available. The selected flow sends from B at \u22122.50 ms and reaches A at +2.50 ms, during route recovery.",
       "view": [
         -10,
         35
@@ -102,7 +108,7 @@
           "time": 0.0,
           "source": 0,
           "target": 3,
-          "physical_down": 5000.0
+          "scheduled_physical_down": 5000.0
         }
       ],
       "cases": {
@@ -171,7 +177,8 @@
                   "standby": [],
                   "candidates": []
                 }
-              ]
+              ],
+              "order": 0
             },
             {
               "time": 0.0,
@@ -225,7 +232,8 @@
                   "standby": [],
                   "candidates": []
                 }
-              ]
+              ],
+              "order": 1
             },
             {
               "time": 5.0,
@@ -272,7 +280,8 @@
                   "standby": [],
                   "candidates": []
                 }
-              ]
+              ],
+              "order": 6
             },
             {
               "time": 10.0,
@@ -328,7 +337,16 @@
                   "standby": [],
                   "candidates": []
                 }
-              ]
+              ],
+              "order": 10
+            }
+          ],
+          "withdrawals": [
+            {
+              "time": 0.0,
+              "source": 0,
+              "target": 3,
+              "order": 1
             }
           ],
           "messages": [
@@ -340,7 +358,9 @@
               "target": 1,
               "kind": "request",
               "metric": null,
-              "delivered": true
+              "delivered": true,
+              "sent_order": 2,
+              "receive_order": 4
             },
             {
               "id": 1,
@@ -350,7 +370,9 @@
               "target": 1,
               "kind": "trigger",
               "metric": 9,
-              "delivered": true
+              "delivered": true,
+              "sent_order": 3,
+              "receive_order": 6
             },
             {
               "id": 2,
@@ -360,7 +382,9 @@
               "target": 0,
               "kind": "response",
               "metric": 9,
-              "delivered": true
+              "delivered": true,
+              "sent_order": 5,
+              "receive_order": 9
             },
             {
               "id": 3,
@@ -370,7 +394,9 @@
               "target": 0,
               "kind": "trigger",
               "metric": 3,
-              "delivered": true
+              "delivered": true,
+              "sent_order": 7,
+              "receive_order": 10
             },
             {
               "id": 4,
@@ -380,7 +406,9 @@
               "target": 2,
               "kind": "trigger",
               "metric": 9,
-              "delivered": true
+              "delivered": true,
+              "sent_order": 8,
+              "receive_order": 11
             },
             {
               "id": 5,
@@ -390,7 +418,9 @@
               "target": 1,
               "kind": "trigger",
               "metric": 9,
-              "delivered": true
+              "delivered": true,
+              "sent_order": 12,
+              "receive_order": 13
             }
           ],
           "omissions": [],
@@ -477,7 +507,8 @@
                   "standby": [],
                   "candidates": []
                 }
-              ]
+              ],
+              "order": 0
             },
             {
               "time": 0.0,
@@ -531,7 +562,8 @@
                   "standby": [],
                   "candidates": []
                 }
-              ]
+              ],
+              "order": 1
             },
             {
               "time": 5.0,
@@ -578,7 +610,8 @@
                   "standby": [],
                   "candidates": []
                 }
-              ]
+              ],
+              "order": 6
             },
             {
               "time": 10.0,
@@ -634,7 +667,16 @@
                   "standby": [],
                   "candidates": []
                 }
-              ]
+              ],
+              "order": 9
+            }
+          ],
+          "withdrawals": [
+            {
+              "time": 0.0,
+              "source": 0,
+              "target": 3,
+              "order": 1
             }
           ],
           "messages": [
@@ -646,7 +688,9 @@
               "target": 1,
               "kind": "request",
               "metric": null,
-              "delivered": true
+              "delivered": true,
+              "sent_order": 2,
+              "receive_order": 4
             },
             {
               "id": 1,
@@ -656,7 +700,9 @@
               "target": 1,
               "kind": "trigger",
               "metric": 9,
-              "delivered": true
+              "delivered": true,
+              "sent_order": 3,
+              "receive_order": 6
             },
             {
               "id": 2,
@@ -666,7 +712,9 @@
               "target": 0,
               "kind": "trigger",
               "metric": 3,
-              "delivered": true
+              "delivered": true,
+              "sent_order": 7,
+              "receive_order": 9
             }
           ],
           "omissions": [
@@ -674,19 +722,22 @@
               "time": 5.0,
               "source": 1,
               "target": 0,
-              "kind": "response"
+              "kind": "response",
+              "order": 5
             },
             {
               "time": 5.0,
               "source": 1,
               "target": 2,
-              "kind": "trigger"
+              "kind": "trigger",
+              "order": 8
             },
             {
               "time": 10.0,
               "source": 0,
               "target": 1,
-              "kind": "trigger"
+              "kind": "trigger",
+              "order": 10
             }
           ],
           "packet": {
@@ -788,7 +839,8 @@
                   "standby": [],
                   "candidates": []
                 }
-              ]
+              ],
+              "order": 0
             },
             {
               "time": 0.0,
@@ -859,7 +911,8 @@
                   "standby": [],
                   "candidates": []
                 }
-              ]
+              ],
+              "order": 1
             },
             {
               "time": 5.0,
@@ -931,7 +984,8 @@
                   "standby": [],
                   "candidates": []
                 }
-              ]
+              ],
+              "order": 3
             },
             {
               "time": 10.0,
@@ -1003,7 +1057,16 @@
                   "standby": [],
                   "candidates": []
                 }
-              ]
+              ],
+              "order": 7
+            }
+          ],
+          "withdrawals": [
+            {
+              "time": 0.0,
+              "source": 0,
+              "target": 3,
+              "order": 1
             }
           ],
           "messages": [
@@ -1015,7 +1078,9 @@
               "target": 1,
               "kind": "trigger",
               "metric": 4,
-              "delivered": true
+              "delivered": true,
+              "sent_order": 2,
+              "receive_order": 3
             },
             {
               "id": 1,
@@ -1025,7 +1090,9 @@
               "target": 0,
               "kind": "trigger",
               "metric": 3,
-              "delivered": true
+              "delivered": true,
+              "sent_order": 4,
+              "receive_order": 6
             },
             {
               "id": 2,
@@ -1035,7 +1102,9 @@
               "target": 2,
               "kind": "trigger",
               "metric": 3,
-              "delivered": true
+              "delivered": true,
+              "sent_order": 5,
+              "receive_order": 7
             }
           ],
           "omissions": [],
@@ -1128,7 +1197,8 @@
                   "standby": [],
                   "candidates": []
                 }
-              ]
+              ],
+              "order": 0
             },
             {
               "time": 0.0,
@@ -1182,7 +1252,8 @@
                   "standby": [],
                   "candidates": []
                 }
-              ]
+              ],
+              "order": 1
             },
             {
               "time": 5.0,
@@ -1229,7 +1300,8 @@
                   "standby": [],
                   "candidates": []
                 }
-              ]
+              ],
+              "order": 6
             },
             {
               "time": 10.0,
@@ -1285,7 +1357,16 @@
                   "standby": [],
                   "candidates": []
                 }
-              ]
+              ],
+              "order": 10
+            }
+          ],
+          "withdrawals": [
+            {
+              "time": 0.0,
+              "source": 0,
+              "target": 3,
+              "order": 1
             }
           ],
           "messages": [
@@ -1297,7 +1378,9 @@
               "target": 1,
               "kind": "request",
               "metric": null,
-              "delivered": true
+              "delivered": true,
+              "sent_order": 2,
+              "receive_order": 4
             },
             {
               "id": 1,
@@ -1307,7 +1390,9 @@
               "target": 1,
               "kind": "trigger",
               "metric": 9,
-              "delivered": true
+              "delivered": true,
+              "sent_order": 3,
+              "receive_order": 6
             },
             {
               "id": 2,
@@ -1317,7 +1402,9 @@
               "target": 0,
               "kind": "response",
               "metric": 9,
-              "delivered": true
+              "delivered": true,
+              "sent_order": 5,
+              "receive_order": 9
             },
             {
               "id": 3,
@@ -1327,7 +1414,9 @@
               "target": 0,
               "kind": "trigger",
               "metric": 3,
-              "delivered": true
+              "delivered": true,
+              "sent_order": 7,
+              "receive_order": 10
             },
             {
               "id": 4,
@@ -1337,7 +1426,9 @@
               "target": 2,
               "kind": "trigger",
               "metric": 9,
-              "delivered": true
+              "delivered": true,
+              "sent_order": 8,
+              "receive_order": 11
             },
             {
               "id": 5,
@@ -1347,7 +1438,9 @@
               "target": 1,
               "kind": "trigger",
               "metric": 9,
-              "delivered": true
+              "delivered": true,
+              "sent_order": 12,
+              "receive_order": 13
             }
           ],
           "omissions": [],
@@ -1434,7 +1527,8 @@
                   "standby": [],
                   "candidates": []
                 }
-              ]
+              ],
+              "order": 0
             },
             {
               "time": 0.0,
@@ -1488,7 +1582,8 @@
                   "standby": [],
                   "candidates": []
                 }
-              ]
+              ],
+              "order": 1
             },
             {
               "time": 5.0,
@@ -1535,7 +1630,8 @@
                   "standby": [],
                   "candidates": []
                 }
-              ]
+              ],
+              "order": 6
             },
             {
               "time": 10.0,
@@ -1591,7 +1687,16 @@
                   "standby": [],
                   "candidates": []
                 }
-              ]
+              ],
+              "order": 9
+            }
+          ],
+          "withdrawals": [
+            {
+              "time": 0.0,
+              "source": 0,
+              "target": 3,
+              "order": 1
             }
           ],
           "messages": [
@@ -1603,7 +1708,9 @@
               "target": 1,
               "kind": "request",
               "metric": null,
-              "delivered": true
+              "delivered": true,
+              "sent_order": 2,
+              "receive_order": 4
             },
             {
               "id": 1,
@@ -1613,7 +1720,9 @@
               "target": 1,
               "kind": "trigger",
               "metric": 9,
-              "delivered": true
+              "delivered": true,
+              "sent_order": 3,
+              "receive_order": 6
             },
             {
               "id": 2,
@@ -1623,7 +1732,9 @@
               "target": 0,
               "kind": "trigger",
               "metric": 3,
-              "delivered": true
+              "delivered": true,
+              "sent_order": 7,
+              "receive_order": 9
             }
           ],
           "omissions": [
@@ -1631,19 +1742,22 @@
               "time": 5.0,
               "source": 1,
               "target": 0,
-              "kind": "response"
+              "kind": "response",
+              "order": 5
             },
             {
               "time": 5.0,
               "source": 1,
               "target": 2,
-              "kind": "trigger"
+              "kind": "trigger",
+              "order": 8
             },
             {
               "time": 10.0,
               "source": 0,
               "target": 1,
-              "kind": "trigger"
+              "kind": "trigger",
+              "order": 10
             }
           ],
           "packet": {
@@ -1729,7 +1843,8 @@
                   "standby": [],
                   "candidates": []
                 }
-              ]
+              ],
+              "order": 0
             },
             {
               "time": 0.0,
@@ -1783,7 +1898,8 @@
                   "standby": [],
                   "candidates": []
                 }
-              ]
+              ],
+              "order": 1
             },
             {
               "time": 5.0,
@@ -1830,7 +1946,8 @@
                   "standby": [],
                   "candidates": []
                 }
-              ]
+              ],
+              "order": 6
             },
             {
               "time": 10.0,
@@ -1886,7 +2003,16 @@
                   "standby": [],
                   "candidates": []
                 }
-              ]
+              ],
+              "order": 9
+            }
+          ],
+          "withdrawals": [
+            {
+              "time": 0.0,
+              "source": 0,
+              "target": 3,
+              "order": 1
             }
           ],
           "messages": [
@@ -1898,7 +2024,9 @@
               "target": 1,
               "kind": "request",
               "metric": null,
-              "delivered": true
+              "delivered": true,
+              "sent_order": 2,
+              "receive_order": 4
             },
             {
               "id": 1,
@@ -1908,7 +2036,9 @@
               "target": 1,
               "kind": "trigger",
               "metric": 9,
-              "delivered": true
+              "delivered": true,
+              "sent_order": 3,
+              "receive_order": 6
             },
             {
               "id": 2,
@@ -1918,7 +2048,9 @@
               "target": 0,
               "kind": "response",
               "metric": 3,
-              "delivered": true
+              "delivered": true,
+              "sent_order": 5,
+              "receive_order": 9
             },
             {
               "id": 3,
@@ -1928,7 +2060,9 @@
               "target": 0,
               "kind": "trigger",
               "metric": 3,
-              "delivered": true
+              "delivered": true,
+              "sent_order": 7,
+              "receive_order": 10
             },
             {
               "id": 4,
@@ -1938,7 +2072,9 @@
               "target": 2,
               "kind": "trigger",
               "metric": 3,
-              "delivered": true
+              "delivered": true,
+              "sent_order": 8,
+              "receive_order": 11
             },
             {
               "id": 5,
@@ -1948,7 +2084,9 @@
               "target": 1,
               "kind": "trigger",
               "metric": 4,
-              "delivered": true
+              "delivered": true,
+              "sent_order": 12,
+              "receive_order": 13
             }
           ],
           "omissions": [],
@@ -2035,13 +2173,13 @@
           "time": -50.0,
           "source": 1,
           "target": 3,
-          "physical_down": 4950.0
+          "scheduled_physical_down": 4950.0
         },
         {
           "time": 0.0,
           "source": 0,
           "target": 2,
-          "physical_down": 5000.0
+          "scheduled_physical_down": 5000.0
         }
       ],
       "cases": {
@@ -2110,7 +2248,8 @@
                   "standby": [],
                   "candidates": []
                 }
-              ]
+              ],
+              "order": 0
             },
             {
               "time": -50.0,
@@ -2165,7 +2304,8 @@
                   "standby": [],
                   "candidates": []
                 }
-              ]
+              ],
+              "order": 1
             },
             {
               "time": -45.0,
@@ -2212,7 +2352,8 @@
                   "standby": [],
                   "candidates": []
                 }
-              ]
+              ],
+              "order": 3
             },
             {
               "time": 0.0,
@@ -2250,7 +2391,8 @@
                   "standby": [],
                   "candidates": []
                 }
-              ]
+              ],
+              "order": 4
             },
             {
               "time": 5.0,
@@ -2279,7 +2421,22 @@
                   "standby": [],
                   "candidates": []
                 }
-              ]
+              ],
+              "order": 9
+            }
+          ],
+          "withdrawals": [
+            {
+              "time": -50.0,
+              "source": 1,
+              "target": 3,
+              "order": 1
+            },
+            {
+              "time": 0.0,
+              "source": 0,
+              "target": 2,
+              "order": 4
             }
           ],
           "messages": [
@@ -2291,7 +2448,9 @@
               "target": 0,
               "kind": "trigger",
               "metric": 9,
-              "delivered": true
+              "delivered": true,
+              "sent_order": 2,
+              "receive_order": 3
             },
             {
               "id": 1,
@@ -2301,7 +2460,9 @@
               "target": 1,
               "kind": "request",
               "metric": null,
-              "delivered": true
+              "delivered": true,
+              "sent_order": 5,
+              "receive_order": 7
             },
             {
               "id": 2,
@@ -2311,7 +2472,9 @@
               "target": 1,
               "kind": "trigger",
               "metric": 9,
-              "delivered": true
+              "delivered": true,
+              "sent_order": 6,
+              "receive_order": 9
             },
             {
               "id": 3,
@@ -2321,7 +2484,9 @@
               "target": 0,
               "kind": "response",
               "metric": 9,
-              "delivered": true
+              "delivered": true,
+              "sent_order": 8,
+              "receive_order": 12
             },
             {
               "id": 4,
@@ -2331,7 +2496,9 @@
               "target": 0,
               "kind": "request",
               "metric": null,
-              "delivered": true
+              "delivered": true,
+              "sent_order": 10,
+              "receive_order": 13
             },
             {
               "id": 5,
@@ -2341,7 +2508,9 @@
               "target": 0,
               "kind": "trigger",
               "metric": 9,
-              "delivered": true
+              "delivered": true,
+              "sent_order": 11,
+              "receive_order": 15
             },
             {
               "id": 6,
@@ -2351,7 +2520,9 @@
               "target": 1,
               "kind": "response",
               "metric": 9,
-              "delivered": true
+              "delivered": true,
+              "sent_order": 14,
+              "receive_order": 16
             }
           ],
           "omissions": [],
@@ -2438,7 +2609,8 @@
                   "standby": [],
                   "candidates": []
                 }
-              ]
+              ],
+              "order": 0
             },
             {
               "time": -50.0,
@@ -2493,7 +2665,8 @@
                   "standby": [],
                   "candidates": []
                 }
-              ]
+              ],
+              "order": 1
             },
             {
               "time": 0.0,
@@ -2540,7 +2713,22 @@
                   "standby": [],
                   "candidates": []
                 }
-              ]
+              ],
+              "order": 3
+            }
+          ],
+          "withdrawals": [
+            {
+              "time": -50.0,
+              "source": 1,
+              "target": 3,
+              "order": 1
+            },
+            {
+              "time": 0.0,
+              "source": 0,
+              "target": 2,
+              "order": 3
             }
           ],
           "messages": [],
@@ -2549,13 +2737,15 @@
               "time": -50.0,
               "source": 1,
               "target": 0,
-              "kind": "trigger"
+              "kind": "trigger",
+              "order": 2
             },
             {
               "time": 0.0,
               "source": 0,
               "target": 1,
-              "kind": "trigger"
+              "kind": "trigger",
+              "order": 4
             }
           ],
           "packet": {
@@ -2765,7 +2955,8 @@
                   "standby": [],
                   "candidates": []
                 }
-              ]
+              ],
+              "order": 0
             },
             {
               "time": -50.0,
@@ -2820,7 +3011,8 @@
                   "standby": [],
                   "candidates": []
                 }
-              ]
+              ],
+              "order": 1
             },
             {
               "time": -45.0,
@@ -2875,7 +3067,8 @@
                   "standby": [],
                   "candidates": []
                 }
-              ]
+              ],
+              "order": 3
             },
             {
               "time": 0.0,
@@ -2922,7 +3115,8 @@
                   "standby": [],
                   "candidates": []
                 }
-              ]
+              ],
+              "order": 4
             },
             {
               "time": 5.0,
@@ -2969,7 +3163,8 @@
                   "standby": [],
                   "candidates": []
                 }
-              ]
+              ],
+              "order": 6
             },
             {
               "time": 10.0,
@@ -3016,7 +3211,8 @@
                   "standby": [],
                   "candidates": []
                 }
-              ]
+              ],
+              "order": 8
             },
             {
               "time": 15.0,
@@ -3063,7 +3259,8 @@
                   "standby": [],
                   "candidates": []
                 }
-              ]
+              ],
+              "order": 10
             },
             {
               "time": 20.0,
@@ -3110,7 +3307,8 @@
                   "standby": [],
                   "candidates": []
                 }
-              ]
+              ],
+              "order": 12
             },
             {
               "time": 25.0,
@@ -3148,7 +3346,8 @@
                   "standby": [],
                   "candidates": []
                 }
-              ]
+              ],
+              "order": 14
             },
             {
               "time": 30.0,
@@ -3177,7 +3376,22 @@
                   "standby": [],
                   "candidates": []
                 }
-              ]
+              ],
+              "order": 19
+            }
+          ],
+          "withdrawals": [
+            {
+              "time": -50.0,
+              "source": 1,
+              "target": 3,
+              "order": 1
+            },
+            {
+              "time": 0.0,
+              "source": 0,
+              "target": 2,
+              "order": 4
             }
           ],
           "messages": [
@@ -3189,7 +3403,9 @@
               "target": 0,
               "kind": "trigger",
               "metric": 3,
-              "delivered": true
+              "delivered": true,
+              "sent_order": 2,
+              "receive_order": 3
             },
             {
               "id": 1,
@@ -3199,7 +3415,9 @@
               "target": 1,
               "kind": "trigger",
               "metric": 4,
-              "delivered": true
+              "delivered": true,
+              "sent_order": 5,
+              "receive_order": 6
             },
             {
               "id": 2,
@@ -3209,7 +3427,9 @@
               "target": 0,
               "kind": "trigger",
               "metric": 5,
-              "delivered": true
+              "delivered": true,
+              "sent_order": 7,
+              "receive_order": 8
             },
             {
               "id": 3,
@@ -3219,7 +3439,9 @@
               "target": 1,
               "kind": "trigger",
               "metric": 6,
-              "delivered": true
+              "delivered": true,
+              "sent_order": 9,
+              "receive_order": 10
             },
             {
               "id": 4,
@@ -3229,7 +3451,9 @@
               "target": 0,
               "kind": "trigger",
               "metric": 7,
-              "delivered": true
+              "delivered": true,
+              "sent_order": 11,
+              "receive_order": 12
             },
             {
               "id": 5,
@@ -3239,7 +3463,9 @@
               "target": 1,
               "kind": "trigger",
               "metric": 8,
-              "delivered": true
+              "delivered": true,
+              "sent_order": 13,
+              "receive_order": 14
             },
             {
               "id": 6,
@@ -3249,7 +3475,9 @@
               "target": 0,
               "kind": "request",
               "metric": null,
-              "delivered": true
+              "delivered": true,
+              "sent_order": 15,
+              "receive_order": 17
             },
             {
               "id": 7,
@@ -3259,7 +3487,9 @@
               "target": 0,
               "kind": "trigger",
               "metric": 9,
-              "delivered": true
+              "delivered": true,
+              "sent_order": 16,
+              "receive_order": 19
             },
             {
               "id": 8,
@@ -3269,7 +3499,9 @@
               "target": 1,
               "kind": "response",
               "metric": 8,
-              "delivered": true
+              "delivered": true,
+              "sent_order": 18,
+              "receive_order": 22
             },
             {
               "id": 9,
@@ -3279,7 +3511,9 @@
               "target": 1,
               "kind": "request",
               "metric": null,
-              "delivered": true
+              "delivered": true,
+              "sent_order": 20,
+              "receive_order": 23
             },
             {
               "id": 10,
@@ -3289,7 +3523,9 @@
               "target": 1,
               "kind": "trigger",
               "metric": 9,
-              "delivered": true
+              "delivered": true,
+              "sent_order": 21,
+              "receive_order": 25
             },
             {
               "id": 11,
@@ -3299,7 +3535,9 @@
               "target": 0,
               "kind": "response",
               "metric": 9,
-              "delivered": true
+              "delivered": true,
+              "sent_order": 24,
+              "receive_order": 26
             }
           ],
           "omissions": [],
@@ -3380,7 +3618,8 @@
                   "standby": [],
                   "candidates": []
                 }
-              ]
+              ],
+              "order": 0
             },
             {
               "time": -50.0,
@@ -3418,7 +3657,8 @@
                   "standby": [],
                   "candidates": []
                 }
-              ]
+              ],
+              "order": 1
             },
             {
               "time": -40.0,
@@ -3465,7 +3705,8 @@
                   "standby": [],
                   "candidates": []
                 }
-              ]
+              ],
+              "order": 7
             },
             {
               "time": 0.0,
@@ -3503,7 +3744,8 @@
                   "standby": [],
                   "candidates": []
                 }
-              ]
+              ],
+              "order": 10
             },
             {
               "time": 5.0,
@@ -3532,7 +3774,22 @@
                   "standby": [],
                   "candidates": []
                 }
-              ]
+              ],
+              "order": 15
+            }
+          ],
+          "withdrawals": [
+            {
+              "time": -50.0,
+              "source": 1,
+              "target": 3,
+              "order": 1
+            },
+            {
+              "time": 0.0,
+              "source": 0,
+              "target": 2,
+              "order": 10
             }
           ],
           "messages": [
@@ -3544,7 +3801,9 @@
               "target": 0,
               "kind": "request",
               "metric": null,
-              "delivered": true
+              "delivered": true,
+              "sent_order": 2,
+              "receive_order": 4
             },
             {
               "id": 1,
@@ -3554,7 +3813,9 @@
               "target": 0,
               "kind": "trigger",
               "metric": 9,
-              "delivered": true
+              "delivered": true,
+              "sent_order": 3,
+              "receive_order": 6
             },
             {
               "id": 2,
@@ -3564,7 +3825,9 @@
               "target": 1,
               "kind": "response",
               "metric": 2,
-              "delivered": true
+              "delivered": true,
+              "sent_order": 5,
+              "receive_order": 7
             },
             {
               "id": 3,
@@ -3574,7 +3837,9 @@
               "target": 0,
               "kind": "trigger",
               "metric": 9,
-              "delivered": true
+              "delivered": true,
+              "sent_order": 8,
+              "receive_order": 9
             },
             {
               "id": 4,
@@ -3584,7 +3849,9 @@
               "target": 1,
               "kind": "request",
               "metric": null,
-              "delivered": true
+              "delivered": true,
+              "sent_order": 11,
+              "receive_order": 13
             },
             {
               "id": 5,
@@ -3594,7 +3861,9 @@
               "target": 1,
               "kind": "trigger",
               "metric": 9,
-              "delivered": true
+              "delivered": true,
+              "sent_order": 12,
+              "receive_order": 15
             },
             {
               "id": 6,
@@ -3604,7 +3873,9 @@
               "target": 0,
               "kind": "response",
               "metric": 9,
-              "delivered": true
+              "delivered": true,
+              "sent_order": 14,
+              "receive_order": 18
             },
             {
               "id": 7,
@@ -3614,7 +3885,9 @@
               "target": 0,
               "kind": "request",
               "metric": null,
-              "delivered": true
+              "delivered": true,
+              "sent_order": 16,
+              "receive_order": 19
             },
             {
               "id": 8,
@@ -3624,7 +3897,9 @@
               "target": 0,
               "kind": "trigger",
               "metric": 9,
-              "delivered": true
+              "delivered": true,
+              "sent_order": 17,
+              "receive_order": 21
             },
             {
               "id": 9,
@@ -3634,7 +3909,9 @@
               "target": 1,
               "kind": "response",
               "metric": 9,
-              "delivered": true
+              "delivered": true,
+              "sent_order": 20,
+              "receive_order": 22
             }
           ],
           "omissions": [],
@@ -3705,7 +3982,8 @@
                   "standby": [],
                   "candidates": []
                 }
-              ]
+              ],
+              "order": 0
             },
             {
               "time": -50.0,
@@ -3743,7 +4021,8 @@
                   "standby": [],
                   "candidates": []
                 }
-              ]
+              ],
+              "order": 1
             },
             {
               "time": -40.0,
@@ -3790,7 +4069,8 @@
                   "standby": [],
                   "candidates": []
                 }
-              ]
+              ],
+              "order": 7
             },
             {
               "time": 0.0,
@@ -3828,7 +4108,8 @@
                   "standby": [],
                   "candidates": []
                 }
-              ]
+              ],
+              "order": 9
             },
             {
               "time": 5.0,
@@ -3857,7 +4138,22 @@
                   "standby": [],
                   "candidates": []
                 }
-              ]
+              ],
+              "order": 14
+            }
+          ],
+          "withdrawals": [
+            {
+              "time": -50.0,
+              "source": 1,
+              "target": 3,
+              "order": 1
+            },
+            {
+              "time": 0.0,
+              "source": 0,
+              "target": 2,
+              "order": 9
             }
           ],
           "messages": [
@@ -3869,7 +4165,9 @@
               "target": 0,
               "kind": "request",
               "metric": null,
-              "delivered": true
+              "delivered": true,
+              "sent_order": 2,
+              "receive_order": 4
             },
             {
               "id": 1,
@@ -3879,7 +4177,9 @@
               "target": 0,
               "kind": "trigger",
               "metric": 9,
-              "delivered": true
+              "delivered": true,
+              "sent_order": 3,
+              "receive_order": 6
             },
             {
               "id": 2,
@@ -3889,7 +4189,9 @@
               "target": 1,
               "kind": "response",
               "metric": 2,
-              "delivered": true
+              "delivered": true,
+              "sent_order": 5,
+              "receive_order": 7
             },
             {
               "id": 3,
@@ -3899,7 +4201,9 @@
               "target": 1,
               "kind": "request",
               "metric": null,
-              "delivered": true
+              "delivered": true,
+              "sent_order": 10,
+              "receive_order": 12
             },
             {
               "id": 4,
@@ -3909,7 +4213,9 @@
               "target": 1,
               "kind": "trigger",
               "metric": 9,
-              "delivered": true
+              "delivered": true,
+              "sent_order": 11,
+              "receive_order": 14
             },
             {
               "id": 5,
@@ -3919,7 +4225,9 @@
               "target": 0,
               "kind": "request",
               "metric": null,
-              "delivered": true
+              "delivered": true,
+              "sent_order": 15,
+              "receive_order": 17
             },
             {
               "id": 6,
@@ -3929,7 +4237,9 @@
               "target": 0,
               "kind": "trigger",
               "metric": 9,
-              "delivered": true
+              "delivered": true,
+              "sent_order": 16,
+              "receive_order": 19
             },
             {
               "id": 7,
@@ -3939,7 +4249,9 @@
               "target": 1,
               "kind": "response",
               "metric": 9,
-              "delivered": true
+              "delivered": true,
+              "sent_order": 18,
+              "receive_order": 20
             }
           ],
           "omissions": [
@@ -3947,13 +4259,15 @@
               "time": -40.0,
               "source": 1,
               "target": 0,
-              "kind": "trigger"
+              "kind": "trigger",
+              "order": 8
             },
             {
               "time": 5.0,
               "source": 1,
               "target": 0,
-              "kind": "response"
+              "kind": "response",
+              "order": 13
             }
           ],
           "packet": {
@@ -4023,7 +4337,8 @@
                   "standby": [],
                   "candidates": []
                 }
-              ]
+              ],
+              "order": 0
             },
             {
               "time": -50.0,
@@ -4061,7 +4376,8 @@
                   "standby": [],
                   "candidates": []
                 }
-              ]
+              ],
+              "order": 1
             },
             {
               "time": -40.0,
@@ -4108,7 +4424,8 @@
                   "standby": [],
                   "candidates": []
                 }
-              ]
+              ],
+              "order": 7
             },
             {
               "time": 0.0,
@@ -4146,7 +4463,8 @@
                   "standby": [],
                   "candidates": []
                 }
-              ]
+              ],
+              "order": 10
             },
             {
               "time": 5.0,
@@ -4175,7 +4493,8 @@
                   "standby": [],
                   "candidates": []
                 }
-              ]
+              ],
+              "order": 15
             },
             {
               "time": 10.0,
@@ -4204,7 +4523,8 @@
                   "standby": [],
                   "candidates": []
                 }
-              ]
+              ],
+              "order": 21
             },
             {
               "time": 15.0,
@@ -4233,7 +4553,22 @@
                   "standby": [],
                   "candidates": []
                 }
-              ]
+              ],
+              "order": 25
+            }
+          ],
+          "withdrawals": [
+            {
+              "time": -50.0,
+              "source": 1,
+              "target": 3,
+              "order": 1
+            },
+            {
+              "time": 0.0,
+              "source": 0,
+              "target": 2,
+              "order": 10
             }
           ],
           "messages": [
@@ -4245,7 +4580,9 @@
               "target": 0,
               "kind": "request",
               "metric": null,
-              "delivered": true
+              "delivered": true,
+              "sent_order": 2,
+              "receive_order": 4
             },
             {
               "id": 1,
@@ -4255,7 +4592,9 @@
               "target": 0,
               "kind": "trigger",
               "metric": 9,
-              "delivered": true
+              "delivered": true,
+              "sent_order": 3,
+              "receive_order": 6
             },
             {
               "id": 2,
@@ -4265,7 +4604,9 @@
               "target": 1,
               "kind": "response",
               "metric": 2,
-              "delivered": true
+              "delivered": true,
+              "sent_order": 5,
+              "receive_order": 7
             },
             {
               "id": 3,
@@ -4275,7 +4616,9 @@
               "target": 0,
               "kind": "trigger",
               "metric": 3,
-              "delivered": true
+              "delivered": true,
+              "sent_order": 8,
+              "receive_order": 9
             },
             {
               "id": 4,
@@ -4285,7 +4628,9 @@
               "target": 1,
               "kind": "request",
               "metric": null,
-              "delivered": true
+              "delivered": true,
+              "sent_order": 11,
+              "receive_order": 13
             },
             {
               "id": 5,
@@ -4295,7 +4640,9 @@
               "target": 1,
               "kind": "trigger",
               "metric": 9,
-              "delivered": true
+              "delivered": true,
+              "sent_order": 12,
+              "receive_order": 15
             },
             {
               "id": 6,
@@ -4305,7 +4652,9 @@
               "target": 0,
               "kind": "response",
               "metric": 3,
-              "delivered": true
+              "delivered": true,
+              "sent_order": 14,
+              "receive_order": 18
             },
             {
               "id": 7,
@@ -4315,7 +4664,9 @@
               "target": 0,
               "kind": "request",
               "metric": null,
-              "delivered": true
+              "delivered": true,
+              "sent_order": 16,
+              "receive_order": 19
             },
             {
               "id": 8,
@@ -4325,7 +4676,9 @@
               "target": 0,
               "kind": "trigger",
               "metric": 9,
-              "delivered": true
+              "delivered": true,
+              "sent_order": 17,
+              "receive_order": 21
             },
             {
               "id": 9,
@@ -4335,7 +4688,9 @@
               "target": 1,
               "kind": "response",
               "metric": 4,
-              "delivered": true
+              "delivered": true,
+              "sent_order": 20,
+              "receive_order": 24
             },
             {
               "id": 10,
@@ -4345,7 +4700,9 @@
               "target": 1,
               "kind": "trigger",
               "metric": 9,
-              "delivered": true
+              "delivered": true,
+              "sent_order": 22,
+              "receive_order": 25
             },
             {
               "id": 11,
@@ -4355,7 +4712,9 @@
               "target": 1,
               "kind": "request",
               "metric": null,
-              "delivered": true
+              "delivered": true,
+              "sent_order": 23,
+              "receive_order": 26
             },
             {
               "id": 12,
@@ -4365,7 +4724,9 @@
               "target": 0,
               "kind": "response",
               "metric": 9,
-              "delivered": true
+              "delivered": true,
+              "sent_order": 27,
+              "receive_order": 30
             },
             {
               "id": 13,
@@ -4375,7 +4736,9 @@
               "target": 0,
               "kind": "trigger",
               "metric": 9,
-              "delivered": true
+              "delivered": true,
+              "sent_order": 28,
+              "receive_order": 31
             },
             {
               "id": 14,
@@ -4385,7 +4748,9 @@
               "target": 0,
               "kind": "request",
               "metric": null,
-              "delivered": true
+              "delivered": true,
+              "sent_order": 29,
+              "receive_order": 32
             },
             {
               "id": 15,
@@ -4395,7 +4760,9 @@
               "target": 1,
               "kind": "response",
               "metric": 9,
-              "delivered": true
+              "delivered": true,
+              "sent_order": 33,
+              "receive_order": 34
             }
           ],
           "omissions": [],
@@ -4419,5 +4786,224 @@
         }
       }
     }
-  ]
+  ],
+  "timing_sensitivity": {
+    "flows": 1000,
+    "flow_ids": [
+      0,
+      999
+    ],
+    "source": "B",
+    "backups": true,
+    "rows": [
+      {
+        "injection_ms": -10.0,
+        "results": {
+          "poisoned_reverse": {
+            "delivered": 1000,
+            "no_route": 0,
+            "ttl_drops": 0,
+            "revisited": 0
+          },
+          "simple_split_horizon": {
+            "delivered": 1000,
+            "no_route": 0,
+            "ttl_drops": 0,
+            "revisited": 0
+          },
+          "none": {
+            "delivered": 1000,
+            "no_route": 0,
+            "ttl_drops": 0,
+            "revisited": 0
+          }
+        }
+      },
+      {
+        "injection_ms": -5.0,
+        "results": {
+          "poisoned_reverse": {
+            "delivered": 505,
+            "no_route": 495,
+            "ttl_drops": 0,
+            "revisited": 0
+          },
+          "simple_split_horizon": {
+            "delivered": 505,
+            "no_route": 495,
+            "ttl_drops": 0,
+            "revisited": 0
+          },
+          "none": {
+            "delivered": 1000,
+            "no_route": 0,
+            "ttl_drops": 0,
+            "revisited": 495
+          }
+        }
+      },
+      {
+        "injection_ms": -2.5,
+        "results": {
+          "poisoned_reverse": {
+            "delivered": 505,
+            "no_route": 495,
+            "ttl_drops": 0,
+            "revisited": 0
+          },
+          "simple_split_horizon": {
+            "delivered": 505,
+            "no_route": 495,
+            "ttl_drops": 0,
+            "revisited": 0
+          },
+          "none": {
+            "delivered": 1000,
+            "no_route": 0,
+            "ttl_drops": 0,
+            "revisited": 495
+          }
+        }
+      },
+      {
+        "injection_ms": 0.0,
+        "results": {
+          "poisoned_reverse": {
+            "delivered": 505,
+            "no_route": 495,
+            "ttl_drops": 0,
+            "revisited": 0
+          },
+          "simple_split_horizon": {
+            "delivered": 505,
+            "no_route": 495,
+            "ttl_drops": 0,
+            "revisited": 0
+          },
+          "none": {
+            "delivered": 1000,
+            "no_route": 0,
+            "ttl_drops": 0,
+            "revisited": 495
+          }
+        }
+      },
+      {
+        "injection_ms": 2.5,
+        "results": {
+          "poisoned_reverse": {
+            "delivered": 505,
+            "no_route": 495,
+            "ttl_drops": 0,
+            "revisited": 0
+          },
+          "simple_split_horizon": {
+            "delivered": 505,
+            "no_route": 495,
+            "ttl_drops": 0,
+            "revisited": 0
+          },
+          "none": {
+            "delivered": 1000,
+            "no_route": 0,
+            "ttl_drops": 0,
+            "revisited": 495
+          }
+        }
+      },
+      {
+        "injection_ms": 5.0,
+        "results": {
+          "poisoned_reverse": {
+            "delivered": 1000,
+            "no_route": 0,
+            "ttl_drops": 0,
+            "revisited": 0
+          },
+          "simple_split_horizon": {
+            "delivered": 1000,
+            "no_route": 0,
+            "ttl_drops": 0,
+            "revisited": 0
+          },
+          "none": {
+            "delivered": 1000,
+            "no_route": 0,
+            "ttl_drops": 0,
+            "revisited": 0
+          }
+        }
+      },
+      {
+        "injection_ms": 7.5,
+        "results": {
+          "poisoned_reverse": {
+            "delivered": 1000,
+            "no_route": 0,
+            "ttl_drops": 0,
+            "revisited": 0
+          },
+          "simple_split_horizon": {
+            "delivered": 1000,
+            "no_route": 0,
+            "ttl_drops": 0,
+            "revisited": 0
+          },
+          "none": {
+            "delivered": 1000,
+            "no_route": 0,
+            "ttl_drops": 0,
+            "revisited": 0
+          }
+        }
+      },
+      {
+        "injection_ms": 10.0,
+        "results": {
+          "poisoned_reverse": {
+            "delivered": 1000,
+            "no_route": 0,
+            "ttl_drops": 0,
+            "revisited": 0
+          },
+          "simple_split_horizon": {
+            "delivered": 1000,
+            "no_route": 0,
+            "ttl_drops": 0,
+            "revisited": 0
+          },
+          "none": {
+            "delivered": 1000,
+            "no_route": 0,
+            "ttl_drops": 0,
+            "revisited": 0
+          }
+        }
+      },
+      {
+        "injection_ms": 15.0,
+        "results": {
+          "poisoned_reverse": {
+            "delivered": 1000,
+            "no_route": 0,
+            "ttl_drops": 0,
+            "revisited": 0
+          },
+          "simple_split_horizon": {
+            "delivered": 1000,
+            "no_route": 0,
+            "ttl_drops": 0,
+            "revisited": 0
+          },
+          "none": {
+            "delivered": 1000,
+            "no_route": 0,
+            "ttl_drops": 0,
+            "revisited": 0
+          }
+        }
+      }
+    ],
+    "scope": "Fixed source B, same prepared toy topology and FIBs, one packet per flow at each chosen phase. This tests sensitivity of the illustrative example, not representative traffic or independent deployments."
+  }
 }

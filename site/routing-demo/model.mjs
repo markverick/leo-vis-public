@@ -25,15 +25,17 @@ export function timeStops(scene, runs) {
 }
 export function timeline(scene, run) {
   const name=i=>scene.nodes[i].label, metric=m=>m===null?'empty':m>=9?'∞':String(m);
-  const items=scene.withdrawals.map(e=>({time:e.time,type:'contact',text:`${name(e.source)}–${name(e.target)} withdrawn from routing`}));
+  const items=(run.withdrawals||scene.withdrawals).map(e=>({time:e.time,type:'contact',priority:0,order:e.order??0,text:`${name(e.source)}–${name(e.target)} withdrawn from routing`}));
   for(const m of run.messages){
-    items.push({time:m.sent,type:'send',text:m.kind==='request'?`${name(m.source)} → ${name(m.target)}: request`:`${name(m.source)} → ${name(m.target)}: advertise ${metric(m.metric)}`});
-    items.push({time:m.arrival,type:'receive',text:`${name(m.target)} ${m.delivered?'receives':'does not receive'} ${m.kind==='request'?'request':metric(m.metric)} from ${name(m.source)}`});
+    items.push({time:m.sent,type:'send',priority:0,order:m.sent_order,message_id:m.id,phase:'send',text:m.kind==='request'?`${name(m.source)} → ${name(m.target)}: request`:`${name(m.source)} → ${name(m.target)}: advertise ${metric(m.metric)}`});
+    items.push({time:m.arrival,type:'receive',priority:0,order:m.receive_order??Number.MAX_SAFE_INTEGER,message_id:m.id,phase:'receive',text:`${name(m.target)} ${m.delivered?'receives':'does not receive'} ${m.kind==='request'?'request':metric(m.metric)} from ${name(m.source)}`});
   }
-  for(const e of run.omissions)items.push({time:e.time,type:'omit',text:`${name(e.source)} → ${name(e.target)}: prefix omitted; no notification`});
+  for(const e of run.omissions)items.push({time:e.time,type:'omit',priority:0,order:e.order,text:`${name(e.source)} → ${name(e.target)}: prefix omitted; no notification`});
   const seen=new Set();
-  run.packet.path.forEach((node,i)=>{items.push({time:run.packet.arrivals[i],type:'packet',text:`Packet ${seen.has(node)?'revisits':'at'} ${name(node)}`});seen.add(node);});
-  items.push({time:run.packet.finished,type:'outcome',text:run.packet.outcome==='delivered'?'Packet delivered':run.packet.outcome==='ttl_expired'?'Packet dropped: TTL exhausted':'Packet dropped: no route'});
-  return items.filter(e=>e.time>=scene.view[0]-EPS&&e.time<=scene.view[1]+EPS).sort((a,b)=>a.time-b.time);
+  run.packet.path.forEach((node,i)=>{items.push({time:run.packet.arrivals[i],type:'packet',priority:1,order:i,text:`Packet ${seen.has(node)?'revisits':'at'} ${name(node)}`});seen.add(node);});
+  items.push({time:run.packet.finished,type:'outcome',priority:1,order:run.packet.path.length,text:run.packet.outcome==='delivered'?'Packet delivered':run.packet.outcome==='ttl_expired'?'Packet dropped: TTL exhausted':'Packet dropped: no route'});
+  // Control changes precede data forwarding at equal times, as in native replay.
+  // Within the control group use the recorded execution order, not array order.
+  return items.filter(e=>e.time>=scene.view[0]-EPS&&e.time<=scene.view[1]+EPS).sort((a,b)=>Math.abs(a.time-b.time)>EPS?a.time-b.time:a.priority-b.priority||a.order-b.order);
 }
 export const formatMs=t=>`${t<0?'−':''}${Math.abs(t).toFixed(2)} ms`;

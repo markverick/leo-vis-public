@@ -55,17 +55,18 @@ function inspection(run){
   return html+'</tbody></table>';
 }
 function render(){
-  $('time').value=time;$('clock').textContent=formatMs(time);
+  $('time').value=time;$('clock').textContent=formatMs(time);$('clock').title=`${time.toFixed(7)} simulated milliseconds`;
   policies.forEach((policy,index)=>{
     const run=runs[index],packet=packetAt(scene,run,time),panel=document.querySelector(`[data-policy="${policy}"]`);
+    panel.querySelector('.packet-path samp').textContent=packet.path.map(n=>scene.nodes[n].label).join(' → ')||'Not injected';
     panel.querySelector('.isls').textContent=packet.isls;panel.querySelector('.revisits').textContent=packet.revisits;
     const status=panel.querySelector('.status');status.textContent=outcomeLabel(packet.status);status.className='status '+(packet.status==='delivered'?'delivered':['no_route','ttl_expired'].includes(packet.status)?'dropped':'');
     panel.querySelector('.graph-host').innerHTML=graph(run,index);panel.querySelector('.inspect').innerHTML=inspection(run);
     const visible=events[index].filter(e=>e.time<=time+EPS).slice(-5).reverse();
-    panel.querySelector('.event-list').innerHTML=visible.map(e=>`<div class="event ${e.type}"><time>${formatMs(e.time)}</time><span>${escape(e.text)}</span></div>`).join('')||'<p style="font-size:11px;color:#778291">Routes are prepared. Packet has not been injected.</p>';
+    panel.querySelector('.event-list').innerHTML=visible.map(e=>`<div class="event ${e.type}"><time title="${e.priority===0?'Control execution order '+e.order:'Data event after same-time control events'}">${formatMs(e.time)}${e.priority===0?` · #${e.order}`:''}</time><span>${escape(e.text)}</span></div>`).join('')||'<p style="font-size:11px;color:#778291">Routes are prepared. Packet has not been injected.</p>';
   });
   $('previous').disabled=!stops.some(x=>x<time-EPS);$('next').disabled=!stops.some(x=>x>time+EPS);
-  const url=new URL(location.href);url.searchParams.set('scene',scene.id);url.searchParams.set('backups',$('backups').checked?'1':'0');url.searchParams.set('t',time.toFixed(3));url.searchParams.set('node',selected);history.replaceState(null,'',url);
+  const url=new URL(location.href);url.searchParams.set('scene',scene.id);url.searchParams.set('backups',$('backups').checked?'1':'0');url.searchParams.set('t',time.toFixed(7));url.searchParams.set('node',selected);history.replaceState(null,'',url);
 }
 function setTime(t){time=Math.max(scene.view[0],Math.min(scene.view[1],t));render();}
 function pause(){playing=false;cancelAnimationFrame(frameId);$('play').textContent='▶ Play';$('play').setAttribute('aria-label','Play animation');}
@@ -79,8 +80,8 @@ function chooseScene(reset=true){
   runs=policies.map(p=>scene.cases[`${p}:${$('backups').checked?1:0}`]);events=runs.map(r=>timeline(scene,r));stops=timeStops(scene,runs);
   $('time').min=scene.view[0];$('time').max=scene.view[1];$('start-time').textContent=formatMs(scene.view[0]);$('end-time').textContent=formatMs(scene.view[1]);
   $('scene-title').textContent=scene.title;$('scene-description').textContent=scene.description;
-  $('scene-note').textContent=$('backups').checked?'All learned higher-cost backups are retained. Orange contacts are withdrawn from routing; the physical 5-second guard remains.':'Higher-cost backups are discarded. Equal-cost multipath remains enabled. Compare the final outcomes with backups turned on.';
-  $('panels').innerHTML=policies.map((p,i)=>`<article class="panel" data-policy="${p}"><div class="panel-head"><h3>${escape(data.policies[i].label)}</h3><p class="policy-rule">${rules[p]}</p></div><div class="metrics"><div>ISL hops sent<strong class="isls">0</strong></div><div>Revisits<strong class="revisits">0</strong></div><div>Packet state<strong class="status">Pending</strong></div></div><div class="graph-host"></div><div class="inspect"></div><div class="events"><h4>Latest events · simulated clock</h4><div class="event-list"></div></div></article>`).join('');
+  $('scene-note').textContent=$('backups').checked?'Selected example: one flow sends at −2.50 ms. All learned backups are retained. Orange means routing withdrawal, not radio failure; the physical 5-second guard remains.':'Higher-cost backups are discarded. Equal-cost multipath remains enabled. Compare the final outcomes with backups turned on.';
+  $('panels').innerHTML=policies.map((p,i)=>`<article class="panel" data-policy="${p}"><div class="panel-head"><h3>${escape(data.policies[i].label)}</h3><p class="policy-rule">${rules[p]}</p></div><div class="metrics"><div>ISL hops sent<strong class="isls">0</strong></div><div>Revisits<strong class="revisits">0</strong></div><div>Packet state<strong class="status">Pending</strong></div></div><p class="packet-path">Arrivals so far: <samp></samp></p><div class="graph-host"></div><div class="inspect"></div><div class="events"><h4>Latest events · newest first</h4><div class="event-list"></div></div></article>`).join('');
   $('comparison').innerHTML=runs.map((r,i)=>`<tr><td>${escape(data.policies[i].label)}</td><td>${outcomeLabel(r.packet.outcome)}</td><td>${r.packet.isls}</td><td>${r.packet.revisits}</td><td>${(r.packet.finished-r.packet.injected).toFixed(2)} ms</td></tr>`).join('');
   setTime(reset?scene.view[0]:time);
 }
@@ -97,7 +98,10 @@ try{
   if(data.schema!==1)throw new Error('Unsupported trace schema');
   const params=new URLSearchParams(location.search);if(data.scenes.some(s=>s.id===params.get('scene')))$('scene').value=params.get('scene');
   $('backups').checked=params.get('backups')!=='0';selected=Math.max(0,Math.min(3,Number(params.get('node'))||0));
-  const c=data.constants;$('assumptions').innerHTML=`<ul><li>ISL propagation: ${c.isl_delay_ms} ms</li><li>GSL propagation: ${c.gsl_delay_ms} ms</li><li>Infinity: ${c.infinity}; unit link costs, origin metric 1</li><li>TTL: ${c.ttl} (at most 63 transmissions)</li><li>Triggered-update cooldown: ${c.trigger_cooldown_ms} ms</li><li>Receipt timeout: ${c.route_timeout_seconds} s</li><li>Periodic update: 30 ± 5 s</li><li>Frozen preparation: ${c.frozen_warmup_seconds} s</li><li>Stable per-flow hashing; flow ${c.flow_id}</li><li>All equal-cost active hops; optional higher-cost standbys</li></ul>`;
+  const c=data.constants;$('assumptions').innerHTML=`<ul><li>ISL propagation: ${c.isl_delay_ms} ms</li><li>GSL propagation: ${c.gsl_delay_ms} ms</li><li>Infinity: ${c.infinity}; unit link costs, origin metric 1</li><li>TTL: ${c.ttl} (at most 63 transmissions)</li><li>Triggered-update cooldown: ${c.trigger_cooldown_ms} ms</li><li>Receipt timeout: ${c.route_timeout_seconds} s</li><li>Periodic update: 30 ± 5 s</li><li>Frozen preparation: ${c.frozen_warmup_seconds} s</li><li>Stable per-flow hashing; flow ${c.flow_id}</li><li>All equal-cost active hops; optional higher-cost standbys</li><li>One request round after losing the last finite route (recovery extension)</li><li>Protocol timer seed ${c.protocol_seed}; garbage collection ${c.garbage_collection_seconds} s</li></ul>`;
+  const sensitivity=data.timing_sensitivity;
+  $('sweep-description').textContent=`${sensitivity.flows.toLocaleString()} synthetic flow IDs at B, each tested at nine injection times, with backups enabled. This is a timing sensitivity check of this scene, not a traffic-frequency estimate.`;
+  $('sweep-results').innerHTML=sensitivity.rows.map(r=>`<tr><td>${formatMs(r.injection_ms)}</td>${policies.map(p=>`<td>${r.results[p].delivered.toLocaleString()} / ${sensitivity.flows.toLocaleString()}</td>`).join('')}</tr>`).join('');
   chooseScene();if(params.has('t')&&Number.isFinite(Number(params.get('t'))))setTime(Number(params.get('t')));
   window.routingDemo={get time(){return time;},get scene(){return scene.id;},get playing(){return playing;},setTime,
     snapshot:()=>runs.map(r=>packetAt(scene,r,time))};

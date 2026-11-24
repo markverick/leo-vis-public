@@ -56,3 +56,33 @@ test('source payload is limited to synthetic trace fields',()=>{
   const text=JSON.stringify(data);
   for(const forbidden of ['/home/','/tmp/','users.csv','gateway-candidates','population.tif','prepared.json','rip_ocm_'])assert.ok(!text.includes(forbidden),forbidden);
 });
+
+test('same-time response is ordered before the receive that changes the sender route',()=>{
+  const run=first.cases['poisoned_reverse:1'];
+  const response=run.messages.find(m=>m.source===1&&m.target===0&&m.kind==='response');
+  const poison=run.messages.find(m=>m.source===0&&m.target===1&&m.metric===9);
+  assert.equal(response.sent,poison.arrival);
+  assert.ok(response.sent_order<poison.receive_order);
+  const events=timeline(first,run);
+  assert.ok(events.findIndex(e=>e.message_id===response.id&&e.phase==='send')<events.findIndex(e=>e.message_id===poison.id&&e.phase==='receive'));
+  assert.deepEqual(stateAt(run,response.sent).nodes[1].active,[2]);
+});
+test('each delivered control message has its own recorded receive order',()=>{
+  for(const scene of data.scenes)for(const run of Object.values(scene.cases)){
+    const orders=[];
+    for(const message of run.messages){
+      assert.ok(Number.isInteger(message.sent_order));orders.push(message.sent_order);
+      if(message.delivered){assert.ok(message.receive_order>message.sent_order);orders.push(message.receive_order);}
+    }
+    assert.equal(orders.length,new Set(orders).size);
+  }
+});
+test('timing sweep discloses phases where every policy already delivers',()=>{
+  const sweep=data.timing_sensitivity;assert.equal(sweep.flows,1000);
+  for(const t of [-10,10,15])for(const policy of data.policies){
+    assert.equal(sweep.rows.find(r=>r.injection_ms===t).results[policy.id].delivered,1000);
+  }
+  const selected=sweep.rows.find(r=>r.injection_ms===-2.5);
+  assert.equal(selected.results.poisoned_reverse.delivered,505);
+  assert.equal(selected.results.none.delivered,1000);
+});
