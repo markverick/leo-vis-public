@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Routing paths — interactive examples</title><meta name="description" content="Step through actual routing advertisements and packet hops to compare poisoned reverse, simple split horizon, and no reverse suppression.">
-<link rel="icon" href="icon.svg" type="image/svg+xml"><link rel="stylesheet" href="style.css?v=4"><script type="module" src="app.mjs?v=4"></script></head>
+<link rel="icon" href="icon.svg" type="image/svg+xml"><link rel="stylesheet" href="style.css?v=5"><script type="module" src="app.mjs?v=5"></script></head>
 <body><main>
 <header><a class="back" href="../index.html">← LEO visualizations</a><span class="eyebrow">Interactive routing examples</span><h1>Routing paths over time</h1><p class="intro">Compare packet paths, routing advertisements, and recovery timing.</p></header>
 <section class="controls" aria-label="Animation controls">
@@ -17,6 +17,6 @@
 <section id="panels" class="panels" aria-label="Synchronized policy comparison"></section>
 <section class="summary"><h2>Packet outcomes</h2><div class="table-scroll"><table><thead><tr><th>Comparison</th><th>Outcome</th><th>ISLs</th><th>Satellite revisits</th><th>Elapsed</th><th>Control messages</th></tr></thead><tbody id="comparison"></tbody></table></div><p>ISLs include repeated traversals and exclude the gateway link. Control messages are sends within the displayed interval.</p></section>
 <details class="summary sweep"><summary>Delivery by injection time</summary><p id="sweep-description"></p><div class="table-scroll"><table><thead id="sweep-head"></thead><tbody id="sweep-results"></tbody></table></div></details>
-<details class="assumptions"><summary>Model and trace details</summary><div id="assumptions"></div><p>Poisoned reverse and simple split horizon apply to all active next hops. Per-neighbor export is an additional comparison: it selects the lowest learned cost excluding the receiver, without checking indirect dependencies.</p><p>Controls select separately prepared runs. The diagram shows the state after all control events at its timestamp; in-flight messages retain their sent values. The browser replays exported events and checked packet traces.</p><p><a href="scenarios.json?v=4" download>Processed traces</a> · <a href="https://www.rfc-editor.org/rfc/rfc2453.html#section-3.4.3">RIP specification</a></p></details>
+<details class="assumptions"><summary>Model and trace details</summary><div id="assumptions"></div><p>Poisoned reverse and simple split horizon apply to all active next hops. Per-neighbor export is an additional comparison: it selects the lowest learned cost excluding the receiver, without checking indirect dependencies.</p><p>Controls select separately prepared runs. The diagram shows the state after all control events at its timestamp; in-flight messages retain their sent values. The browser replays exported events and checked packet traces.</p><p><a href="scenarios.json?v=5" download>Processed traces</a> · <a href="https://www.rfc-editor.org/rfc/rfc2453.html#section-3.4.3">RIP specification</a></p></details>
 <footer>Constructed topologies · selected flows and contact times · schematic layout</footer>
 <p id="error" role="alert" hidden></p></main></body></html>

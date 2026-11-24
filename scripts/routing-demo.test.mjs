@@ -7,7 +7,7 @@ const first=data.scenes.find(s=>s.id==='surviving-contact'),second=data.scenes.f
 
 test('processed traces cover all policies with and without retained backups',()=>{
   assert.equal(data.schema,2);assert.equal(data.scenes.length,5);
-  for(const scene of data.scenes){assert.equal(Object.keys(scene.cases).length,6);
+  for(const scene of data.scenes){assert.equal(Object.keys(scene.cases).length,scene.comparisons.length*2);
     const physical=new Set(scene.links.map(e=>[e.source,e.target].sort().join(':')));
     for(const run of Object.values(scene.cases)){
       assert.ok(run.packet.native_verified);assert.ok(run.states.length>0);
@@ -97,4 +97,10 @@ test('new comparisons retain both successful and failed paths',()=>{
  for(const scene of data.scenes)for(const row of scene.timing_sensitivity.rows)for(const c of scene.comparisons){
   const r=row.results[c.id];assert.equal(r.delivered+r.no_route+r.ttl_drops,scene.timing_sensitivity.flows);
  }
+});
+
+test('advertisement scene compares all four distinct methods',()=>{
+ const s=data.scenes.find(s=>s.id==='neighbor-exports');
+ assert.deepEqual(s.comparisons.map(c=>c.id),['poisoned_reverse','simple_split_horizon','none','neighbor_specific']);
+ assert.equal(Object.keys(s.cases).length,8);
 });

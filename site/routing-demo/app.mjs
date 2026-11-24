@@ -1,4 +1,4 @@
-import {EPS,stateAt,packetAt,timeStops,timeline,formatMs} from './model.mjs?v=4';
+import {EPS,stateAt,packetAt,timeStops,timeline,formatMs} from './model.mjs?v=5';
 const $=id=>document.getElementById(id);
 const escape=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 let data,scene,runs,stops,events,time=0,playing=false,lastFrame=0,selected=0,frameId=0;
@@ -28,7 +28,7 @@ function graph(run,index){
     svg+=`<g><title>${escape(`${nodes[m.source].label} → ${nodes[m.target].label}: ${m.kind==='request'?'request':`metric ${text}`}; arrives ${formatMs(m.arrival)}`)}</title><circle cx="${p.x}" cy="${p.y}" r="10" fill="${m.kind==='request'?'#4e789c':poison?colors.poison:colors.message}" stroke="white" stroke-width="2"/><text x="${p.x}" y="${p.y+3.5}" fill="white" font-size="10" text-anchor="middle" font-weight="700">${text}</text></g>`;
   }}
   for(const node of nodes){const s=states[node.id],selectedNode=node.id===selected;
-    svg+=`<g role="button" tabindex="0" data-node="${node.id}" aria-label="Inspect ${node.kind} ${escape(node.label)}" aria-pressed="${selectedNode}"><title>Inspect ${escape(node.label)} in all three policies</title>`;
+    svg+=`<g role="button" tabindex="0" data-node="${node.id}" aria-label="Inspect ${node.kind} ${escape(node.label)}" aria-pressed="${selectedNode}"><title>Inspect ${escape(node.label)} across comparisons</title>`;
     if(selectedNode)svg+=`<circle cx="${node.x}" cy="${node.y}" r="28" fill="none" stroke="#567a9b" stroke-width="1.5" stroke-dasharray="3 3"/>`;
     if(node.kind==='gateway')svg+=`<rect x="${node.x-21}" y="${node.y-19}" width="42" height="38" rx="8" fill="#e7f2ee" stroke="#27785e" stroke-width="1.8"/>`;
     else svg+=`<circle cx="${node.x}" cy="${node.y}" r="21" fill="white" stroke="${s.metric>=9?'#ba6666':'#697d8c'}" stroke-width="1.8"/>`;
@@ -82,6 +82,7 @@ function chooseScene(reset=true){
   $('scene-title').textContent=scene.title;$('scene-description').textContent=scene.description;
   const cooldowns=[...new Set(comparisons.map(c=>c.cooldown_ms))];
   $('scene-note').textContent=`Flow 0 · injected ${formatMs(runs[0].packet.injected)} · ECMP · backups ${$('backups').checked?'retained':'discarded'} · cooldown ${cooldowns.join(' / ')} ms`;
+  $('panels').classList.toggle('four-methods',policies.length===4);
   $('panels').innerHTML=policies.map((p,i)=>`<article class="panel" data-policy="${p}"><div class="panel-head"><h3>${escape(comparisons[i].label)}</h3><p class="policy-rule">${escape(comparisons[i].rule)}</p></div><div class="metrics"><div>ISL hops sent<strong class="isls">0</strong></div><div>Revisits<strong class="revisits">0</strong></div><div>Packet state<strong class="status">Pending</strong></div></div><p class="packet-path">Arrivals so far: <samp></samp></p><div class="graph-host"></div><div class="inspect"></div><details class="events"><summary>Event log</summary><div class="event-list"></div></details></article>`).join('');
   $('comparison').innerHTML=runs.map((r,i)=>`<tr><td>${escape(comparisons[i].label)}</td><td>${outcomeLabel(r.packet.outcome)}</td><td>${r.packet.isls}</td><td>${r.packet.revisits}</td><td>${(r.packet.finished-r.packet.injected).toFixed(2)} ms</td><td>${r.messages.filter(m=>m.sent>=scene.view[0]-EPS&&m.sent<=scene.view[1]+EPS).length}</td></tr>`).join('');
   const sensitivity=scene.timing_sensitivity;
@@ -100,7 +101,7 @@ document.querySelectorAll('[data-jump]').forEach(button=>button.addEventListener
 function selectNode(e){const target=e.target.closest('[data-node]');if(!target)return;if(e.type==='keydown'&&!['Enter',' '].includes(e.key))return;if(e.type==='keydown')e.preventDefault();selected=Number(target.dataset.node);render();}
 $('panels').addEventListener('click',selectNode);$('panels').addEventListener('keydown',selectNode);
 try{
-  const response=await fetch('./scenarios.json?v=4');if(!response.ok)throw new Error(`Trace request failed (${response.status})`);data=await response.json();
+  const response=await fetch('./scenarios.json?v=5');if(!response.ok)throw new Error(`Trace request failed (${response.status})`);data=await response.json();
   if(data.schema!==2)throw new Error('Unsupported trace schema');
   const params=new URLSearchParams(location.search);if(data.scenes.some(s=>s.id===params.get('scene')))$('scene').value=params.get('scene');
   $('backups').checked=params.get('backups')!=='0';selected=Math.max(0,Math.trunc(Number(params.get('node'))||0));
