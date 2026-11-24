@@ -977,7 +977,7 @@
   {
     "path": "routing-demo/index.html",
     "bytes": 5012,
-    "sha256": "2aaa28eb2b06b85eb61cbf589f3960859aa5ebc487359ae08a840d20c13d4623"
+    "sha256": "6f83d412565f25d2671db0bebccfaf4202209fac04723dcdc16fdc0b51e1e3db"
   },
   {
     "path": "routing-demo/model.mjs",
@@ -991,7 +991,7 @@
   },
   {
     "path": "routing-demo/style.css",
-    "bytes": 8056,
-    "sha256": "c232fcfd774c6fc720ef80085b20d2ea0b9b32cc6e12873db6cd3038c83f3754"
+    "bytes": 8173,
+    "sha256": "94ae2a93d5a0f3e5d909eab3cfa422aecb6284df36f03d10e7d44eb1270803f0"
   }
 ]
