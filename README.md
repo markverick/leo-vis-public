@@ -40,6 +40,7 @@ https://markverick.github.io/leo-vis-public/routing-demo/
 
 Five synthetic scenes compare reverse suppression, retained backups,
 receiver-specific advertisements, shared gateway exits, and trigger cooldowns.
+Satellites run DV; gateways are passive local prefix attachments. No DV messages cross GSLs.
 The synchronized slider replays checked simulator traces; each scene includes
 packet outcomes, router inspection, event logs, and a 1,000-flow timing sweep.
 Model settings are available in a collapsed section.

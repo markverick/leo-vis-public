@@ -104,3 +104,13 @@ test('advertisement scene compares all four distinct methods',()=>{
  assert.deepEqual(s.comparisons.map(c=>c.id),['poisoned_reverse','simple_split_horizon','none','neighbor_specific']);
  assert.equal(Object.keys(s.cases).length,8);
 });
+
+test('gateways are passive attachments and never send or receive DV messages',()=>{
+  assert.equal(data.gateway_model,'satellite-attachments');
+  for(const scene of data.scenes)for(const run of Object.values(scene.cases)){
+    for(const m of run.messages){assert.equal(scene.nodes[m.source].kind,'satellite');assert.equal(scene.nodes[m.target].kind,'satellite');}
+    for(const snapshot of run.states)for(const gateway of scene.nodes.filter(n=>n.kind==='gateway')){
+      const row=snapshot.nodes[gateway.id];assert.equal(row.passive,true);assert.equal(row.metric,null);assert.deepEqual(row.candidates,[]);
+    }
+  }
+});

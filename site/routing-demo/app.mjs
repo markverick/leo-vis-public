@@ -1,4 +1,4 @@
-import {EPS,stateAt,packetAt,timeStops,timeline,formatMs} from './model.mjs?v=5';
+import {EPS,stateAt,packetAt,timeStops,timeline,formatMs} from './model.mjs?v=7';
 const $=id=>document.getElementById(id);
 const escape=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 let data,scene,runs,stops,events,time=0,playing=false,lastFrame=0,selected=0,frameId=0;
@@ -41,15 +41,15 @@ function graph(run,index){
 }
 function inspection(run){
   const node=scene.nodes[selected],state=stateAt(run,time).nodes[selected],metric=state.metric>=9?'∞':state.metric;
-  if(node.kind==='gateway')return `<h4>${escape(node.label)} · prefix origin</h4><p class="node-state">Origin metric 1. All gateways in this scene advertise the same destination prefix.</p>`;
+  if(node.kind==='gateway')return `<h4>${escape(node.label)} · passive gateway</h4><p class="node-state">Provides the shared prefix through eligible GSL attachments. Attached satellites originate metric 2 and exchange DV updates over ISLs.</p>`;
   const names=ids=>ids.map(i=>scene.nodes[i].label).join(', ')||'none';
   let html=`<h4>Inspect ${escape(node.label)} <span style="font-weight:400;color:#7a8490">· click any node above</span></h4><p class="node-state">Metric <strong>${metric}</strong> · active: <strong>${escape(names(state.active))}</strong><br>Standby: ${escape(names(state.standby))}</p><table><thead><tr><th>Via</th><th>Local cost</th><th>Role</th></tr></thead><tbody>`;
   const peers=scene.links.filter(e=>e.source===selected||e.target===selected).map(e=>e.source===selected?e.target:e.source);
   for(const peer of peers){const candidate=state.candidates.find(c=>c.neighbor===peer),role=state.active.includes(peer)?'active':state.standby.includes(peer)?'backup':null;
     const received=run.messages.filter(m=>m.kind!=='request'&&m.source===peer&&m.target===selected&&m.delivered&&m.arrival<=time+EPS).at(-1);
     const cost=candidate?candidate.cost:received?.metric>=9?'∞':'—';
-    const age=candidate?`${Math.max(0,(time-candidate.received)/1000).toFixed(3)} s`:'—';
-    html+=`<tr><td>${escape(scene.nodes[peer].label)}</td><td title="${candidate?`Last received ${age} ago`:received?.metric>=9?'Last received: infinity':'No retained candidate'}">${cost}</td><td>${role?`<span class="tag ${role}">${role}</span>`:'not retained'}</td></tr>`;
+    const age=candidate&&!candidate.local?`${Math.max(0,(time-candidate.received)/1000).toFixed(3)} s`:'—';
+    html+=`<tr><td>${escape(scene.nodes[peer].label)}</td><td title="${candidate?.local?'Local connected attachment':candidate?`Last received ${age} ago`:received?.metric>=9?'Last received: infinity':'No retained candidate'}">${cost}</td><td>${role?`<span class="tag ${role}">${role}</span>`:candidate?.local?'local attachment':'not retained'}</td></tr>`;
   }
   return html+'</tbody></table>';
 }
@@ -89,7 +89,7 @@ function chooseScene(reset=true){
   $('sweep-description').textContent=`${sensitivity.flows.toLocaleString()} flow IDs at B, one packet per flow at each injection time, with backups retained.`;
   $('sweep-head').innerHTML='<tr><th>Injection time</th>'+comparisons.map(c=>`<th>${escape(c.label)}</th>`).join('')+'</tr>';
   $('sweep-results').innerHTML=sensitivity.rows.map(r=>`<tr><td>${formatMs(r.injection_ms)}</td>${policies.map(p=>`<td>${r.results[p].delivered.toLocaleString()} / ${sensitivity.flows.toLocaleString()}</td>`).join('')}</tr>`).join('');
-  $('assumptions').innerHTML=`<dl class="model-grid"><dt>Topology</dt><dd>${scene.nodes.filter(n=>n.kind==='satellite').length} satellites · ${scene.nodes.filter(n=>n.kind==='gateway').length} gateways · shared anycast prefix</dd><dt>Propagation</dt><dd>5 ms ISLs · 2 ms GSLs · 550 km altitude</dd><dt>Routing metric</dt><dd>Unit link costs · origin metric 1 · infinity 9</dd><dt>Packet</dt><dd>Flow 0 · stable per-flow hash 42002 · TTL 64 (63 transmissions)</dd><dt>Triggers</dt><dd>Fixed cooldown ${cooldowns.join(' / ')} ms; forwarding entries update on receipt</dd><dt>Timers</dt><dd>Periodic 30 ± 5 s · receipt expiry 180 s · garbage collection 120 s</dd><dt>Preparation</dt><dd>600 s · timer seed 42 · one request round on loss of the last finite route</dd><dt>Contact events</dt><dd>Routing withdrawals, 5 s before scheduled physical loss</dd><dt>Timing model</dt><dd>Fixed positions · propagation only · no queues, random loss or retransmission</dd></dl>`;
+  $('assumptions').innerHTML=`<dl class="model-grid"><dt>Topology</dt><dd>${scene.nodes.filter(n=>n.kind==='satellite').length} satellites · ${scene.nodes.filter(n=>n.kind==='gateway').length} gateways · shared anycast prefix</dd><dt>Propagation</dt><dd>5 ms ISLs · 2 ms GSLs · 550 km altitude</dd><dt>Routing metric</dt><dd>Local satellite attachment metric 2 · unit ISL costs · infinity 9</dd><dt>Packet</dt><dd>Flow 0 · stable per-flow hash 42002 · TTL 64 (63 transmissions)</dd><dt>Triggers</dt><dd>Fixed cooldown ${cooldowns.join(' / ')} ms; forwarding entries update on local attachment events or received advertisements</dd><dt>Timers</dt><dd>Periodic 30 ± 5 s · receipt expiry 180 s · garbage collection 120 s</dd><dt>Preparation</dt><dd>600 s · timer seed 42 · one request round on loss of the last finite route</dd><dt>Contact events</dt><dd>Routing withdrawals, 5 s before scheduled physical loss</dd><dt>Timing model</dt><dd>Fixed positions · propagation only · no queues, random loss or retransmission</dd></dl>`;
   setTime(reset?scene.view[0]:time);
 }
 $('play').addEventListener('click',()=>playing?pause():play());$('time').addEventListener('input',e=>{pause();setTime(Number(e.target.value));});
@@ -101,7 +101,7 @@ document.querySelectorAll('[data-jump]').forEach(button=>button.addEventListener
 function selectNode(e){const target=e.target.closest('[data-node]');if(!target)return;if(e.type==='keydown'&&!['Enter',' '].includes(e.key))return;if(e.type==='keydown')e.preventDefault();selected=Number(target.dataset.node);render();}
 $('panels').addEventListener('click',selectNode);$('panels').addEventListener('keydown',selectNode);
 try{
-  const response=await fetch('./scenarios.json?v=5');if(!response.ok)throw new Error(`Trace request failed (${response.status})`);data=await response.json();
+  const response=await fetch('./scenarios.json?v=7');if(!response.ok)throw new Error(`Trace request failed (${response.status})`);data=await response.json();
   if(data.schema!==2)throw new Error('Unsupported trace schema');
   const params=new URLSearchParams(location.search);if(data.scenes.some(s=>s.id===params.get('scene')))$('scene').value=params.get('scene');
   $('backups').checked=params.get('backups')!=='0';selected=Math.max(0,Math.trunc(Number(params.get('node'))||0));
